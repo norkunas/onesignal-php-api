@@ -2,9 +2,9 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 $client = new \OneSignal\Client();
-$client->setApplicationId('fa2c7836-e7f2-11e4-a050-2fad00aaa11c');
-$client->setApplicationAuthKey('ZmEyYzc4OWEtZTdmMi0xMWU0LWEwNTEtNzc5NjYwMDc3NzEw');
-$client->setUserAuthKey('NDJmNmQzMWEtZTdmNi0xMWU0LWE1ZGEtOWY2MTk0NzMxM2Mx');
+$client->setApplicationId('application_id');
+$client->setApplicationAuthKey('rest_api_key');
+$client->setUserAuthKey('user_auth_key');
 
 $api = new \OneSignal\OneSignal($client);
 
