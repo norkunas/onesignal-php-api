@@ -28,6 +28,7 @@ $api = new \OneSignal\OneSignal($config);
 ```
 
 ### Applications
+Possible options are listed at [Official Documentation](http://documentation.onesignal.com/v2.0/docs/apps-create-an-app).
 ```php
 // Get the list of your OneSignal applications
 $myApps = $api->apps->getAll();
@@ -43,6 +44,7 @@ $api->apps->update('application_id', ['name' => 'new app name']);
 ```
 
 ### Devices
+Possible options are listed at [Official Documentation](http://documentation.onesignal.com/v2.0/docs/players-add-a-device).
 ```php
 $devices = $api->devices->getAll();
 $device = $api->devices->getOne('device_id');
@@ -58,6 +60,7 @@ $api->devices->update('device_id', [
 ```
 
 ### Notifications
+Possible options are listed at [Official Documentation](http://documentation.onesignal.com/v2.0/docs/notifications-create-notification).
 ```php
 $notifications = $api->notifications->getAll();
 $notification = $api->notifications->getOne('notification_id');
