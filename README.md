@@ -1,5 +1,7 @@
 # OneSignal API for PHP
 
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://packagist.org/packages/norkunas/onesignal-php-api)
+
 ## Install using Composer
 
 ```
