@@ -10,11 +10,11 @@
         }
     ],
     "require": {
-      "php": ">=5.4.0",
-      "guzzlehttp/guzzle": "~5.2",
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "~5.2",
         "symfony/options-resolver": "~2.6"
     },
     "autoload": {
-      "psr-4": { "OneSignal\\": "src/" }
+        "psr-4": { "OneSignal\\": "src/" }
     }
 }
