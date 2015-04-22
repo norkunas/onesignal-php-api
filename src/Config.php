@@ -1,7 +1,7 @@
 <?php
 namespace OneSignal;
 
-class Client
+class Config
 {
     /**
      * @var string

@@ -1,6 +1,11 @@
 <?php
 namespace OneSignal;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Message\Response;
+use OneSignal\Exception\OneSignalException;
+
 /**
  * @property-read Apps          $apps
  * @property-read Devices       $devices
@@ -11,14 +16,14 @@ class OneSignal
     const API_URL = 'https://onesignal.com/api/v1';
 
     /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
      * @var Client
      */
     protected $client;
-
-    /**
-     * @var \GuzzleHttp\Client
-     */
-    protected $httpClient;
 
     /**
      * @var array
@@ -28,41 +33,92 @@ class OneSignal
     /**
      * Constructor
      *
+     * @param Config $config
      * @param Client $client
      */
-    public function __construct(Client $client)
+    public function __construct(Config $config = null, Client $client = null)
     {
-        $this->client = $client;
-        $this->httpClient = new \GuzzleHttp\Client([
+        $this->config = ($config ?: new Config);
+        $this->client = ($client ?: new Client([
             'defaults' => [
                 'headers' => [
                     'Accept' => 'application/json',
                 ],
             ],
-        ]);
-        /*$this->client = $guzzle ?: new Client([
-            'base_url' => ['https://onesignal.com/api/{version}', ['version' => 'v1']],
-        ]);*/
+        ]));
     }
 
     /**
-     * Set http client
+     * Set config
      *
-     * @param \GuzzleHttp\Client $httpClient
+     * @param Config $config
      */
-    public function setHttpClient(\GuzzleHttp\Client $httpClient)
+    public function setConfig(Config $config)
     {
-        $this->httpClient = $httpClient;
+        $this->config = $config;
     }
 
     /**
-     * Get http client
+     * Get config
      *
-     * @return \GuzzleHttp\Client
+     * @return Config
      */
-    public function getHttpClient()
+    public function getConfig()
     {
-        return $this->httpClient;
+        return $this->config;
+    }
+
+    /**
+     * Set client
+     *
+     * @param Client $client
+     */
+    public function setClient(Client $client)
+    {
+        $this->client = $client;
+    }
+
+    /**
+     * Get client
+     *
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * Make a custom api request
+     *
+     * @param string $method  HTTP Method
+     * @param string $uri     URI template
+     * @param array  $options Array of request options to apply.
+     *
+     * @return Response
+     * @throws OneSignalException
+     */
+    public function request($method, $uri, array $options = [])
+    {
+        try {
+            $request = $this->client->createRequest($method, self::API_URL . $uri, $options);
+
+            return $this->client->send($request)->json();
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            $headers = $response->getHeaders();
+
+            if (!empty($headers['Content-Type']) && false !== strpos($headers['Content-Type'][0], 'application/json')) {
+                $body = $response->json();
+                $errors = (isset($body['errors']) ? $body['errors'] : []);
+
+                if (404 === $response->getStatusCode()) {
+                    $errors[] = 'Not Found';
+                }
+
+                throw new OneSignalException($response->getStatusCode(), $errors, $e->getMessage(), $e->getCode(), $e);
+            }
+        }
     }
 
     /**
@@ -81,7 +137,7 @@ class OneSignal
 
             $serviceName = __NAMESPACE__ . '\\' . ucfirst($name);
 
-            $this->services[$name] = new $serviceName($this->client, $this->httpClient);
+            $this->services[$name] = new $serviceName($this);
 
             return $this->services[$name];
         }

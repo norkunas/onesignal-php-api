@@ -6,69 +6,62 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Apps
 {
     /**
-     * @var Client
+     * @var OneSignal
      */
-    protected $client;
-
-    /**
-     * @var \GuzzleHttp\Client
-     */
-    protected $http;
+    protected $api;
 
     /**
      * Constructor
      *
-     * @param Client             $client
-     * @param \GuzzleHttp\Client $guzzle
+     * @param OneSignal $api
      */
-    public function __construct(Client $client, \GuzzleHttp\Client $guzzle)
+    public function __construct(OneSignal $api)
     {
-        $this->client = $client;
-        $this->http = $guzzle;
+        $this->api = $api;
     }
 
     public function getOne($id)
     {
-        return $this->http->get('https://onesignal.com/api/v1/apps/' . $id, [
+        return $this->api->request('GET', '/apps/' . $id, [
             'headers' => [
-                'Authorization' => 'Basic ' . $this->client->getUserAuthKey(),
+                'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
             ],
-        ])->json();
+        ]);
     }
 
     public function getAll()
     {
-        return $this->http->get('https://onesignal.com/api/v1/apps', [
+        return $this->api->request('GET', '/apps', [
             'headers' => [
-                'Authorization' => 'Basic ' . $this->client->getUserAuthKey(),
+                'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
             ],
-        ])->json();
+        ]);
     }
 
     public function add(array $data)
     {
         $data = $this->resolve($data);
 
-        return $this->http->post('https://onesignal.com/api/v1/apps', [
+        return $this->api->request('POST', '/apps', [
             'headers' => [
-                'Authorization' => 'Basic ' . $this->client->getUserAuthKey(),
+                'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
                 'Content-Type' => 'application/json',
             ],
             'json' => $data,
-        ])->json();
+        ]);
     }
 
     public function update($id, array $data)
     {
         $data = $this->resolve($data);
 
-        return $this->http->put('https://onesignal.com/api/v1/apps/' . $id, [
+        return $this->api->request('PUT', '/apps/' . $id, [
             'headers' => [
-                'Authorization' => 'Basic ' . $this->client->getUserAuthKey(),
+                'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
                 'Content-Type' => 'application/json',
             ],
             'json' => $data,
-        ])->json();
+        ]);
     }
 
     protected function resolve(array $data)

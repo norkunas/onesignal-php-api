@@ -11,53 +11,38 @@ class Devices
     const WINDOWS_PHONE = 3;
 
     /**
-     * @var Client
+     * @var OneSignal
      */
-    protected $client;
-
-    /**
-     * @var \GuzzleHttp\Client
-     */
-    protected $http;
+    protected $api;
 
     /**
      * Constructor
      *
-     * @param Client             $client
-     * @param \GuzzleHttp\Client $guzzle
+     * @param OneSignal $api
      */
-    public function __construct(Client $client, \GuzzleHttp\Client $guzzle)
+    public function __construct(OneSignal $api)
     {
-        $this->client = $client;
-        $this->http = $guzzle;
+        $this->api = $api;
     }
 
     public function getOne($id)
     {
-        return $this->http->get('https://onesignal.com/api/v1/players/' . $id, [
-            'headers' => [
-                //'Authorization' => 'Basic ' . $this->client->getApplicationAuthKey(),
-            ],
-        ])->json();
+        return $this->api->request('GET', '/players/' . $id);
     }
 
-    public function getAll($limit = null, $offset = null)
+    public function getAll($limit = 50, $offset = 0)
     {
-        $url = 'https://onesignal.com/api/v1/players?app_id=' . $this->client->getApplicationId();
-
-        if ($limit) {
-            $url .= '&limit=' . $limit;
-        }
-
-        if ($offset) {
-            $url .= '&offset=' . $offset;
-        }
-
-        return $this->http->get($url, [
+        return $this->api->request('GET', '/players?' . http_build_query([
+            'limit' => max(0, min(50, filter_var($limit, FILTER_VALIDATE_INT))),
+            'offset' => max(0, min(50, filter_var($offset, FILTER_VALIDATE_INT))),
+        ]), [
             'headers' => [
-                'Authorization' => 'Basic ' . $this->client->getApplicationAuthKey(),
+                'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
             ],
-        ])->json();
+            'json' => [
+                'app_id' => $this->api->getConfig()->getApplicationId(),
+            ],
+        ]);
     }
 
     public function add(array $data)
@@ -74,24 +59,24 @@ class Devices
                 ]);
         });
 
-        return $this->http->post('https://onesignal.com/api/v1/players', [
+        return $this->api->request('POST', '/players', [
             'headers' => [
                 'Content-Type' => 'application/json',
             ],
             'json' => $data,
-        ])->json();
+        ]);
     }
 
     public function update($id, array $data)
     {
         $data = $this->resolve($data);
 
-        return $this->http->put('https://onesignal.com/api/v1/players/' . $id, [
+        return $this->api->request('PUT', '/players/' . $id, [
             'headers' => [
                 'Content-Type' => 'application/json',
             ],
             'json' => $data,
-        ])->json();
+        ]);
     }
 
     protected function resolve(array $data, callable $callback = null)
@@ -132,7 +117,7 @@ class Devices
             ->setAllowedTypes('badge_count', 'int')
             ->setDefined('last_active')
             ->setAllowedTypes('last_active', 'int')
-            ->setDefault('app_id', $this->client->getApplicationId());
+            ->setDefault('app_id', $this->api->getConfig()->getApplicationId());
 
         return $resolver->resolve($data);
     }
