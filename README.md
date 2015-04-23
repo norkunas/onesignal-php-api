@@ -84,6 +84,7 @@ $api->notifications->cancel('notification_id');
 
 ### Catching errors
 ```php
+use GuzzleHttp\Exception\RequestException;
 use OneSignal\Exception\OneSignalException;
 
 try {
@@ -91,5 +92,7 @@ try {
 } catch (OneSignalException $e) {
     $httpStatusCode = $e->getStatusCode();
     $errors = $e->getErrors();
+} catch (RequestException $e) {
+    $message = $e->getMessage();
 }
 ```
