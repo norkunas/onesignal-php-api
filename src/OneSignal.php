@@ -121,7 +121,7 @@ class OneSignal
                     throw new OneSignalException($response->getStatusCode(), $errors, $e->getMessage(), $e->getCode(), $e);
                 }
             } else {
-                throw new OneSignalException(0, [], $e->getMessage(), $e->getCode(), $e);
+                throw $e;
             }
         }
     }
