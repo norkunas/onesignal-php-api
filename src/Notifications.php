@@ -120,7 +120,7 @@ class Notifications
             ->setAllowedTypes('include_chrome_reg_ids', 'array')
             ->setDefined('tags')
             ->setAllowedTypes('tags', 'array')
-            ->setNormalizer('tags', function (Options $options, $value) {
+            ->setNormalizer('tags', function (Options $options, array $value) {
                 $tags = [];
 
                 foreach ($value as $tag) {
