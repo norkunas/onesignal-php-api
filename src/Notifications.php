@@ -50,7 +50,7 @@ class Notifications
     public function add(array $data)
     {
         $data = $this->resolve($data);
-
+var_dump($data);exit;
         return $this->api->request('POST', '/notifications', [
             'headers' => [
                 'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
@@ -119,7 +119,24 @@ class Notifications
             ->setDefined('include_chrome_reg_ids')
             ->setAllowedTypes('include_chrome_reg_ids', 'array')
             ->setDefined('tags')
+            ->setAllowedTypes('tags', 'array')
+            ->setNormalizer('tags', function (Options $options, $value) {
+                $tags = [];
 
+                foreach ($value as $tag) {
+                    if (!isset($tag['key'], $tag['relation'], $tag['value'])) {
+                        continue;
+                    }
+                    // @todo: values must be passed as string so make a validation or cast them to string
+                    $tags[] = [
+                        'key' => $tag['key'],
+                        'relation' => $tag['relation'],
+                        'value' => $tag['value'],
+                    ];
+                }
+
+                return $tags;
+            })
             ->setDefined('ios_badgeType')
             ->setAllowedTypes('ios_badgeType', 'string')
             ->setAllowedValues('ios_badgeType', ['None', 'SetTo', 'Increase'])
