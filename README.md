@@ -66,7 +66,7 @@ Possible options are listed at [Official Documentation](http://documentation.one
 ```php
 $notifications = $api->notifications->getAll();
 $notification = $api->notifications->getOne('notification_id');
-
+// Do not combine with targeting parameters
 $api->notifications->add([
     'contents' => [
         'en' => 'Notification message'
@@ -75,6 +75,18 @@ $api->notifications->add([
     'data' => ['foo' => 'bar'],
     'isChrome' => true,
     'send_after' => new \DateTime('1 hour'),
+    'tags' => [
+        [
+            'key' => 'level',
+            'relation' => '>',
+            'value' => '10',
+        ],
+        [
+            'key' => 'madePurchase',
+            'relation' => '=',
+            'value' => 'true',
+        ]
+    ],
     // ..other options
 ]));
 
