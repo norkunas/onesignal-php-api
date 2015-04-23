@@ -50,7 +50,7 @@ class Notifications
     public function add(array $data)
     {
         $data = $this->resolve($data);
-var_dump($data);exit;
+
         return $this->api->request('POST', '/notifications', [
             'headers' => [
                 'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
