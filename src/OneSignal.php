@@ -106,17 +106,22 @@ class OneSignal
             return $this->client->send($request)->json();
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            $headers = $response->getHeaders();
 
-            if (!empty($headers['Content-Type']) && false !== strpos($headers['Content-Type'][0], 'application/json')) {
-                $body = $response->json();
-                $errors = (isset($body['errors']) ? $body['errors'] : []);
+            if ($response) {
+                $headers = $response->getHeaders();
 
-                if (404 === $response->getStatusCode()) {
-                    $errors[] = 'Not Found';
+                if (!empty($headers['Content-Type']) && false !== strpos($headers['Content-Type'][0], 'application/json')) {
+                    $body = $response->json();
+                    $errors = (isset($body['errors']) ? $body['errors'] : []);
+
+                    if (404 === $response->getStatusCode()) {
+                        $errors[] = 'Not Found';
+                    }
+
+                    throw new OneSignalException($response->getStatusCode(), $errors, $e->getMessage(), $e->getCode(), $e);
                 }
-
-                throw new OneSignalException($response->getStatusCode(), $errors, $e->getMessage(), $e->getCode(), $e);
+            } else {
+                throw new OneSignalException(0, [], $e->getMessage(), $e->getCode(), $e);
             }
         }
     }
