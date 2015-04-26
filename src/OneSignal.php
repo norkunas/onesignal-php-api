@@ -120,9 +120,9 @@ class OneSignal
 
                     throw new OneSignalException($response->getStatusCode(), $errors, $e->getMessage(), $e->getCode(), $e);
                 }
-            } else {
-                throw $e;
             }
+
+            throw $e;
         }
     }
 
