@@ -151,7 +151,24 @@ class Notifications
             ->setDefined('data')
             ->setAllowedTypes('data', 'array')
             ->setDefined('buttons')
+            ->setAllowedTypes('buttons', 'array')
+            ->setNormalizer('buttons', function (Options $options, array $value) {
+                $buttons = [];
 
+                foreach ($value as $button) {
+                    if (isset($button['text'])) {
+                        continue;
+                    }
+
+                    $buttons[] = [
+                        'id' => (isset($button['id']) ? $button['id'] : mt_rand()),
+                        'text' => $button['text'],
+                        'icon' => (isset($button['icon']) ? $button['icon'] : null),
+                    ];
+                }
+
+                return $buttons;
+            })
             ->setDefined('small_icon')
             ->setAllowedTypes('small_icon', 'string')
             ->setDefined('large_icon')
