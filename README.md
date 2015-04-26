@@ -69,7 +69,7 @@ Possible options are listed at [Official Documentation](http://documentation.one
 ```php
 $notifications = $api->notifications->getAll();
 $notification = $api->notifications->getOne('notification_id');
-// Do not combine with targeting parameters
+// Do not combine targeting parameters
 $api->notifications->add([
     'contents' => [
         'en' => 'Notification message'
