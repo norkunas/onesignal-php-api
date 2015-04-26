@@ -29,7 +29,7 @@ $config->setApplicationId('your_application_id');
 $config->setApplicationAuthKey('your_application_auth_key');
 $config->setUserAuthKey('your_auth_key');
 
-$api = new \OneSignal\OneSignal($config);
+$api = new OneSignal($config);
 ```
 
 ### Applications
