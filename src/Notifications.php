@@ -156,7 +156,7 @@ class Notifications
                 $buttons = [];
 
                 foreach ($value as $button) {
-                    if (isset($button['text'])) {
+                    if (!isset($button['text'])) {
                         continue;
                     }
 
