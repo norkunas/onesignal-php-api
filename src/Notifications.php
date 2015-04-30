@@ -91,7 +91,9 @@ class Notifications
 
         $resolver
             ->setDefined('contents')
+            ->setAllowedTypes('contents', 'array')
             ->setDefined('headings')
+            ->setAllowedTypes('headings', 'array')
             ->setDefined('isIos')
             ->setAllowedTypes('isIos', 'bool')
             ->setDefined('isAndroid')
