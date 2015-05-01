@@ -89,6 +89,7 @@ class Devices
 
         $resolver
             ->setDefined('identifier')
+            ->setAllowedTypes('identifier', 'string')
             ->setDefined('language')
             ->setAllowedTypes('language', 'string')
             ->setDefined('timezone')
