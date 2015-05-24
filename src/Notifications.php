@@ -21,6 +21,15 @@ class Notifications
         $this->api = $api;
     }
 
+    /**
+     * Get information about notification with provided ID.
+     *
+     * Application authentication key and ID must be set.
+     *
+     * @param string $id Notification ID
+     *
+     * @return array
+     */
     public function getOne($id)
     {
         $url = '/notifications/' . $id . '?app_id=' . $this->api->getConfig()->getApplicationId();
@@ -32,6 +41,16 @@ class Notifications
         ]);
     }
 
+    /**
+     * Get information about all notifications.
+     *
+     * Application authentication key and ID must be set.
+     *
+     * @param int $limit  Results offset (results are sorted by ID)
+     * @param int $offset How many notifications to return (max 50)
+     *
+     * @return array
+     */
     public function getAll($limit = null, $offset = null)
     {
         return $this->api->request('GET', '/notifications?' . http_build_query([
@@ -47,6 +66,15 @@ class Notifications
         ]);
     }
 
+    /**
+     * Send new notification with provided data.
+     *
+     * Application authentication key and ID must be set.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
     public function add(array $data)
     {
         $data = $this->resolve($data);
@@ -60,6 +88,15 @@ class Notifications
         ]);
     }
 
+    /**
+     * Open notification.
+     *
+     * Application authentication key and ID must be set.
+     *
+     * @param string $id Notification ID
+     *
+     * @return array
+     */
     public function open($id)
     {
         return $this->api->request('PUT', '/notifications/' . $id, [
@@ -73,6 +110,15 @@ class Notifications
         ]);
     }
 
+    /**
+     * Cancel notification.
+     *
+     * Application authentication key and ID must be set.
+     *
+     * @param string $id Notification ID
+     *
+     * @return array
+     */
     public function cancel($id)
     {
         return $this->api->request('DELETE', '/notifications/' . $id, [

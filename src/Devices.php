@@ -16,7 +16,7 @@ class Devices
     protected $api;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param OneSignal $api
      */
@@ -25,11 +25,28 @@ class Devices
         $this->api = $api;
     }
 
+    /**
+     * Get information about device with provided ID.
+     *
+     * @param string $id Device ID
+     *
+     * @return \GuzzleHttp\Message\Response
+     */
     public function getOne($id)
     {
         return $this->api->request('GET', '/players/' . $id);
     }
 
+    /**
+     * Get information about all registered devices for your application.
+     *
+     * Application auth key must be set.
+     *
+     * @param int $limit  Results offset (results are sorted by ID)
+     * @param int $offset How many devices to return (max 50)
+     *
+     * @return array
+     */
     public function getAll($limit = 50, $offset = 0)
     {
         return $this->api->request('GET', '/players?' . http_build_query([
@@ -45,6 +62,13 @@ class Devices
         ]);
     }
 
+    /**
+     * Register a device for your application.
+     *
+     * @param array $data Device data
+     *
+     * @return array
+     */
     public function add(array $data)
     {
         $data = $this->resolve($data, function (OptionsResolver $resolver) {
@@ -67,6 +91,14 @@ class Devices
         ]);
     }
 
+    /**
+     * Update existing registered device for your application with provided data.
+     *
+     * @param string $id   Device ID
+     * @param array  $data New device data
+     *
+     * @return array
+     */
     public function update($id, array $data)
     {
         $data = $this->resolve($data);

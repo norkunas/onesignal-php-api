@@ -19,7 +19,7 @@ class Config
     protected $userAuthKey;
 
     /**
-     * Set OneSignal application id
+     * Set OneSignal application id.
      *
      * @param string $applicationId
      */
@@ -29,7 +29,7 @@ class Config
     }
 
     /**
-     * Get OneSignal application id
+     * Get OneSignal application id.
      *
      * @return string
      */
@@ -39,7 +39,7 @@ class Config
     }
 
     /**
-     * Set OneSignal application authentication key
+     * Set OneSignal application authentication key.
      *
      * @param string $applicationAuthKey
      */
@@ -49,7 +49,7 @@ class Config
     }
 
     /**
-     * Get OneSignal application authentication key
+     * Get OneSignal application authentication key.
      *
      * @return string
      */
@@ -59,7 +59,7 @@ class Config
     }
 
     /**
-     * Set user authentication key
+     * Set user authentication key.
      *
      * @param string $userAuthKey
      */
@@ -69,7 +69,7 @@ class Config
     }
 
     /**
-     * Get user authentication key
+     * Get user authentication key.
      *
      * @return string
      */

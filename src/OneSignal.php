@@ -7,9 +7,9 @@ use GuzzleHttp\Message\Response;
 use OneSignal\Exception\OneSignalException;
 
 /**
- * @property-read Apps          $apps
- * @property-read Devices       $devices
- * @property-read Notifications $notifications
+ * @property-read Apps          $apps          Applications API service.
+ * @property-read Devices       $devices       Devices API service.
+ * @property-read Notifications $notifications Notifications API service.
  */
 class OneSignal
 {
@@ -31,7 +31,7 @@ class OneSignal
     protected $services = [];
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param Config $config
      * @param Client $client
@@ -49,7 +49,7 @@ class OneSignal
     }
 
     /**
-     * Set config
+     * Set config.
      *
      * @param Config $config
      */
@@ -59,7 +59,7 @@ class OneSignal
     }
 
     /**
-     * Get config
+     * Get config.
      *
      * @return Config
      */
@@ -69,7 +69,7 @@ class OneSignal
     }
 
     /**
-     * Set client
+     * Set client.
      *
      * @param Client $client
      */
@@ -79,7 +79,7 @@ class OneSignal
     }
 
     /**
-     * Get client
+     * Get client.
      *
      * @return Client
      */
@@ -89,7 +89,7 @@ class OneSignal
     }
 
     /**
-     * Make a custom api request
+     * Make a custom api request.
      *
      * @param string $method  HTTP Method
      * @param string $uri     URI template
@@ -127,7 +127,7 @@ class OneSignal
     }
 
     /**
-     * Create required services on the fly
+     * Create required services on the fly.
      *
      * @param string $name
      *

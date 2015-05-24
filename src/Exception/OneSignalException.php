@@ -14,7 +14,7 @@ class OneSignalException extends \RuntimeException
     protected $errors;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param int        $statusCode HTTP Status Code
      * @param array      $errors     [optional] Errors list
@@ -29,7 +29,7 @@ class OneSignalException extends \RuntimeException
     }
 
     /**
-     * Get http status code
+     * Get http status code.
      *
      * @return int
      */
@@ -39,7 +39,7 @@ class OneSignalException extends \RuntimeException
     }
 
     /**
-     * Get errors list
+     * Get errors list.
      *
      * @return array
      */
