@@ -172,15 +172,15 @@ class Notifications
                 $tags = [];
 
                 foreach ($value as $tag) {
-                    if (!isset($tag['key'], $tag['relation'], $tag['value'])) {
-                        continue;
+                    if (isset($tag['key'], $tag['relation'], $tag['value'])) {
+                        $tags[] = [
+                            'key' => (string) $tag['key'],
+                            'relation' => (string) $tag['relation'],
+                            'value' => (string) $tag['value'],
+                        ];
+                    } elseif (isset($tag['operator'])) {
+                        $tags[] = ['operator' => 'OR'];
                     }
-                    // @todo: values must be passed as string so make a validation or cast them to string
-                    $tags[] = [
-                        'key' => $tag['key'],
-                        'relation' => $tag['relation'],
-                        'value' => $tag['value'],
-                    ];
                 }
 
                 return $tags;
