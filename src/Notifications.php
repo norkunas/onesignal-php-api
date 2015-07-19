@@ -166,6 +166,8 @@ class Notifications
             ->setAllowedTypes('include_amazon_reg_ids', 'array')
             ->setDefined('include_chrome_reg_ids')
             ->setAllowedTypes('include_chrome_reg_ids', 'array')
+            ->setDefined('include_chrome_web_reg_ids')
+            ->setAllowedTypes('include_chrome_web_reg_ids', 'array')
             ->setDefined('tags')
             ->setAllowedTypes('tags', 'array')
             ->setNormalizer('tags', function (Options $options, array $value) {
@@ -270,6 +272,14 @@ class Notifications
             ->setAllowedTypes('amazon_background_data', 'bool')
             ->setDefined('template_id')
             ->setAllowedTypes('template_id', 'string')
+            ->setDefined('android_group')
+            ->setAllowedTypes('android_group', 'string')
+            ->setDefined('android_group_message')
+            ->setAllowedTypes('android_group_message', 'array')
+            ->setDefined('adm_group')
+            ->setAllowedTypes('adm_group', 'string')
+            ->setDefined('adm_group_message')
+            ->setAllowedTypes('adm_group_message', 'array')
             ->setDefault('app_id', $this->api->getConfig()->getApplicationId());
 
         return $resolver->resolve($data);
