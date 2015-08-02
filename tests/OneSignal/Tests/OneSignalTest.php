@@ -1,5 +1,4 @@
 <?php
-
 namespace OneSignal\Tests;
 
 use OneSignal\OneSignal;
@@ -9,6 +8,9 @@ use OneSignal\OneSignal;
  */
 class OneSignalTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var OneSignal
+     */
     private $api;
 
     public function setUp()
