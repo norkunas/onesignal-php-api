@@ -46,12 +46,13 @@ class Notifications
      *
      * Application authentication key and ID must be set.
      *
-     * @param int $limit  Results offset (results are sorted by ID)
-     * @param int $offset How many notifications to return (max 50)
+     * @param int $limit How many notifications to return (max 50) 
+     * @param int $offset Results offset (results are sorted by ID)
+     * 
      *
      * @return array
      */
-    public function getAll($limit = null, $offset = null)
+    public function getAll($limit = 50, $offset = null)
     {
         return $this->api->request('GET', '/notifications?' . http_build_query([
              'limit' => max(0, min(50, filter_var($limit, FILTER_VALIDATE_INT))),
