@@ -52,7 +52,7 @@ class Notifications
      *
      * @return array
      */
-    public function getAll($limit = 50, $offset = null)
+    public function getAll($limit = 50, $offset = 0)
     {
         return $this->api->request('GET', '/notifications?' . http_build_query([
              'limit' => max(0, min(50, filter_var($limit, FILTER_VALIDATE_INT))),
