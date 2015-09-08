@@ -1,4 +1,5 @@
 <?php
+
 namespace OneSignal;
 
 use GuzzleHttp\Client;
@@ -38,7 +39,7 @@ class OneSignal
      */
     public function __construct(Config $config = null, Client $client = null)
     {
-        $this->config = ($config ?: new Config);
+        $this->config = ($config ?: new Config());
         $this->client = ($client ?: new Client([
             'defaults' => [
                 'headers' => [
@@ -95,8 +96,9 @@ class OneSignal
      * @param string $uri     URI template
      * @param array  $options Array of request options to apply.
      *
-     * @return Response
      * @throws OneSignalException
+     *
+     * @return Response
      */
     public function request($method, $uri, array $options = [])
     {
@@ -153,6 +155,6 @@ class OneSignal
 
         trigger_error(sprintf($error, $name, $trace[0]['file'], $trace[0]['line']), E_USER_NOTICE);
 
-        return null;
+        return;
     }
 }
