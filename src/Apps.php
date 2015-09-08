@@ -1,4 +1,5 @@
 <?php
+
 namespace OneSignal;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;

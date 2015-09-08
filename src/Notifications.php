@@ -1,4 +1,5 @@
 <?php
+
 namespace OneSignal;
 
 use Symfony\Component\OptionsResolver\Options;
@@ -12,7 +13,7 @@ class Notifications
     protected $api;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param OneSignal $api
      */
@@ -46,9 +47,8 @@ class Notifications
      *
      * Application authentication key and ID must be set.
      *
-     * @param int $limit How many notifications to return (max 50) 
+     * @param int $limit  How many notifications to return (max 50) 
      * @param int $offset Results offset (results are sorted by ID)
-     * 
      *
      * @return array
      */

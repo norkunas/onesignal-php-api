@@ -1,4 +1,5 @@
 <?php
+
 namespace OneSignal\Tests;
 
 use OneSignal\OneSignal;
