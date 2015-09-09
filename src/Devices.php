@@ -6,6 +6,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Devices
 {
+    const DEVICES_LIMIT = 50;
+
     const IOS = 0;
     const ANDROID = 1;
     const AMAZON = 2;
@@ -48,11 +50,11 @@ class Devices
      *
      * @return array
      */
-    public function getAll($limit = 50, $offset = 0)
+    public function getAll($limit = self::DEVICES_LIMIT, $offset = 0)
     {
         return $this->api->request('GET', '/players?' . http_build_query([
-            'limit' => max(0, min(50, filter_var($limit, FILTER_VALIDATE_INT))),
-            'offset' => max(0, min(50, filter_var($offset, FILTER_VALIDATE_INT))),
+            'limit' => max(0, min(self::DEVICES_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
+            'offset' => max(0, min(self::DEVICES_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
         ]), [
             'headers' => [
                 'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),

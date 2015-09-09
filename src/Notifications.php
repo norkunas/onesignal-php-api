@@ -7,6 +7,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Notifications
 {
+    const NOTIFICATIONS_LIMIT = 50;
+
     /**
      * @var OneSignal
      */
@@ -47,16 +49,16 @@ class Notifications
      *
      * Application authentication key and ID must be set.
      *
-     * @param int $limit  How many notifications to return (max 50) 
+     * @param int $limit  How many notifications to return (max 50)
      * @param int $offset Results offset (results are sorted by ID)
      *
      * @return array
      */
-    public function getAll($limit = 50, $offset = 0)
+    public function getAll($limit = self::NOTIFICATIONS_LIMIT, $offset = 0)
     {
         return $this->api->request('GET', '/notifications?' . http_build_query([
-             'limit' => max(0, min(50, filter_var($limit, FILTER_VALIDATE_INT))),
-             'offset' => max(0, min(50, filter_var($offset, FILTER_VALIDATE_INT))),
+             'limit' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
+             'offset' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
         ]), [
             'headers' => [
                 'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
