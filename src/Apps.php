@@ -106,11 +106,11 @@ class Apps
 
         $resolver->setRequired('name');
         $resolver->setAllowedTypes('name', 'string');
-        $resolver->setDefined(['apns_env', 'apns_p12', 'apns_password', 'gcm_key']);
+        $resolver->setDefined(['apns_env', 'apns_p12', 'apns_p12_password', 'gcm_key']);
         $resolver->setAllowedTypes('apns_env', 'string');
         $resolver->setAllowedValues('apns_env', ['sandbox', 'production']);
         $resolver->setAllowedTypes('apns_p12', 'string');
-        $resolver->setAllowedTypes('apns_password', 'string');
+        $resolver->setAllowedTypes('apns_p12_password', 'string');
         $resolver->setAllowedTypes('gcm_key', 'string');
 
         return $resolver->resolve($data);
