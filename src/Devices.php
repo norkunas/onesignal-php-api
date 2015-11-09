@@ -114,6 +114,101 @@ class Devices
         ]);
     }
 
+    /**
+     * Call on new device session in your app
+     *
+     * @param string $id   Device ID
+     * @param array  $data Device data
+     *
+     * @return array
+     */
+    public function onSession($id, array $data)
+    {
+        $data = (new OptionsResolver())
+            ->setDefined('identifier')
+            ->setAllowedTypes('identifier', 'string')
+            ->setDefined('language')
+            ->setAllowedTypes('language', 'string')
+            ->setDefined('timezone')
+            ->setAllowedTypes('timezone', 'int')
+            ->setDefined('game_version')
+            ->setAllowedTypes('game_version', 'string')
+            ->setDefined('device_model')
+            ->setAllowedTypes('device_model', 'string')
+            ->setDefined('ad_id')
+            ->setAllowedTypes('ad_id', 'string')
+            ->setDefined('sdk')
+            ->setAllowedTypes('sdk', 'string')
+            ->resolve($data);
+
+        return $this->api->request('PUT', '/players/' . $id . '/on_session', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
+            'json' => $data,
+        ]);
+    }
+
+    /**
+     * Track a new purchase
+     *
+     * @param string $id   Device ID
+     * @param array  $data Device data
+     *
+     * @return array
+     */
+    public function onPurchase($id, array $data)
+    {
+        $data = (new OptionsResolver())
+            ->setDefined('existing')
+            ->setAllowedTypes('existing', 'bool')
+            ->setRequired('purchases')
+            ->setAllowedTypes('purchases', 'array')
+            ->resolve($data);
+
+        foreach ($data['purchases'] as $key => $purchase) {
+            $data['purchases'][$key] = (new OptionsResolver())
+                ->setRequired('sku')
+                ->setAllowedTypes('sku', 'string')
+                ->setRequired('amount')
+                ->setAllowedTypes('amount', 'float')
+                ->setRequired('iso')
+                ->setAllowedTypes('iso', 'string')
+                ->resolve($purchase);
+        }
+
+        return $this->api->request('PUT', '/players/' . $id . '/on_purchase', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
+            'json' => $data,
+        ]);
+    }
+
+    /**
+     * Increment the device's total session length
+     *
+     * @param string $id   Device ID
+     * @param array  $data Device data
+     *
+     * @return array
+     */
+    public function onFocus($id, array $data)
+    {
+        $data = (new OptionsResolver())
+            ->setDefault('state', 'ping')
+            ->setRequired('active_time')
+            ->setAllowedTypes('active_time', 'int')
+            ->resolve($data);
+
+        return $this->api->request('PUT', '/players/' . $id . '/on_focus', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
+            'json' => $data,
+        ]);
+    }
+
     protected function resolve(array $data, callable $callback = null)
     {
         $resolver = new OptionsResolver();
