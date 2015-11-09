@@ -115,7 +115,7 @@ class Devices
     }
 
     /**
-     * Call on new device session in your app
+     * Call on new device session in your app.
      *
      * @param string $id   Device ID
      * @param array  $data Device data
@@ -150,7 +150,7 @@ class Devices
     }
 
     /**
-     * Track a new purchase
+     * Track a new purchase.
      *
      * @param string $id   Device ID
      * @param array  $data Device data
@@ -186,7 +186,7 @@ class Devices
     }
 
     /**
-     * Increment the device's total session length
+     * Increment the device's total session length.
      *
      * @param string $id   Device ID
      * @param array  $data Device data
