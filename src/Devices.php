@@ -209,6 +209,25 @@ class Devices
         ]);
     }
 
+    /**
+     * Export all information about devices in a CSV format for your application.
+     *
+     * Application auth key must be set.
+     *
+     * @return array
+     */
+    public function csvExport()
+    {
+        return $this->api->request('POST', '/players/csv_export', [
+            'headers' => [
+                'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+            ],
+            'json' => [
+                'app_id' => $this->api->getConfig()->getApplicationId(),
+            ],
+        ]);
+    }
+
     protected function resolve(array $data, callable $callback = null)
     {
         $resolver = new OptionsResolver();
