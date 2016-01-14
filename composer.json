@@ -1,17 +1,20 @@
 {
-    "name": "norkunas/onesignal-php-api",
-    "description": "OneSignal API for PHP",
+    "name": "jgraffite/onesignal-php-api",
+    "description": "OneSignal API for PHP - ",
     "keywords": ["onesignal", "api"],
     "license": "MIT",
     "authors": [
         {
             "name": "Tomas Norkūnas",
             "email": "norkunas.tom@gmail.com"
+        },
+        {
+            "name": "Jorge Luis Malaquias",
+            "email": "jorge@macrobol.com"
         }
     ],
     "require": {
         "php": ">=5.4.0|^7.0",
-        "guzzlehttp/guzzle": "~5.3",
         "symfony/options-resolver": "~2.7|^3.0"
     },
     "require-dev": {
