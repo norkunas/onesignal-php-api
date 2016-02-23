@@ -66,7 +66,7 @@ class OneSignal
     }
 
     /**
-     * Set client
+     * Set client.
      *
      * @param Client $client
      */
@@ -76,7 +76,7 @@ class OneSignal
     }
 
     /**
-     * Get client
+     * Get client.
      *
      * @return Client|null
      */
