@@ -18,11 +18,18 @@ composer require norkunas/onesignal-php-api
 
 All API responses can be found at [Official Documentation](http://documentation.onesignal.com/v2.0/docs/server-api-overview).
 
-### Initialize
+### Initialize using Guzzle 6
+```
+composer require php-http/guzzle6-adapter
+```
 ```php
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
+use GuzzleHttp\Client as GuzzleClient;
+use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
+use Http\Client\Common\HttpMethodsClient as HttpClient;
+use Http\Message\MessageFactory\GuzzleMessageFactory;
 use OneSignal\Config;
 use OneSignal\Devices;
 use OneSignal\OneSignal;
@@ -32,7 +39,41 @@ $config->setApplicationId('your_application_id');
 $config->setApplicationAuthKey('your_application_auth_key');
 $config->setUserAuthKey('your_auth_key');
 
-$api = new OneSignal($config);
+$guzzle = new GuzzleClient([
+    // ..config
+]);
+
+$client = new HttpClient(new GuzzleAdapter($guzzle), new GuzzleMessageFactory());
+$api = new OneSignal($config, $client);
+```
+
+### Initialize using Guzzle 5
+```
+composer require guzzlehttp/psr7 php-http/guzzle5-adapter
+```
+```php
+<?php
+require __DIR__ . '/vendor/autoload.php';
+
+use GuzzleHttp\Client as GuzzleClient;
+use Http\Adapter\Guzzle5\Client as GuzzleAdapter;
+use Http\Client\Common\HttpMethodsClient as HttpClient;
+use Http\Message\MessageFactory\GuzzleMessageFactory;
+use OneSignal\Config;
+use OneSignal\Devices;
+use OneSignal\OneSignal;
+
+$config = new Config();
+$config->setApplicationId('your_application_id');
+$config->setApplicationAuthKey('your_application_auth_key');
+$config->setUserAuthKey('your_auth_key');
+
+$guzzle = new GuzzleClient([
+    // ..config
+]);
+
+$client = new HttpClient(new GuzzleAdapter($guzzle), new GuzzleMessageFactory());
+$api = new OneSignal($config, $client);
 ```
 
 ### Applications
@@ -98,19 +139,4 @@ $api->notifications->add([
 
 $api->notifications->open('notification_id');
 $api->notifications->cancel('notification_id');
-```
-
-### Catching errors
-```php
-use GuzzleHttp\Exception\RequestException;
-use OneSignal\Exception\OneSignalException;
-
-try {
-    $api->notifications->getOne('notification_id');
-} catch (OneSignalException $e) {
-    $httpStatusCode = $e->getStatusCode();
-    $errors = $e->getErrors();
-} catch (RequestException $e) {
-    $message = $e->getMessage();
-}
 ```
