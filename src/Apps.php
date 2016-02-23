@@ -91,6 +91,7 @@ class Apps
             ->setAllowedTypes('name', 'string')
             ->setDefined('apns_env')
             ->setAllowedTypes('apns_env', 'string')
+            ->setAllowedValues('apns_env', ['sandbox', 'production'])
             ->setDefined('apns_p12')
             ->setAllowedTypes('apns_p12', 'string')
             ->setDefined('apns_p12_password')
