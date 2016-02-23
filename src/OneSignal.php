@@ -2,10 +2,9 @@
 
 namespace OneSignal;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\Response;
+use Http\Client\Common\HttpMethodsClient as Client;
 use OneSignal\Exception\OneSignalException;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * @property-read Apps          $apps          Applications API service.
@@ -40,13 +39,10 @@ class OneSignal
     public function __construct(Config $config = null, Client $client = null)
     {
         $this->config = ($config ?: new Config());
-        $this->client = ($client ?: new Client([
-            'defaults' => [
-                'headers' => [
-                    'Accept' => 'application/json',
-                ],
-            ],
-        ]));
+
+        if (null !== $client) {
+            $this->client = $client;
+        }
     }
 
     /**
@@ -70,7 +66,7 @@ class OneSignal
     }
 
     /**
-     * Set client.
+     * Set client
      *
      * @param Client $client
      */
@@ -80,9 +76,9 @@ class OneSignal
     }
 
     /**
-     * Get client.
+     * Get client
      *
-     * @return Client
+     * @return Client|null
      */
     public function getClient()
     {
@@ -92,39 +88,23 @@ class OneSignal
     /**
      * Make a custom api request.
      *
-     * @param string $method  HTTP Method
-     * @param string $uri     URI template
-     * @param array  $options Array of request options to apply.
+     * @param string                      $method  HTTP Method
+     * @param string                      $uri     URI template
+     * @param array                       $headers
+     * @param string|StreamInterface|null $body
      *
      * @throws OneSignalException
      *
-     * @return Response
+     * @return array
      */
-    public function request($method, $uri, array $options = [])
+    public function request($method, $uri, array $headers = [], $body = null)
     {
         try {
-            $request = $this->client->createRequest($method, self::API_URL . $uri, $options);
+            $response = $this->client->send($method, self::API_URL . $uri, $headers, $body);
 
-            return $this->client->send($request)->json();
-        } catch (RequestException $e) {
-            $response = $e->getResponse();
-
-            if ($response) {
-                $headers = $response->getHeaders();
-
-                if (!empty($headers['Content-Type']) && false !== strpos($headers['Content-Type'][0], 'application/json')) {
-                    $body = $response->json();
-                    $errors = (isset($body['errors']) ? $body['errors'] : []);
-
-                    if (404 === $response->getStatusCode()) {
-                        $errors[] = 'Not Found';
-                    }
-
-                    throw new OneSignalException($response->getStatusCode(), $errors, $e->getMessage(), $e->getCode(), $e);
-                }
-            }
-
-            throw $e;
+            return json_decode($response->getBody(), true);
+        } catch (\Exception $e) {
+            throw new OneSignalException($e->getMessage());
         }
     }
 

@@ -9,16 +9,8 @@ class Notifications
 {
     const NOTIFICATIONS_LIMIT = 50;
 
-    /**
-     * @var OneSignal
-     */
     protected $api;
 
-    /**
-     * Constructor.
-     *
-     * @param OneSignal $api
-     */
     public function __construct(OneSignal $api)
     {
         $this->api = $api;
@@ -38,9 +30,7 @@ class Notifications
         $url = '/notifications/' . $id . '?app_id=' . $this->api->getConfig()->getApplicationId();
 
         return $this->api->request('GET', $url, [
-            'headers' => [
-                'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
-            ],
+            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
         ]);
     }
 
@@ -60,13 +50,10 @@ class Notifications
              'limit' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
              'offset' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
         ]), [
-            'headers' => [
-                'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
-            ],
-            'json' => [
-                'app_id' => $this->api->getConfig()->getApplicationId(),
-            ],
-        ]);
+            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+        ], json_encode([
+            'app_id' => $this->api->getConfig()->getApplicationId(),
+        ]));
     }
 
     /**
@@ -80,15 +67,10 @@ class Notifications
      */
     public function add(array $data)
     {
-        $data = $this->resolve($data);
-
         return $this->api->request('POST', '/notifications', [
-            'headers' => [
-                'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $data,
-        ]);
+            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+            'Content-Type' => 'application/json',
+        ], json_encode($this->resolve($data)));
     }
 
     /**
@@ -103,14 +85,11 @@ class Notifications
     public function open($id)
     {
         return $this->api->request('PUT', '/notifications/' . $id, [
-            'headers' => [
-                'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
-            ],
-            'json' => [
-                'app_id' => $this->api->getConfig()->getApplicationId(),
-                'opened' => true,
-            ],
-        ]);
+            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+        ], json_encode([
+            'app_id' => $this->api->getConfig()->getApplicationId(),
+            'opened' => true,
+        ]));
     }
 
     /**
@@ -125,13 +104,10 @@ class Notifications
     public function cancel($id)
     {
         return $this->api->request('DELETE', '/notifications/' . $id, [
-            'headers' => [
-                'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
-            ],
-            'json' => [
-                'app_id' => $this->api->getConfig()->getApplicationId(),
-            ],
-        ]);
+            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+        ], json_encode([
+            'app_id' => $this->api->getConfig()->getApplicationId(),
+        ]));
     }
 
     protected function resolve(array $data)

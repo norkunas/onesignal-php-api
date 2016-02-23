@@ -6,16 +6,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Apps
 {
-    /**
-     * @var OneSignal
-     */
     protected $api;
 
-    /**
-     * Constructor.
-     *
-     * @param OneSignal $api
-     */
     public function __construct(OneSignal $api)
     {
         $this->api = $api;
@@ -33,9 +25,7 @@ class Apps
     public function getOne($id)
     {
         return $this->api->request('GET', '/apps/' . $id, [
-            'headers' => [
-                'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
-            ],
+            'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
         ]);
     }
 
@@ -49,9 +39,7 @@ class Apps
     public function getAll()
     {
         return $this->api->request('GET', '/apps', [
-            'headers' => [
-                'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
-            ],
+            'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
         ]);
     }
 
@@ -69,12 +57,9 @@ class Apps
         $data = $this->resolve($data);
 
         return $this->api->request('POST', '/apps', [
-            'headers' => [
-                'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $data,
-        ]);
+            'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
+            'Content-Type' => 'application/json',
+        ], json_encode($data));
     }
 
     /**
@@ -85,19 +70,16 @@ class Apps
      * @param string $id   ID of your application
      * @param array  $data New application data
      *
-     * @return \GuzzleHttp\Message\Response
+     * @return array
      */
     public function update($id, array $data)
     {
         $data = $this->resolve($data);
 
         return $this->api->request('PUT', '/apps/' . $id, [
-            'headers' => [
-                'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $data,
-        ]);
+            'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
+            'Content-Type' => 'application/json',
+        ], json_encode($data));
     }
 
     protected function resolve(array $data)

@@ -13,16 +13,8 @@ class Devices
     const AMAZON = 2;
     const WINDOWS_PHONE = 3;
 
-    /**
-     * @var OneSignal
-     */
     protected $api;
 
-    /**
-     * Constructor.
-     *
-     * @param OneSignal $api
-     */
     public function __construct(OneSignal $api)
     {
         $this->api = $api;
@@ -33,7 +25,7 @@ class Devices
      *
      * @param string $id Device ID
      *
-     * @return \GuzzleHttp\Message\Response
+     * @return array
      */
     public function getOne($id)
     {
@@ -56,13 +48,10 @@ class Devices
             'limit' => max(0, min(self::DEVICES_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
             'offset' => max(0, min(self::DEVICES_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
         ]), [
-            'headers' => [
-                'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
-            ],
-            'json' => [
-                'app_id' => $this->api->getConfig()->getApplicationId(),
-            ],
-        ]);
+            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+        ], json_encode([
+            'app_id' => $this->api->getConfig()->getApplicationId(),
+        ]));
     }
 
     /**
@@ -87,11 +76,8 @@ class Devices
         });
 
         return $this->api->request('POST', '/players', [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $data,
-        ]);
+            'Content-Type' => 'application/json',
+        ], json_encode($data));
     }
 
     /**
@@ -104,14 +90,9 @@ class Devices
      */
     public function update($id, array $data)
     {
-        $data = $this->resolve($data);
-
         return $this->api->request('PUT', '/players/' . $id, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $data,
-        ]);
+            'Content-Type' => 'application/json',
+        ], json_encode($this->resolve($data)));
     }
 
     /**
@@ -142,11 +123,8 @@ class Devices
             ->resolve($data);
 
         return $this->api->request('PUT', '/players/' . $id . '/on_session', [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $data,
-        ]);
+            'Content-Type' => 'application/json',
+        ], json_encode($data));
     }
 
     /**
@@ -178,11 +156,8 @@ class Devices
         }
 
         return $this->api->request('PUT', '/players/' . $id . '/on_purchase', [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $data,
-        ]);
+            'Content-Type' => 'application/json',
+        ], json_encode($data));
     }
 
     /**
@@ -202,11 +177,8 @@ class Devices
             ->resolve($data);
 
         return $this->api->request('PUT', '/players/' . $id . '/on_focus', [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-            'json' => $data,
-        ]);
+            'Content-Type' => 'application/json',
+        ], json_encode($data));
     }
 
     /**
@@ -219,13 +191,10 @@ class Devices
     public function csvExport()
     {
         return $this->api->request('POST', '/players/csv_export', [
-            'headers' => [
-                'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
-            ],
-            'json' => [
-                'app_id' => $this->api->getConfig()->getApplicationId(),
-            ],
-        ]);
+            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+        ], json_encode([
+            'app_id' => $this->api->getConfig()->getApplicationId(),
+        ]));
     }
 
     protected function resolve(array $data, callable $callback = null)
