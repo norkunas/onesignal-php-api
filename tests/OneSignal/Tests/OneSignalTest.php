@@ -41,9 +41,4 @@ class OneSignalTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('OneSignal\Config', $this->api->getConfig());
     }
-
-    public function testClient()
-    {
-        $this->assertInstanceOf('GuzzleHttp\Client', $this->api->getClient());
-    }
 }
