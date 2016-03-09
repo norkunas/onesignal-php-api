@@ -230,6 +230,8 @@ class Notifications
             ->setAllowedTypes('chrome_big_picture', 'string')
             ->setDefined('chrome_web_icon')
             ->setAllowedTypes('chrome_web_icon', 'string')
+            ->setDefined('firefox_icon')
+            ->setAllowedTypes('firefox_icon', 'string')
             ->setDefined('url')
             ->setAllowedTypes('url', 'string')
             ->setAllowedValues('url', function ($value) {
