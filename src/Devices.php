@@ -102,9 +102,16 @@ class Devices
      */
     public function update($id, array $data)
     {
+        $data = $this->resolve($data, function (OptionsResolver $resolver) {
+            $resolver
+                ->setDefined('notification_types')
+                ->setAllowedTypes('notification_types', 'int')
+                ->setAllowedValues('notification_types', [1, -2]);
+        });
+
         return $this->api->request('PUT', '/players/' . $id, [
             'Content-Type' => 'application/json',
-        ], json_encode($this->resolve($data)));
+        ], json_encode($data));
     }
 
     /**
