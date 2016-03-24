@@ -248,6 +248,9 @@ class Devices
             ->setAllowedTypes('badge_count', 'int')
             ->setDefined('last_active')
             ->setAllowedTypes('last_active', 'int')
+            ->setDefined('test_type')
+            ->setAllowedTypes('test_type', 'int')
+            ->setAllowedValues('test_type', [1, 2])
             ->setDefault('app_id', $this->api->getConfig()->getApplicationId());
 
         return $resolver->resolve($data);
