@@ -12,6 +12,12 @@ class Devices
     const ANDROID = 1;
     const AMAZON = 2;
     const WINDOWS_PHONE = 3;
+    const WINDOWS_PHONE_MPNS = 3;
+    const CHROME_APP = 4;
+    const CHROME_WEB = 5;
+    const WINDOWS_PHONE_WNS = 6;
+    const SAFARI = 7;
+    const FIREFOX = 8;
 
     protected $api;
 
@@ -72,6 +78,12 @@ class Devices
                     self::ANDROID,
                     self::AMAZON,
                     self::WINDOWS_PHONE,
+                    self::WINDOWS_PHONE_MPNS,
+                    self::CHROME_APP,
+                    self::CHROME_WEB,
+                    self::WINDOWS_PHONE_WNS,
+                    self::SAFARI,
+                    self::FIREFOX,
                 ]);
         });
 
