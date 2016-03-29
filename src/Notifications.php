@@ -27,10 +27,10 @@ class Notifications
      */
     public function getOne($id)
     {
-        $url = '/notifications/' . $id . '?app_id=' . $this->api->getConfig()->getApplicationId();
+        $url = '/notifications/'.$id.'?app_id='.$this->api->getConfig()->getApplicationId();
 
         return $this->api->request('GET', $url, [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
         ]);
     }
 
@@ -46,11 +46,11 @@ class Notifications
      */
     public function getAll($limit = self::NOTIFICATIONS_LIMIT, $offset = 0)
     {
-        return $this->api->request('GET', '/notifications?' . http_build_query([
+        return $this->api->request('GET', '/notifications?'.http_build_query([
              'limit' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
              'offset' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
         ]), [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
         ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
         ]));
@@ -68,7 +68,7 @@ class Notifications
     public function add(array $data)
     {
         return $this->api->request('POST', '/notifications', [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
             'Content-Type' => 'application/json',
         ], json_encode($this->resolve($data)));
     }
@@ -84,8 +84,8 @@ class Notifications
      */
     public function open($id)
     {
-        return $this->api->request('PUT', '/notifications/' . $id, [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+        return $this->api->request('PUT', '/notifications/'.$id, [
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
         ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
             'opened' => true,
@@ -103,8 +103,8 @@ class Notifications
      */
     public function cancel($id)
     {
-        return $this->api->request('DELETE', '/notifications/' . $id, [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+        return $this->api->request('DELETE', '/notifications/'.$id, [
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
         ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
         ]));
