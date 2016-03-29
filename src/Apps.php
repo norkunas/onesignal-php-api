@@ -24,8 +24,8 @@ class Apps
      */
     public function getOne($id)
     {
-        return $this->api->request('GET', '/apps/' . $id, [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
+        return $this->api->request('GET', '/apps/'.$id, [
+            'Authorization' => 'Basic '.$this->api->getConfig()->getUserAuthKey(),
         ]);
     }
 
@@ -39,7 +39,7 @@ class Apps
     public function getAll()
     {
         return $this->api->request('GET', '/apps', [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
+            'Authorization' => 'Basic '.$this->api->getConfig()->getUserAuthKey(),
         ]);
     }
 
@@ -57,7 +57,7 @@ class Apps
         $data = $this->resolve($data);
 
         return $this->api->request('POST', '/apps', [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
+            'Authorization' => 'Basic '.$this->api->getConfig()->getUserAuthKey(),
             'Content-Type' => 'application/json',
         ], json_encode($data));
     }
@@ -76,8 +76,8 @@ class Apps
     {
         $data = $this->resolve($data);
 
-        return $this->api->request('PUT', '/apps/' . $id, [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getUserAuthKey(),
+        return $this->api->request('PUT', '/apps/'.$id, [
+            'Authorization' => 'Basic '.$this->api->getConfig()->getUserAuthKey(),
             'Content-Type' => 'application/json',
         ], json_encode($data));
     }

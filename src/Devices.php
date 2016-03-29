@@ -35,7 +35,7 @@ class Devices
      */
     public function getOne($id)
     {
-        return $this->api->request('GET', '/players/' . $id);
+        return $this->api->request('GET', '/players/'.$id);
     }
 
     /**
@@ -50,11 +50,11 @@ class Devices
      */
     public function getAll($limit = self::DEVICES_LIMIT, $offset = 0)
     {
-        return $this->api->request('GET', '/players?' . http_build_query([
+        return $this->api->request('GET', '/players?'.http_build_query([
             'limit' => max(0, min(self::DEVICES_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
             'offset' => max(0, min(self::DEVICES_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
         ]), [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
         ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
         ]));
@@ -109,7 +109,7 @@ class Devices
                 ->setAllowedValues('notification_types', [1, -2]);
         });
 
-        return $this->api->request('PUT', '/players/' . $id, [
+        return $this->api->request('PUT', '/players/'.$id, [
             'Content-Type' => 'application/json',
         ], json_encode($data));
     }
@@ -141,7 +141,7 @@ class Devices
             ->setAllowedTypes('sdk', 'string')
             ->resolve($data);
 
-        return $this->api->request('PUT', '/players/' . $id . '/on_session', [
+        return $this->api->request('PUT', '/players/'.$id.'/on_session', [
             'Content-Type' => 'application/json',
         ], json_encode($data));
     }
@@ -174,7 +174,7 @@ class Devices
                 ->resolve($purchase);
         }
 
-        return $this->api->request('PUT', '/players/' . $id . '/on_purchase', [
+        return $this->api->request('PUT', '/players/'.$id.'/on_purchase', [
             'Content-Type' => 'application/json',
         ], json_encode($data));
     }
@@ -195,7 +195,7 @@ class Devices
             ->setAllowedTypes('active_time', 'int')
             ->resolve($data);
 
-        return $this->api->request('PUT', '/players/' . $id . '/on_focus', [
+        return $this->api->request('PUT', '/players/'.$id.'/on_focus', [
             'Content-Type' => 'application/json',
         ], json_encode($data));
     }
@@ -210,7 +210,7 @@ class Devices
     public function csvExport()
     {
         return $this->api->request('POST', '/players/csv_export', [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
         ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
         ]));

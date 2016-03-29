@@ -100,7 +100,7 @@ class OneSignal
     public function request($method, $uri, array $headers = [], $body = null)
     {
         try {
-            $response = $this->client->send($method, self::API_URL . $uri, $headers, $body);
+            $response = $this->client->send($method, self::API_URL.$uri, $headers, $body);
 
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {
@@ -122,7 +122,7 @@ class OneSignal
                 return $this->services[$name];
             }
 
-            $serviceName = __NAMESPACE__ . '\\' . ucfirst($name);
+            $serviceName = __NAMESPACE__.'\\'.ucfirst($name);
 
             $this->services[$name] = new $serviceName($this);
 
