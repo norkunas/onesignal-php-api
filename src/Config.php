@@ -7,17 +7,17 @@ class Config
     /**
      * @var string
      */
-    protected $applicationId;
+    private $applicationId;
 
     /**
      * @var string
      */
-    protected $applicationAuthKey;
+    private $applicationAuthKey;
 
     /**
      * @var string
      */
-    protected $userAuthKey;
+    private $userAuthKey;
 
     /**
      * Set OneSignal application id.

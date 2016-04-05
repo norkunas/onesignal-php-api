@@ -18,17 +18,17 @@ class OneSignal
     /**
      * @var Config
      */
-    protected $config;
+    private $config;
 
     /**
      * @var Client
      */
-    protected $client;
+    private $client;
 
     /**
      * @var array
      */
-    protected $services = [];
+    private $services = [];
 
     /**
      * Constructor.
