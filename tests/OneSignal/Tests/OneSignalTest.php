@@ -24,12 +24,29 @@ class OneSignalTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('OneSignal\Notifications', $this->api->notifications);
     }
 
+    public function testIfInstanceIsCached()
+    {
+        $this->assertInstanceOf('OneSignal\Apps', $this->api->apps);
+        $this->assertInstanceOf('OneSignal\Apps', $this->api->apps);
+    }
+
     /**
      * @expectedException \PHPUnit_Framework_Error
      */
     public function testBadInstance()
     {
         $this->api->unknownInstance;
+    }
+
+    public function testClientSetFromConstructor()
+    {
+        $client = $this->getMockBuilder('Http\Client\Common\HttpMethodsClient')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $api = new OneSignal(null, $client);
+
+        $this->assertInstanceOf('Http\Client\Common\HttpMethodsClient', $api->getClient());
     }
 
     public function testClientWithSetterAndGetter()
