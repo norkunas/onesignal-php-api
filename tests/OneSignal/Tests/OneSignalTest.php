@@ -2,11 +2,9 @@
 
 namespace OneSignal\Tests;
 
+use OneSignal\Config;
 use OneSignal\OneSignal;
 
-/**
- * @covers OneSignal
- */
 class OneSignalTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -19,9 +17,6 @@ class OneSignalTest extends \PHPUnit_Framework_TestCase
         $this->api = new OneSignal();
     }
 
-    /**
-     * @covers OneSignal::__get
-     */
     public function testInstances()
     {
         $this->assertInstanceOf('OneSignal\Apps', $this->api->apps);
@@ -37,8 +32,21 @@ class OneSignalTest extends \PHPUnit_Framework_TestCase
         $this->api->unknownInstance;
     }
 
-    public function testConfig()
+    public function testClientWithSetterAndGetter()
     {
+        $client = $this->getMockBuilder('Http\Client\Common\HttpMethodsClient')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->api->setClient($client);
+
+        $this->assertInstanceOf('Http\Client\Common\HttpMethodsClient', $this->api->getClient());
+    }
+
+    public function testConfigWithSetterAndGetter()
+    {
+        $this->api->setConfig(new Config());
+
         $this->assertInstanceOf('OneSignal\Config', $this->api->getConfig());
     }
 }
