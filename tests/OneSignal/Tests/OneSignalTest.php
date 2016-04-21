@@ -31,7 +31,7 @@ class OneSignalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error
+     * @expectedException \OneSignal\Exception\OneSignalException
      */
     public function testBadInstance()
     {
