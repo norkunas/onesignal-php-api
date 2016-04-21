@@ -115,7 +115,7 @@ class OneSignal
      *
      * @return object
      *
-     * @throws OneSignalException If an invalid option name is given
+     * @throws OneSignalException If an invalid service name is given
      */
     public function __get($name)
     {
