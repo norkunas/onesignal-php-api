@@ -114,6 +114,8 @@ class OneSignal
      * @param string $name
      *
      * @return object
+     *
+     * @throws OneSignalException If an invalid option name is given
      */
     public function __get($name)
     {
@@ -131,8 +133,6 @@ class OneSignal
 
         $trace = debug_backtrace();
 
-        $error = 'Undefined property via __get(): %s in %s on line %u';
-
-        trigger_error(sprintf($error, $name, $trace[0]['file'], $trace[0]['line']), E_USER_NOTICE);
+        throw new OneSignalException(sprintf('Undefined property via __get(): %s in %s on line %u', $name, $trace[0]['file'], $trace[0]['line']));
     }
 }
