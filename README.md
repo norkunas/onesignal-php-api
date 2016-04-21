@@ -14,6 +14,12 @@
 composer require norkunas/onesignal-php-api
 ```
 
+**Currently v1 is not released yet, so if you want to use any Http Provider then you have to run this:**
+
+```
+composer require norkunas/onesignal-php-api:1.0.x-dev
+```
+
 ### Info
 
 All API responses can be found at [Official Documentation](http://documentation.onesignal.com/v2.0/docs/server-api-overview).
