@@ -6,7 +6,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Devices
 {
-    const DEVICES_LIMIT = 50;
+    const DEVICES_LIMIT = 300;
 
     const IOS = 0;
     const ANDROID = 1;
