@@ -51,6 +51,7 @@ class Notifications
              'offset' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
         ]), [
             'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+            'Content-Type' => 'application/json',
         ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
         ]));
@@ -86,6 +87,7 @@ class Notifications
     {
         return $this->api->request('PUT', '/notifications/'.$id, [
             'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+            'Content-Type' => 'application/json',
         ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
             'opened' => true,
@@ -105,6 +107,7 @@ class Notifications
     {
         return $this->api->request('DELETE', '/notifications/'.$id, [
             'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+            'Content-Type' => 'application/json',
         ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
         ]));
