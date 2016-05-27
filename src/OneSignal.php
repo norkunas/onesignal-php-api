@@ -154,7 +154,5 @@ class OneSignal
         $error = 'Undefined property via __get(): %s in %s on line %u';
 
         trigger_error(sprintf($error, $name, $trace[0]['file'], $trace[0]['line']), E_USER_NOTICE);
-
-        return;
     }
 }
