@@ -6,12 +6,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Devices
 {
-    const DEVICES_LIMIT = 50;
+    const DEVICES_LIMIT = 300;
 
     const IOS = 0;
     const ANDROID = 1;
     const AMAZON = 2;
     const WINDOWS_PHONE = 3;
+    const WINDOWS_PHONE_MPNS = 3;
+    const CHROME_APP = 4;
+    const CHROME_WEB = 5;
+    const WINDOWS_PHONE_WNS = 6;
+    const SAFARI = 7;
+    const FIREFOX = 8;
 
     /**
      * @var OneSignal
@@ -267,6 +273,9 @@ class Devices
             ->setAllowedTypes('badge_count', 'int')
             ->setDefined('last_active')
             ->setAllowedTypes('last_active', 'int')
+            ->setDefined('test_type')
+            ->setAllowedTypes('test_type', 'int')
+            ->setAllowedValues('test_type', [1, 2])
             ->setDefault('app_id', $this->api->getConfig()->getApplicationId());
 
         return $resolver->resolve($data);
