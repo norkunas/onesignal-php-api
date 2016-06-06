@@ -8,13 +8,10 @@
 [![StyleCI](https://styleci.io/repos/34352212/shield?style=flat)](https://styleci.io/repos/34352212)
 [![License](https://poser.pugx.org/norkunas/onesignal-php-api/license)](https://packagist.org/packages/norkunas/onesignal-php-api)
 
+## Currently v1 is not released yet and current README is for v1
+For 0.1 branch README file look [here](/../../blob/0.1/README.md).
+
 ## Install using Composer
-
-```
-composer require norkunas/onesignal-php-api
-```
-
-**Currently v1 is not released yet, so if you want to use any Http Provider then you have to run this:**
 
 ```
 composer require norkunas/onesignal-php-api:1.0.x-dev
