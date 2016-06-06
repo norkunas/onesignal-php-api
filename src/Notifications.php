@@ -298,6 +298,10 @@ class Notifications
             ->setAllowedTypes('adm_group', 'string')
             ->setDefined('adm_group_message')
             ->setAllowedTypes('adm_group_message', 'array')
+            ->setDefined('ttl')
+            ->setAllowedTypes('ttl', 'int')
+            ->setDefined('priority')
+            ->setAllowedTypes('priority', 'int')
             ->setDefault('app_id', $this->api->getConfig()->getApplicationId());
 
         return $resolver->resolve($data);
