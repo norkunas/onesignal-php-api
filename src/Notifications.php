@@ -224,6 +224,16 @@ class Notifications
             ->setAllowedTypes('adm_large_icon', 'string')
             ->setDefined('adm_big_picture')
             ->setAllowedTypes('adm_big_picture', 'string')
+            ->setDefined('web_buttons')
+            ->setAllowedTypes('web_buttons', 'array')
+            ->setAllowedValues('web_buttons', function ($buttons) {
+                $required_keys = ['id', 'text', 'icon', 'url'];
+                foreach ($buttons as $button) {
+                    if (!is_array($button))    { return false; }
+                    if (count(array_intersect_key(array_flip($required_keys), $button)) != count($required_keys))    { return false; }
+                }
+                return true;
+            })
             ->setDefined('chrome_icon')
             ->setAllowedTypes('chrome_icon', 'string')
             ->setDefined('chrome_big_picture')
