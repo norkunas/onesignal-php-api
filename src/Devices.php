@@ -52,7 +52,7 @@ class Devices
     {
         return $this->api->request('GET', '/players?'.http_build_query([
                 'limit' => max(0, min(self::DEVICES_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
-                'offset' => max(0, min(self::DEVICES_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
+                'offset' => filter_var($offset, FILTER_VALIDATE_INT),
                 'app_id' => $this->api->getConfig()->getApplicationId(),
             ]), [
             'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
