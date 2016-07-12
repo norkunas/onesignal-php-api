@@ -236,6 +236,7 @@ class Notifications
                         return false;
                     }
                 }
+
                 return true;
             })
             ->setDefined('chrome_icon')
