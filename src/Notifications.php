@@ -229,8 +229,12 @@ class Notifications
             ->setAllowedValues('web_buttons', function ($buttons) {
                 $required_keys = ['id', 'text', 'icon', 'url'];
                 foreach ($buttons as $button) {
-                    if (!is_array($button))    { return false; }
-                    if (count(array_intersect_key(array_flip($required_keys), $button)) != count($required_keys))    { return false; }
+                    if (!is_array($button)) {
+                        return false;
+                    }
+                    if (count(array_intersect_key(array_flip($required_keys), $button)) != count($required_keys)) {
+                        return false;
+                    }
                 }
                 return true;
             })
