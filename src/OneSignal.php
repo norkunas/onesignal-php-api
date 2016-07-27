@@ -18,17 +18,17 @@ class OneSignal
     /**
      * @var Config
      */
-    protected $config;
+    private $config;
 
     /**
      * @var Client
      */
-    protected $client;
+    private $client;
 
     /**
      * @var array
      */
-    protected $services = [];
+    private $services = [];
 
     /**
      * Constructor.
@@ -100,9 +100,11 @@ class OneSignal
     public function request($method, $uri, array $headers = [], $body = null)
     {
         try {
-            $response = $this->client->send($method, self::API_URL . $uri, $headers, $body);
+            $response = $this->client->send($method, self::API_URL.$uri, $headers, $body);
 
             return json_decode($response->getBody(), true);
+        } catch (\Throwable $t) {
+            throw new OneSignalException($t->getMessage());
         } catch (\Exception $e) {
             throw new OneSignalException($e->getMessage());
         }
@@ -114,6 +116,8 @@ class OneSignal
      * @param string $name
      *
      * @return object
+     *
+     * @throws OneSignalException If an invalid service name is given
      */
     public function __get($name)
     {
@@ -122,7 +126,7 @@ class OneSignal
                 return $this->services[$name];
             }
 
-            $serviceName = __NAMESPACE__ . '\\' . ucfirst($name);
+            $serviceName = __NAMESPACE__.'\\'.ucfirst($name);
 
             $this->services[$name] = new $serviceName($this);
 
@@ -131,8 +135,6 @@ class OneSignal
 
         $trace = debug_backtrace();
 
-        $error = 'Undefined property via __get(): %s in %s on line %u';
-
-        trigger_error(sprintf($error, $name, $trace[0]['file'], $trace[0]['line']), E_USER_NOTICE);
+        throw new OneSignalException(sprintf('Undefined property via __get(): %s in %s on line %u', $name, $trace[0]['file'], $trace[0]['line']));
     }
 }

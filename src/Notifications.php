@@ -27,10 +27,10 @@ class Notifications
      */
     public function getOne($id)
     {
-        $url = '/notifications/' . $id . '?app_id=' . $this->api->getConfig()->getApplicationId();
+        $url = '/notifications/'.$id.'?app_id='.$this->api->getConfig()->getApplicationId();
 
         return $this->api->request('GET', $url, [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
         ]);
     }
 
@@ -46,11 +46,12 @@ class Notifications
      */
     public function getAll($limit = self::NOTIFICATIONS_LIMIT, $offset = 0)
     {
-        return $this->api->request('GET', '/notifications?' . http_build_query([
+        return $this->api->request('GET', '/notifications?'.http_build_query([
              'limit' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
              'offset' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
         ]), [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+            'Content-Type' => 'application/json',
         ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
         ]));
@@ -68,7 +69,7 @@ class Notifications
     public function add(array $data)
     {
         return $this->api->request('POST', '/notifications', [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
             'Content-Type' => 'application/json',
         ], json_encode($this->resolve($data)));
     }
@@ -84,8 +85,9 @@ class Notifications
      */
     public function open($id)
     {
-        return $this->api->request('PUT', '/notifications/' . $id, [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+        return $this->api->request('PUT', '/notifications/'.$id, [
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+            'Content-Type' => 'application/json',
         ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
             'opened' => true,
@@ -103,8 +105,9 @@ class Notifications
      */
     public function cancel($id)
     {
-        return $this->api->request('DELETE', '/notifications/' . $id, [
-            'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+        return $this->api->request('DELETE', '/notifications/'.$id, [
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+            'Content-Type' => 'application/json',
         ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
         ]));
@@ -250,10 +253,7 @@ class Notifications
             ->setDefined('url')
             ->setAllowedTypes('url', 'string')
             ->setAllowedValues('url', function ($value) {
-                // https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Constraints/UrlValidator.php
-                $pattern = '~^(http|https)://(([\pL\pN-]+:)?([\pL\pN-]+)@)?(([\pL\pN\pS-\.])+(\.?([\pL]|xn\-\-[\pL\pN-]+)+\.?)|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\[(?:(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-f]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-f]{1,4})))?::(?:(?:(?:[0-9a-f]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,1}(?:(?:[0-9a-f]{1,4})))?::(?:(?:(?:[0-9a-f]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,2}(?:(?:[0-9a-f]{1,4})))?::(?:(?:(?:[0-9a-f]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,3}(?:(?:[0-9a-f]{1,4})))?::(?:(?:[0-9a-f]{1,4})):)(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,4}(?:(?:[0-9a-f]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-f]{1,4})):(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,5}(?:(?:[0-9a-f]{1,4})))?::)(?:(?:[0-9a-f]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-f]{1,4})):){0,6}(?:(?:[0-9a-f]{1,4})))?::))))\])(:[0-9]+)?(/?|/\S+)$~ixu';
-
-                return (bool) preg_match($pattern, $value);
+                return (bool) filter_var($value, FILTER_VALIDATE_URL);
             })
             ->setDefined('send_after')
             ->setAllowedTypes('send_after', '\DateTime')
@@ -292,6 +292,10 @@ class Notifications
             ->setAllowedTypes('adm_group', 'string')
             ->setDefined('adm_group_message')
             ->setAllowedTypes('adm_group_message', 'array')
+            ->setDefined('ttl')
+            ->setAllowedTypes('ttl', 'int')
+            ->setDefined('priority')
+            ->setAllowedTypes('priority', 'int')
             ->setDefault('app_id', $this->api->getConfig()->getApplicationId());
 
         return $resolver->resolve($data);
