@@ -8,9 +8,9 @@ use GuzzleHttp\Message\Response;
 use OneSignal\Exception\OneSignalException;
 
 /**
- * @property-read Apps          $apps          Applications API service.
- * @property-read Devices       $devices       Devices API service.
- * @property-read Notifications $notifications Notifications API service.
+ * @property-read Apps          $apps          Applications API service
+ * @property-read Devices       $devices       Devices API service
+ * @property-read Notifications $notifications Notifications API service
  */
 class OneSignal
 {
