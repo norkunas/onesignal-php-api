@@ -55,6 +55,7 @@ class Devices
             'offset' => max(0, min(self::DEVICES_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
         ]), [
             'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+            'Content-Type' => 'application/json',
         ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
         ]));
