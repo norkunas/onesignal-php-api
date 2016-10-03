@@ -172,13 +172,8 @@ class Notifications
                 $filters = [];
 
                 foreach ($value as $filter) {
-                    if (isset($filter['field'], $filter['key'], $filter['relation'], $filter['value'])) {
-                        $filters[] = [
-                            'field' => (string) $filter['field'],
-                            'key' => (string) $filter['key'],
-                            'relation' => (string) $filter['relation'],
-                            'value' => $filter['value'],
-                        ];
+                    if (isset($filter['field'])) {
+                        $filters[] = $filter;
                     } elseif (isset($filter['operator'])) {
                         $filters[] = ['operator' => 'OR'];
                     }
