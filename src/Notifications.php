@@ -122,18 +122,24 @@ class Notifications
             ->setAllowedTypes('contents', 'array')
             ->setDefined('headings')
             ->setAllowedTypes('headings', 'array')
+            ->setDefined('subtitle')
+            ->setAllowedTypes('subtitle', 'array')
             ->setDefined('isIos')
             ->setAllowedTypes('isIos', 'bool')
             ->setDefined('isAndroid')
             ->setAllowedTypes('isAndroid', 'bool')
             ->setDefined('isWP')
             ->setAllowedTypes('isWP', 'bool')
+            ->setDefined('isWP_WNS')
+            ->setAllowedTypes('isWP_WNS', 'bool')
             ->setDefined('isAdm')
             ->setAllowedTypes('isAdm', 'bool')
             ->setDefined('isChrome')
             ->setAllowedTypes('isChrome', 'bool')
             ->setDefined('isChromeWeb')
             ->setAllowedTypes('isChromeWeb', 'bool')
+            ->setDefined('isFirefox')
+            ->setAllowedTypes('isFirefox', 'bool')
             ->setDefined('isSafari')
             ->setAllowedTypes('isSafari', 'bool')
             ->setDefined('isAnyWeb')
@@ -160,6 +166,26 @@ class Notifications
             ->setAllowedTypes('include_chrome_web_reg_ids', 'array')
             ->setDefined('app_ids')
             ->setAllowedTypes('app_ids', 'array')
+            ->setDefined('filters')
+            ->setAllowedTypes('filters', 'array')
+            ->setNormalizer('filters', function (Options $options, array $value) {
+                $filters = [];
+
+                foreach ($value as $filter) {
+                    if (isset($filter['field'], $filter['key'], $filter['relation'], $filter['value'])) {
+                        $filters[] = [
+                            'field' => (string) $filter['field'],
+                            'key' => (string) $filter['key'],
+                            'relation' => (string) $filter['relation'],
+                            'value' => $filter['value'],
+                        ];
+                    } elseif (isset($filter['operator'])) {
+                        $filters[] = ['operator' => 'OR'];
+                    }
+                }
+
+                return $filters;
+            })
             ->setDefined('tags')
             ->setAllowedTypes('tags', 'array')
             ->setNormalizer('tags', function (Options $options, array $value) {
@@ -215,10 +241,38 @@ class Notifications
 
                 return $buttons;
             })
+            ->setDefined('android_background_layout')
+            ->setAllowedValues('android_background_layout', 'array')
+            ->setAllowedValues('android_background_layout', function ($layout) {
+                if (empty($layout)) {
+                    return false;
+                }
+
+                $requiredKeys = ['image', 'headings_color', 'contents_color'];
+
+                foreach ($layout as $k => $v) {
+                    if (!in_array($k, $requiredKeys) || !is_string($v)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            })
             ->setDefined('small_icon')
             ->setAllowedTypes('small_icon', 'string')
             ->setDefined('large_icon')
             ->setAllowedTypes('large_icon', 'string')
+            ->setDefined('ios_attachments')
+            ->setAllowedTypes('ios_attachments', 'array')
+            ->setAllowedValues('ios_attachments', function ($attachments) {
+                foreach ($attachments as $key => $value) {
+                    if (!is_string($key) || !is_string($value)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            })
             ->setDefined('big_picture')
             ->setAllowedTypes('big_picture', 'string')
             ->setDefined('adm_small_icon')
@@ -230,18 +284,20 @@ class Notifications
             ->setDefined('web_buttons')
             ->setAllowedTypes('web_buttons', 'array')
             ->setAllowedValues('web_buttons', function ($buttons) {
-                $required_keys = ['id', 'text', 'icon', 'url'];
+                $requiredKeys = ['id', 'text', 'icon', 'url'];
                 foreach ($buttons as $button) {
                     if (!is_array($button)) {
                         return false;
                     }
-                    if (count(array_intersect_key(array_flip($required_keys), $button)) != count($required_keys)) {
+                    if (count(array_intersect_key(array_flip($requiredKeys), $button)) != count($requiredKeys)) {
                         return false;
                     }
                 }
 
                 return true;
             })
+            ->setDefined('ios_category')
+            ->setAllowedTypes('ios_category', 'string')
             ->setDefined('chrome_icon')
             ->setAllowedTypes('chrome_icon', 'string')
             ->setDefined('chrome_big_picture')
@@ -278,6 +334,8 @@ class Notifications
             ->setAllowedValues('android_visibility', [-1, 0, 1])
             ->setDefined('content_available')
             ->setAllowedTypes('content_available', 'bool')
+            ->setDefined('mutable_content')
+            ->setAllowedTypes('mutable_content', 'bool')
             ->setDefined('android_background_data')
             ->setAllowedTypes('android_background_data', 'bool')
             ->setDefined('amazon_background_data')
