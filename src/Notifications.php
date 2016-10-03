@@ -256,7 +256,7 @@ class Notifications
                 return (bool) filter_var($value, FILTER_VALIDATE_URL);
             })
             ->setDefined('send_after')
-            ->setAllowedTypes('send_after', '\DateTime')
+            ->setAllowedTypes('send_after', ['\DateTime', '\DateTimeInterface'])
             ->setNormalizer('send_after', function (Options $options, \DateTime $value) {
                 //Fri May 02 2014 00:00:00 GMT-0700 (PDT)
                 return $value->format('D M d Y H:i:s eO (T)');
@@ -265,7 +265,7 @@ class Notifications
             ->setAllowedTypes('delayed_option', 'string')
             ->setAllowedValues('delayed_option', ['timezone', 'last-active'])
             ->setDefined('delivery_time_of_day')
-            ->setAllowedTypes('delivery_time_of_day', '\DateTime')
+            ->setAllowedTypes('delivery_time_of_day', ['\DateTime', '\DateTimeInterface'])
             ->setNormalizer('delivery_time_of_day', function (Options $options, \DateTime $value) {
                 return $value->format('g:iA');
             })
