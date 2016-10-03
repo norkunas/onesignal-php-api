@@ -125,17 +125,22 @@ $api->notifications->add([
     'data' => ['foo' => 'bar'],
     'isChrome' => true,
     'send_after' => new \DateTime('1 hour'),
-    'tags' => [
+    'filters' => [
         [
-            'key' => 'level',
-            'relation' => '>',
-            'value' => '10',
+            'field' => 'tag',
+            'key' => 'is_vip',
+            'relation' => '!=',
+            'value' => 'true',
         ],
         [
-            'key' => 'madePurchase',
+            'operator' => 'OR',
+        ],
+        [
+            'field' => 'tag',
+            'key' => 'is_admin',
             'relation' => '=',
             'value' => 'true',
-        ]
+        ],
     ],
     // ..other options
 ]));
