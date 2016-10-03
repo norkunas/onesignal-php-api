@@ -309,8 +309,8 @@ class Notifications
             ->setDefined('send_after')
             ->setAllowedTypes('send_after', ['\DateTime', '\DateTimeInterface'])
             ->setNormalizer('send_after', function (Options $options, \DateTime $value) {
-                //Fri May 02 2014 00:00:00 GMT-0700 (PDT)
-                return $value->format('D M d Y H:i:s eO (T)');
+                //"2015-09-24 14:00:00 GMT-0700"
+                return $value->format('Y-m-d H:i:s TO');
             })
             ->setDefined('delayed_option')
             ->setAllowedTypes('delayed_option', 'string')
