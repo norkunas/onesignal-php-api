@@ -186,6 +186,8 @@ class Notifications
             ->setNormalizer('tags', function (Options $options, array $value) {
                 $tags = [];
 
+                trigger_error('Tags are deprecated, please use filters instead.', E_USER_DEPRECATED);
+
                 foreach ($value as $tag) {
                     if (isset($tag['key'], $tag['relation'], $tag['value'])) {
                         $tags[] = [
@@ -307,7 +309,7 @@ class Notifications
                 return (bool) filter_var($value, FILTER_VALIDATE_URL);
             })
             ->setDefined('send_after')
-            ->setAllowedTypes('send_after', ['\DateTime', '\DateTimeInterface'])
+            ->setAllowedTypes('send_after', '\DateTimeInterface')
             ->setNormalizer('send_after', function (Options $options, \DateTime $value) {
                 //"2015-09-24 14:00:00 GMT-0700"
                 return $value->format('Y-m-d H:i:s TO');
@@ -316,7 +318,7 @@ class Notifications
             ->setAllowedTypes('delayed_option', 'string')
             ->setAllowedValues('delayed_option', ['timezone', 'last-active'])
             ->setDefined('delivery_time_of_day')
-            ->setAllowedTypes('delivery_time_of_day', ['\DateTime', '\DateTimeInterface'])
+            ->setAllowedTypes('delivery_time_of_day', '\DateTimeInterface')
             ->setNormalizer('delivery_time_of_day', function (Options $options, \DateTime $value) {
                 return $value->format('g:iA');
             })
