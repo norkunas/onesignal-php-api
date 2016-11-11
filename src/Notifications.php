@@ -184,27 +184,6 @@ class Notifications
 
                 return $filters;
             })
-            ->setDefined('tags')
-            ->setAllowedTypes('tags', 'array')
-            ->setNormalizer('tags', function (Options $options, array $value) {
-                $tags = [];
-
-                trigger_error('Tags are deprecated, please use filters instead.', E_USER_DEPRECATED);
-
-                foreach ($value as $tag) {
-                    if (isset($tag['key'], $tag['relation'], $tag['value'])) {
-                        $tags[] = [
-                            'key' => (string) $tag['key'],
-                            'relation' => (string) $tag['relation'],
-                            'value' => (string) $tag['value'],
-                        ];
-                    } elseif (isset($tag['operator'])) {
-                        $tags[] = ['operator' => 'OR'];
-                    }
-                }
-
-                return $tags;
-            })
             ->setDefined('ios_badgeType')
             ->setAllowedTypes('ios_badgeType', 'string')
             ->setAllowedValues('ios_badgeType', ['None', 'SetTo', 'Increase'])

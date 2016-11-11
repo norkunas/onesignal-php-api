@@ -210,7 +210,7 @@ class Devices
      * Application auth key must be set.
      *
      * @param array $extraFields Additional fields that you wish to include.
-     *                           Currently supports location and rooted.
+     *                           Currently supports: "location", "rooted"
      *
      * @return array
      */
