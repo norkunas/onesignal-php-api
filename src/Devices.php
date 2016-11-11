@@ -222,6 +222,8 @@ class Devices
             'headers' => [
                 'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
                 'Content-Type' => 'application/json',
+            ],
+            [
                 'extra_fields' => $extraFields,
             ],
         ]);
