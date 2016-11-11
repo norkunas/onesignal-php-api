@@ -178,7 +178,7 @@ class Devices
                 ->resolve($purchase);
         }
 
-        return $this->api->request('PUT', '/players/'.$id.'/on_purchase', [
+        return $this->api->request('POST', '/players/'.$id.'/on_purchase', [
             'Content-Type' => 'application/json',
         ], json_encode($data));
     }
