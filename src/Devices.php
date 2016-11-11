@@ -44,21 +44,24 @@ class Devices
      * Application auth key must be set.
      *
      * @param int $limit  Results offset (results are sorted by ID)
-     * @param int $offset How many devices to return (max 50)
+     * @param int $offset How many devices to return (max 300)
      *
      * @return array
      */
     public function getAll($limit = self::DEVICES_LIMIT, $offset = 0)
     {
-        return $this->api->request('GET', '/players?'.http_build_query([
-            'limit' => max(0, min(self::DEVICES_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
+        $query = [
+            'limit' => max(1, min(self::DEVICES_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
             'offset' => max(0, min(self::DEVICES_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
-        ]), [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-            'Content-Type' => 'application/json',
-        ], json_encode([
             'app_id' => $this->api->getConfig()->getApplicationId(),
-        ]));
+        ];
+
+        return $this->api->request('GET', '/players?'.http_build_query($query), [
+            'headers' => [
+                'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+                'Content-Type' => 'application/json',
+            ],
+        ]);
     }
 
     /**
@@ -206,15 +209,22 @@ class Devices
      *
      * Application auth key must be set.
      *
+     * @param array $extraFields Additional fields that you wish to include.
+     *                           Currently supports location and rooted.
+     *
      * @return array
      */
-    public function csvExport()
+    public function csvExport(array $extraFields = [])
     {
-        return $this->api->request('POST', '/players/csv_export', [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-        ], json_encode([
-            'app_id' => $this->api->getConfig()->getApplicationId(),
-        ]));
+        $url = '/players/csv-export?app_id='.$this->api->getConfig()->getApplicationId();
+
+        return $this->api->request('POST', $url, [
+            'headers' => [
+                'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+                'Content-Type' => 'application/json',
+                'extra_fields' => $extraFields,
+            ],
+        ]);
     }
 
     protected function resolve(array $data, callable $callback = null)

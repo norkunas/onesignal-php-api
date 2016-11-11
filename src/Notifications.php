@@ -46,15 +46,18 @@ class Notifications
      */
     public function getAll($limit = self::NOTIFICATIONS_LIMIT, $offset = 0)
     {
-        return $this->api->request('GET', '/notifications?'.http_build_query([
-             'limit' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
-             'offset' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
-        ]), [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-            'Content-Type' => 'application/json',
-        ], json_encode([
+        $query = [
+            'limit' => max(1, min(self::NOTIFICATIONS_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
+            'offset' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
             'app_id' => $this->api->getConfig()->getApplicationId(),
-        ]));
+        ];
+
+        return $this->api->request('GET', '/notifications?'.http_build_query($query), [
+            'headers' => [
+                'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+                'Content-Type' => 'application/json',
+            ],
+        ]);
     }
 
     /**
