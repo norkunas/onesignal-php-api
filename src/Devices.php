@@ -52,21 +52,21 @@ class Devices
      * Application auth key must be set.
      *
      * @param int $limit  Results offset (results are sorted by ID)
-     * @param int $offset How many devices to return (max 50)
+     * @param int $offset How many devices to return (max 300)
      *
      * @return array
      */
     public function getAll($limit = self::DEVICES_LIMIT, $offset = 0)
     {
-        return $this->api->request('GET', '/players?' . http_build_query([
-            'limit' => max(0, min(self::DEVICES_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
+        $query = [
+            'limit' => max(1, min(self::DEVICES_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
             'offset' => max(0, min(self::DEVICES_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
-        ]), [
+            'app_id' => $this->api->getConfig()->getApplicationId(),
+        ];
+
+        return $this->api->request('GET', '/players?' . http_build_query($query), [
             'headers' => [
                 'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
-            ],
-            'json' => [
-                'app_id' => $this->api->getConfig()->getApplicationId(),
             ],
         ]);
     }
@@ -224,12 +224,11 @@ class Devices
      */
     public function csvExport()
     {
-        return $this->api->request('POST', '/players/csv_export', [
+        $url = '/players/csv-export?app_id=' . $this->api->getConfig()->getApplicationId();
+
+        return $this->api->request('POST', $url, [
             'headers' => [
                 'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
-            ],
-            'json' => [
-                'app_id' => $this->api->getConfig()->getApplicationId(),
             ],
         ]);
     }
