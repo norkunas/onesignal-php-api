@@ -124,12 +124,11 @@ class Notifications
      */
     public function cancel($id)
     {
-        return $this->api->request('DELETE', '/notifications/' . $id, [
+        $url = '/notifications/' . $id . '?app_id=' . $this->api->getConfig()->getApplicationId();
+
+        return $this->api->request('DELETE', $url, [
             'headers' => [
                 'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
-            ],
-            'json' => [
-                'app_id' => $this->api->getConfig()->getApplicationId(),
             ],
         ]);
     }
