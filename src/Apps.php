@@ -58,7 +58,6 @@ class Apps
 
         return $this->api->request('POST', '/apps', [
             'Authorization' => 'Basic '.$this->api->getConfig()->getUserAuthKey(),
-            'Content-Type' => 'application/json',
         ], json_encode($data));
     }
 
@@ -78,7 +77,6 @@ class Apps
 
         return $this->api->request('PUT', '/apps/'.$id, [
             'Authorization' => 'Basic '.$this->api->getConfig()->getUserAuthKey(),
-            'Content-Type' => 'application/json',
         ], json_encode($data));
     }
 

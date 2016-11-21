@@ -57,10 +57,7 @@ class Devices
         ];
 
         return $this->api->request('GET', '/players?'.http_build_query($query), [
-            'headers' => [
-                'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-                'Content-Type' => 'application/json',
-            ],
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
         ]);
     }
 
@@ -91,9 +88,7 @@ class Devices
                 ]);
         });
 
-        return $this->api->request('POST', '/players', [
-            'Content-Type' => 'application/json',
-        ], json_encode($data));
+        return $this->api->request('POST', '/players', [], json_encode($data));
     }
 
     /**
@@ -113,9 +108,7 @@ class Devices
                 ->setAllowedValues('notification_types', [1, -2]);
         });
 
-        return $this->api->request('PUT', '/players/'.$id, [
-            'Content-Type' => 'application/json',
-        ], json_encode($data));
+        return $this->api->request('PUT', '/players/'.$id, [], json_encode($data));
     }
 
     /**
@@ -145,9 +138,7 @@ class Devices
             ->setAllowedTypes('sdk', 'string')
             ->resolve($data);
 
-        return $this->api->request('PUT', '/players/'.$id.'/on_session', [
-            'Content-Type' => 'application/json',
-        ], json_encode($data));
+        return $this->api->request('PUT', '/players/'.$id.'/on_session', [], json_encode($data));
     }
 
     /**
@@ -178,9 +169,7 @@ class Devices
                 ->resolve($purchase);
         }
 
-        return $this->api->request('POST', '/players/'.$id.'/on_purchase', [
-            'Content-Type' => 'application/json',
-        ], json_encode($data));
+        return $this->api->request('POST', '/players/'.$id.'/on_purchase', [], json_encode($data));
     }
 
     /**
@@ -199,9 +188,7 @@ class Devices
             ->setAllowedTypes('active_time', 'int')
             ->resolve($data);
 
-        return $this->api->request('PUT', '/players/'.$id.'/on_focus', [
-            'Content-Type' => 'application/json',
-        ], json_encode($data));
+        return $this->api->request('PUT', '/players/'.$id.'/on_focus', [], json_encode($data));
     }
 
     /**
@@ -218,15 +205,15 @@ class Devices
     {
         $url = '/players/csv-export?app_id='.$this->api->getConfig()->getApplicationId();
 
-        return $this->api->request('POST', $url, [
-            'headers' => [
-                'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-                'Content-Type' => 'application/json',
-            ],
-            [
-                'extra_fields' => $extraFields,
-            ],
-        ]);
+        $headers = [
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+        ];
+
+        $body = [
+            'extra_fields' => $extraFields,
+        ];
+
+        return $this->api->request('POST', $url, $headers, $body);
     }
 
     protected function resolve(array $data, callable $callback = null)
