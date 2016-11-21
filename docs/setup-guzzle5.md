@@ -2,7 +2,7 @@
 
 ```composer require guzzlehttp/psr7 php-http/guzzle5-adapter```
 
-Note: if you already have some psr7 package then skip requiring it.
+Note: if you already have some psr7 implementation then skip requiring it.
 
 ```php
 <?php
