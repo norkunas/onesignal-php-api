@@ -9,7 +9,6 @@
 [![License](https://poser.pugx.org/norkunas/onesignal-php-api/license)](https://packagist.org/packages/norkunas/onesignal-php-api)
 
 ## Documentation
--------------
 
 [Read the Documentation for 1.0](https://github.com/norkunas/onesignal-php-api/blob/master/docs/getting-started.md)
 
