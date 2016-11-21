@@ -10,7 +10,7 @@
 
 ## Documentation
 
-[Read the Documentation for 1.0](https://github.com/norkunas/onesignal-php-api/blob/master/docs/getting-started.md)
+[Read the Documentation for 1.0](/docs/getting-started.md)
 
 [Read the Documentation for 0.1](https://github.com/norkunas/onesignal-php-api/blob/0.1/README.md)
 
