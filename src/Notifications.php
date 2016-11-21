@@ -180,6 +180,21 @@ class Notifications
             ->setAllowedTypes('include_chrome_web_reg_ids', 'array')
             ->setDefined('app_ids')
             ->setAllowedTypes('app_ids', 'array')
+            ->setDefined('filters')
+            ->setAllowedTypes('filters', 'array')
+            ->setNormalizer('filters', function (Options $options, array $value) {
+                $filters = [];
+
+                foreach ($value as $filter) {
+                    if (isset($filter['field'])) {
+                        $filters[] = $filter;
+                    } elseif (isset($filter['operator'])) {
+                        $filters[] = ['operator' => 'OR'];
+                    }
+                }
+
+                return $filters;
+            })
             ->setDefined('tags')
             ->setAllowedTypes('tags', 'array')
             ->setNormalizer('tags', function (Options $options, array $value) {
