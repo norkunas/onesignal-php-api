@@ -213,7 +213,7 @@ class Devices
             'extra_fields' => $extraFields,
         ];
 
-        return $this->api->request('POST', $url, $headers, $body);
+        return $this->api->request('POST', $url, $headers, json_encode($body));
     }
 
     protected function resolve(array $data, callable $callback = null)
