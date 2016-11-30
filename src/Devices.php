@@ -224,7 +224,7 @@ class Devices
      */
     public function csvExport()
     {
-        $url = '/players/csv-export?app_id=' . $this->api->getConfig()->getApplicationId();
+        $url = '/players/csv_export?app_id=' . $this->api->getConfig()->getApplicationId();
 
         return $this->api->request('POST', $url, [
             'headers' => [
