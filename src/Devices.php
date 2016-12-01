@@ -203,7 +203,7 @@ class Devices
      */
     public function csvExport(array $extraFields = [])
     {
-        $url = '/players/csv-export?app_id='.$this->api->getConfig()->getApplicationId();
+        $url = '/players/csv_export?app_id='.$this->api->getConfig()->getApplicationId();
 
         $headers = [
             'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
