@@ -218,7 +218,7 @@ class Devices
     /**
      * Export all information about devices in a CSV format for your application.
      *
-     * Application auth key must be set. 
+     * Application auth key must be set.
      *
      * @return array
      */
