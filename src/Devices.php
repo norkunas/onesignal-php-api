@@ -138,7 +138,7 @@ class Devices
             ->setAllowedTypes('sdk', 'string')
             ->resolve($data);
 
-        return $this->api->request('PUT', '/players/'.$id.'/on_session', [], json_encode($data));
+        return $this->api->request('POST', '/players/'.$id.'/on_session', [], json_encode($data));
     }
 
     /**
@@ -188,7 +188,7 @@ class Devices
             ->setAllowedTypes('active_time', 'int')
             ->resolve($data);
 
-        return $this->api->request('PUT', '/players/'.$id.'/on_focus', [], json_encode($data));
+        return $this->api->request('POST', '/players/'.$id.'/on_focus', [], json_encode($data));
     }
 
     /**
