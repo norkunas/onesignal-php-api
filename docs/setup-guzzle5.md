@@ -1,6 +1,6 @@
 # Setup with Guzzle5
 
-```composer require guzzlehttp/psr7 php-http/guzzle5-adapter```
+```composer require guzzlehttp/psr7 php-http/guzzle5-adapter norkunas/onesignal-php-api```
 
 Note: if you already have some psr7 implementation then skip requiring it.
 
