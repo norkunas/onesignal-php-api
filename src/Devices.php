@@ -43,7 +43,11 @@ class Devices
      */
     public function getOne($id)
     {
-        return $this->api->request('GET', '/players/' . $id);
+        $query = [
+            'app_id' => $this->api->getConfig()->getApplicationId(),
+        ];
+
+        return $this->api->request('GET', '/players/' . $id . '?' . http_build_query($query));
     }
 
     /**
