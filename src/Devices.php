@@ -55,8 +55,8 @@ class Devices
      *
      * Application auth key must be set.
      *
-     * @param int $limit  Results offset (results are sorted by ID)
-     * @param int $offset How many devices to return (max 300)
+     * @param int $limit  How many devices to return. Max is 300. Default is 300
+     * @param int $offset Result offset. Default is 0. Results are sorted by id
      *
      * @return array
      */
@@ -64,7 +64,7 @@ class Devices
     {
         $query = [
             'limit' => max(1, min(self::DEVICES_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
-            'offset' => max(0, min(self::DEVICES_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
+            'offset' => max(0, filter_var($offset, FILTER_VALIDATE_INT)),
             'app_id' => $this->api->getConfig()->getApplicationId(),
         ];
 
