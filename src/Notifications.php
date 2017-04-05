@@ -48,7 +48,7 @@ class Notifications
     {
         $query = [
             'limit' => max(1, min(self::NOTIFICATIONS_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
-            'offset' => max(0, min(self::NOTIFICATIONS_LIMIT, filter_var($offset, FILTER_VALIDATE_INT))),
+            'offset' => max(0, filter_var($offset, FILTER_VALIDATE_INT)),
             'app_id' => $this->api->getConfig()->getApplicationId(),
         ];
 
