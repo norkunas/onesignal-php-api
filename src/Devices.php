@@ -259,6 +259,8 @@ class Devices
             ->setAllowedTypes('badge_count', 'int')
             ->setDefined('last_active')
             ->setAllowedTypes('last_active', 'int')
+            ->setDefined('notification_types')
+            ->setAllowedTypes('notification_types', 'int')
             ->setDefined('test_type')
             ->setAllowedTypes('test_type', 'int')
             ->setAllowedValues('test_type', [1, 2])
