@@ -18,6 +18,7 @@ class Devices
     const WINDOWS_PHONE_WNS = 6;
     const SAFARI = 7;
     const FIREFOX = 8;
+    const MACOS = 9;
 
     /**
      * @var OneSignal
@@ -93,6 +94,13 @@ class Devices
                     self::ANDROID,
                     self::AMAZON,
                     self::WINDOWS_PHONE,
+                    self::WINDOWS_PHONE_MPNS,
+                    self::CHROME_APP,
+                    self::CHROME_WEB,
+                    self::WINDOWS_PHONE_WNS,
+                    self::SAFARI,
+                    self::FIREFOX,
+                    self::MACOS,
                 ]);
         });
 
