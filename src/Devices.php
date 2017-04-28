@@ -18,6 +18,7 @@ class Devices
     const WINDOWS_PHONE_WNS = 6;
     const SAFARI = 7;
     const FIREFOX = 8;
+    const MACOS = 9;
 
     protected $api;
 
@@ -89,6 +90,7 @@ class Devices
                     self::WINDOWS_PHONE_WNS,
                     self::SAFARI,
                     self::FIREFOX,
+                    self::MACOS,
                 ]);
         });
 
