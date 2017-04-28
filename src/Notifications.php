@@ -283,6 +283,8 @@ class Notifications
             ->setAllowedTypes('chrome_big_picture', 'string')
             ->setDefined('chrome_web_icon')
             ->setAllowedTypes('chrome_web_icon', 'string')
+            ->setDefined('chrome_web_image')
+            ->setAllowedTypes('chrome_web_image', 'string')
             ->setDefined('firefox_icon')
             ->setAllowedTypes('firefox_icon', 'string')
             ->setDefined('url')

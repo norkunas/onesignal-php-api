@@ -80,6 +80,7 @@ $api->notifications->add([
     'included_segments' => ['All'],
     'data' => ['foo' => 'bar'],
     'isChrome' => true,
+    'isChromeWeb' => true, // For Chrome Web Push notificaitons
     'send_after' => new \DateTime('1 hour'),
     'filters' => [
         [
