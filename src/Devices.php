@@ -105,12 +105,7 @@ class Devices
      */
     public function update($id, array $data)
     {
-        $data = $this->resolve($data, function (OptionsResolver $resolver) {
-            $resolver
-                ->setDefined('notification_types')
-                ->setAllowedTypes('notification_types', 'int')
-                ->setAllowedValues('notification_types', [1, -2]);
-        });
+        $data = $this->resolve($data);
 
         return $this->api->request('PUT', '/players/'.$id, [], json_encode($data));
     }
@@ -259,6 +254,9 @@ class Devices
             ->setAllowedTypes('badge_count', 'int')
             ->setDefined('last_active')
             ->setAllowedTypes('last_active', 'int')
+            ->setDefined('notification_types')
+            ->setAllowedTypes('notification_types', 'int')
+            ->setAllowedValues('notification_types', [1, -2])
             ->setDefined('test_type')
             ->setAllowedTypes('test_type', 'int')
             ->setAllowedValues('test_type', [1, 2])
