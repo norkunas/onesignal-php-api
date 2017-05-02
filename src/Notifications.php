@@ -307,6 +307,8 @@ class Notifications
             ->setDefined('android_visibility')
             ->setAllowedTypes('android_visibility', 'int')
             ->setAllowedValues('android_visibility', [-1, 0, 1])
+            ->setDefined('collapse_id')
+            ->setAllowedTypes('collapse_id', 'string')
             ->setDefined('content_available')
             ->setAllowedTypes('content_available', 'bool')
             ->setDefined('mutable_content')
