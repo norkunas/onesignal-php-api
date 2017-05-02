@@ -131,12 +131,17 @@ class Devices
             ->setAllowedTypes('timezone', 'int')
             ->setDefined('game_version')
             ->setAllowedTypes('game_version', 'string')
+            ->setDefined('device_os')
+            ->setAllowedTypes('device_os', 'string')
+            // @todo: remove "device_model" later (this option is probably deprecated as it is removed from documentation)
             ->setDefined('device_model')
             ->setAllowedTypes('device_model', 'string')
             ->setDefined('ad_id')
             ->setAllowedTypes('ad_id', 'string')
             ->setDefined('sdk')
             ->setAllowedTypes('sdk', 'string')
+            ->setDefined('tags')
+            ->setAllowedTypes('tags', 'array')
             ->resolve($data);
 
         return $this->api->request('POST', '/players/'.$id.'/on_session', [], json_encode($data));
@@ -198,7 +203,7 @@ class Devices
      * Application auth key must be set.
      *
      * @param array $extraFields Additional fields that you wish to include.
-     *                           Currently supports: "location", "rooted"
+     *                           Currently supports: "location", "country", "rooted"
      *
      * @return array
      */
