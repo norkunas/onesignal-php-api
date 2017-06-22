@@ -2,11 +2,10 @@
 
 namespace OneSignal\Tests;
 
+use GuzzleHttp\Client;
+use OneSignal\Config;
 use OneSignal\OneSignal;
 
-/**
- * @covers OneSignal
- */
 class OneSignalTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -19,9 +18,6 @@ class OneSignalTest extends \PHPUnit_Framework_TestCase
         $this->api = new OneSignal();
     }
 
-    /**
-     * @covers OneSignal::__get
-     */
     public function testInstances()
     {
         $this->assertInstanceOf('OneSignal\Apps', $this->api->apps);
@@ -39,11 +35,17 @@ class OneSignalTest extends \PHPUnit_Framework_TestCase
 
     public function testConfig()
     {
-        $this->assertInstanceOf('OneSignal\Config', $this->api->getConfig());
+        $config = new Config();
+        $this->api->setConfig($config);
+
+        $this->assertSame($config, $this->api->getConfig());
     }
 
     public function testClient()
     {
-        $this->assertInstanceOf('GuzzleHttp\Client', $this->api->getClient());
+        $client = new Client();
+        $this->api->setClient($client);
+
+        $this->assertSame($client, $this->api->getClient());
     }
 }
