@@ -85,7 +85,7 @@ class Apps
      * @param string $id   ID of your application
      * @param array  $data New application data
      *
-     * @return \GuzzleHttp\Message\Response
+     * @return array
      */
     public function update($id, array $data)
     {

@@ -98,7 +98,7 @@ class OneSignal
      *
      * @throws OneSignalException
      *
-     * @return Response
+     * @return array
      */
     public function request($method, $uri, array $options = [])
     {

@@ -40,7 +40,7 @@ class Devices
      *
      * @param string $id Device ID
      *
-     * @return \GuzzleHttp\Message\Response
+     * @return array
      */
     public function getOne($id)
     {
