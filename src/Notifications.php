@@ -105,6 +105,7 @@ class Notifications
         return $this->api->request('PUT', '/notifications/' . $id, [
             'headers' => [
                 'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
+                'Content-Type' => 'application/json',
             ],
             'json' => [
                 'app_id' => $this->api->getConfig()->getApplicationId(),
