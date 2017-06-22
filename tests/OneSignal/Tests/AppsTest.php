@@ -67,7 +67,7 @@ class AppsTest extends TestCase
                 'safari_icon_128_128' => 'http://onesignal.com/safari_packages/92911750-242d-4260-9e00-9d9034f139ce/128x128.png',
                 'safari_icon_256_256' => 'http://onesignal.com/safari_packages/92911750-242d-4260-9e00-9d9034f139ce/128x128@2x.png',
                 'site_name' => 'The URL to your website for Web Push',
-                'basic_auth_key' => 'NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj'
+                'basic_auth_key' => 'NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj',
             ],
             [
                 'id' => 'e4e87830-b954-11e3-811d-f3b376925f15',
@@ -93,8 +93,8 @@ class AppsTest extends TestCase
                 'safari_icon_128_128' => 'http://onesignal.com/safari_packages/e4e87830-b954-11e3-811d-f3b376925f15/128x128.png',
                 'safari_icon_256_256' => 'http://onesignal.com/safari_packages/e4e87830-b954-11e3-811d-f3b376925f15/128x128@2x.png',
                 'site_name' => 'The URL to your website for Web Push',
-                'basic_auth_key' => 'NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj'
-            ]
+                'basic_auth_key' => 'NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj',
+            ],
         ];
 
         $oneSignal = $this->getMockedOneSignal();
@@ -141,7 +141,7 @@ class AppsTest extends TestCase
             'safari_icon_128_128' => 'http://onesignal.com/safari_packages/e4e87830-b954-11e3-811d-f3b376925f15/128x128.png',
             'safari_icon_256_256' => 'http://onesignal.com/safari_packages/e4e87830-b954-11e3-811d-f3b376925f15/128x128@2x.png',
             'site_name' => 'The URL to your website for Web Push',
-            'basic_auth_key' => 'NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj'
+            'basic_auth_key' => 'NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj',
         ];
 
         $oneSignal = $this->getMockedOneSignal();
@@ -152,7 +152,7 @@ class AppsTest extends TestCase
                     'Authorization' => 'Basic ' . $oneSignal->getConfig()->getUserAuthKey(),
                     'Content-Type' => 'application/json',
                 ],
-                'json' => $postData
+                'json' => $postData,
             ])
             ->willReturn($returnData);
 
@@ -194,7 +194,7 @@ class AppsTest extends TestCase
             'safari_icon_128_128' => 'http://onesignal.com/safari_packages/e4e87830-b954-11e3-811d-f3b376925f15/128x128.png',
             'safari_icon_256_256' => 'http://onesignal.com/safari_packages/e4e87830-b954-11e3-811d-f3b376925f15/128x128@2x.png',
             'site_name' => 'The URL to your website for Web Push',
-            'basic_auth_key' => 'NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj'
+            'basic_auth_key' => 'NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj',
         ];
 
         $oneSignal = $this->getMockedOneSignal();
@@ -205,7 +205,7 @@ class AppsTest extends TestCase
                     'Authorization' => 'Basic ' . $oneSignal->getConfig()->getUserAuthKey(),
                     'Content-Type' => 'application/json',
                 ],
-                'json' => $postData
+                'json' => $postData,
             ])
             ->willReturn($returnData);
 

@@ -4,7 +4,6 @@ namespace OneSignal;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\Response;
 use OneSignal\Exception\OneSignalException;
 
 /**

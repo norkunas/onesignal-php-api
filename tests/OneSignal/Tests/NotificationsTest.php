@@ -9,27 +9,27 @@ class NotificationsTest extends TestCase
     public function testGetOne()
     {
         $data = [
-            'id' => "481a2734-6b7d-11e4-a6ea-4b53294fa671",
+            'id' => '481a2734-6b7d-11e4-a6ea-4b53294fa671',
             'successful' => 15,
             'failed' => 1,
             'converted' => 3,
             'remaining' => 0,
             'queued_at' => 1415914655,
             'send_after' => 1415914655,
-            'url' =>  "https://yourWebsiteToOpen.com",
+            'url' =>  'https://yourWebsiteToOpen.com',
             'data' => [
                 'foo' => 'bar',
-                'your' => 'custom metadata'
+                'your' => 'custom metadata',
             ],
             'canceled' => false,
             'headings' => [
                 'en' => 'English and default langauge heading',
-                'es' => 'Spanish language heading'
+                'es' => 'Spanish language heading',
             ],
             'contents' => [
                 'en' => 'English language content',
-                'es' => 'Hola'
-            ]
+                'es' => 'Hola',
+            ],
         ];
 
         $oneSignal = $this->getMockedOneSignal();
@@ -63,12 +63,12 @@ class NotificationsTest extends TestCase
                     'data' => null,
                     'headings' => [
                         'en' => 'English and default langauge heading',
-                        'es' => 'Spanish language heading'
+                        'es' => 'Spanish language heading',
                     ],
                     'contents' => [
                         'en' => 'English and default content',
-                        'es' => 'Hola'
-                    ]
+                        'es' => 'Hola',
+                    ],
                 ],
                 [
                     'id' => 'b6b326a8-40aa-13e5-b91b-bf8bc3fa26f7',
@@ -82,18 +82,18 @@ class NotificationsTest extends TestCase
                     'url' => null,
                     'data' => [
                         'foo' => 'bar',
-                        'your' => 'custom metadata'
+                        'your' => 'custom metadata',
                     ],
                     'headings' => [
                         'en' => 'English and default langauge heading',
-                        'es' => 'Spanish language heading'
+                        'es' => 'Spanish language heading',
                     ],
                     'contents' => [
                         'en' => 'English and default content',
-                        'es' => 'Hola'
-                    ]
-                ]
-            ]
+                        'es' => 'Hola',
+                    ],
+                ],
+            ],
         ];
 
         $oneSignal = $this->getMockedOneSignal();
@@ -145,7 +145,7 @@ class NotificationsTest extends TestCase
                     'Authorization' => 'Basic app_auth',
                     'Content-Type' => 'application/json',
                 ],
-                'json' => $postData
+                'json' => $postData,
             ])
             ->willReturn($returnData);
 
@@ -174,7 +174,7 @@ class NotificationsTest extends TestCase
                 [
                     'field' => 'amount_spent',
                     'relation' => '>',
-                    'value' => '0'
+                    'value' => '0',
                 ],
             ],
         ];
@@ -192,7 +192,7 @@ class NotificationsTest extends TestCase
                     'Authorization' => 'Basic app_auth',
                     'Content-Type' => 'application/json',
                 ],
-                'json' => $postData
+                'json' => $postData,
             ])
             ->willReturn($returnData);
 
@@ -220,7 +220,7 @@ class NotificationsTest extends TestCase
                     'Authorization' => 'Basic app_auth',
                     'Content-Type' => 'application/json',
                 ],
-                'json' => $postData
+                'json' => $postData,
             ])
             ->willReturn($returnData);
 

@@ -23,7 +23,7 @@ class DevicesTest extends TestCase
             'amount_spent' => 0.0,
             'created_at' => 1395096859,
             'invalid_identifier' => false,
-            'badge_count' =>  0
+            'badge_count' =>  0,
         ];
 
         $oneSignal = $this->getMockedOneSignal();
@@ -102,7 +102,7 @@ class DevicesTest extends TestCase
                 'headers' => [
                     'Content-Type' => 'application/json',
                 ],
-                'json' => $postData
+                'json' => $postData,
             ])
             ->willReturn($returnData);
 
@@ -138,7 +138,7 @@ class DevicesTest extends TestCase
                 'headers' => [
                     'Content-Type' => 'application/json',
                 ],
-                'json' => $postData
+                'json' => $postData,
             ])
             ->willReturn($returnData);
 
@@ -167,7 +167,7 @@ class DevicesTest extends TestCase
                 'headers' => [
                     'Content-Type' => 'application/json',
                 ],
-                'json' => $postData
+                'json' => $postData,
             ])
             ->willReturn($returnData);
 
@@ -199,7 +199,7 @@ class DevicesTest extends TestCase
                 'headers' => [
                     'Content-Type' => 'application/json',
                 ],
-                'json' => $postData
+                'json' => $postData,
             ])
             ->willReturn($returnData);
 
@@ -226,7 +226,7 @@ class DevicesTest extends TestCase
                 'headers' => [
                     'Content-Type' => 'application/json',
                 ],
-                'json' => $postData
+                'json' => $postData,
             ])
             ->willReturn($returnData);
 
@@ -238,7 +238,7 @@ class DevicesTest extends TestCase
     public function testCsvExport()
     {
         $data = [
-            'csv_file_url' => 'https://onesignal.com/csv_exports/b2f7f966-d8cc-11e4-bed1-df8f05be55ba/users_184948440ec0e334728e87228011ff41_2015-11-10.csv.gz'
+            'csv_file_url' => 'https://onesignal.com/csv_exports/b2f7f966-d8cc-11e4-bed1-df8f05be55ba/users_184948440ec0e334728e87228011ff41_2015-11-10.csv.gz',
         ];
 
         $oneSignal = $this->getMockedOneSignal();
