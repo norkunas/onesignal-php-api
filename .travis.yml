@@ -1,15 +1,20 @@
 language: php
-
 sudo: false
 
-php:
-    - 5.4
-    - 5.5
-    - 5.6
-    - 7.0
-    - 7.1
-    - nightly
+matrix:
+    fast_finish: true
+    include:
+        - php: "5.4"
+        - php: "5.5"
+        - php: "5.6"
+        - php: "7.0"
+        - php: "7.1"
+        - php: "nightly"
+    allow_failures:
+        - php: "nightly"
 
-before_script:
+install:
     - composer self-update
-    - composer install --no-interaction --prefer-source --dev
+    - composer install --no-interaction --prefer-source --no-suggest
+
+script: vendor/bin/phpunit
