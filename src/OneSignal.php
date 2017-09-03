@@ -4,6 +4,7 @@ namespace OneSignal;
 
 use Http\Client\Common\HttpMethodsClient as Client;
 use OneSignal\Exception\OneSignalException;
+use OneSignal\Resolver\ResolverFactory;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -25,6 +26,8 @@ class OneSignal
      */
     private $client;
 
+    private $resolverFactory;
+
     /**
      * @var array
      */
@@ -43,6 +46,8 @@ class OneSignal
         if (null !== $client) {
             $this->client = $client;
         }
+
+        $this->resolverFactory = new ResolverFactory($this->config);
     }
 
     /**
@@ -130,7 +135,7 @@ class OneSignal
 
             $serviceName = __NAMESPACE__.'\\'.ucfirst($name);
 
-            $this->services[$name] = new $serviceName($this);
+            $this->services[$name] = new $serviceName($this, $this->resolverFactory);
 
             return $this->services[$name];
         }
