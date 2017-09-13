@@ -2,7 +2,7 @@
 
 namespace OneSignal;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use OneSignal\Resolver\ResolverFactory;
 
 class Devices
 {
@@ -22,9 +22,12 @@ class Devices
 
     protected $api;
 
-    public function __construct(OneSignal $api)
+    private $resolverFactory;
+
+    public function __construct(OneSignal $api, ResolverFactory $resolverFactory)
     {
         $this->api = $api;
+        $this->resolverFactory = $resolverFactory;
     }
 
     /**
@@ -75,24 +78,7 @@ class Devices
      */
     public function add(array $data)
     {
-        $data = $this->resolve($data, function (OptionsResolver $resolver) {
-            $resolver
-                ->setRequired('device_type')
-                ->setAllowedTypes('device_type', 'int')
-                ->setAllowedValues('device_type', [
-                    self::IOS,
-                    self::ANDROID,
-                    self::AMAZON,
-                    self::WINDOWS_PHONE,
-                    self::WINDOWS_PHONE_MPNS,
-                    self::CHROME_APP,
-                    self::CHROME_WEB,
-                    self::WINDOWS_PHONE_WNS,
-                    self::SAFARI,
-                    self::FIREFOX,
-                    self::MACOS,
-                ]);
-        });
+        $data = $this->resolverFactory->createNewDeviceResolver()->resolve($data);
 
         return $this->api->request('POST', '/players', [], json_encode($data));
     }
@@ -107,7 +93,7 @@ class Devices
      */
     public function update($id, array $data)
     {
-        $data = $this->resolve($data);
+        $data = $this->resolverFactory->createExistingDeviceResolver()->resolve($data);
 
         return $this->api->request('PUT', '/players/'.$id, [], json_encode($data));
     }
@@ -122,27 +108,7 @@ class Devices
      */
     public function onSession($id, array $data)
     {
-        $data = (new OptionsResolver())
-            ->setDefined('identifier')
-            ->setAllowedTypes('identifier', 'string')
-            ->setDefined('language')
-            ->setAllowedTypes('language', 'string')
-            ->setDefined('timezone')
-            ->setAllowedTypes('timezone', 'int')
-            ->setDefined('game_version')
-            ->setAllowedTypes('game_version', 'string')
-            ->setDefined('device_os')
-            ->setAllowedTypes('device_os', 'string')
-            // @todo: remove "device_model" later (this option is probably deprecated as it is removed from documentation)
-            ->setDefined('device_model')
-            ->setAllowedTypes('device_model', 'string')
-            ->setDefined('ad_id')
-            ->setAllowedTypes('ad_id', 'string')
-            ->setDefined('sdk')
-            ->setAllowedTypes('sdk', 'string')
-            ->setDefined('tags')
-            ->setAllowedTypes('tags', 'array')
-            ->resolve($data);
+        $data = $this->resolverFactory->createDeviceSessionResolver()->resolve($data);
 
         return $this->api->request('POST', '/players/'.$id.'/on_session', [], json_encode($data));
     }
@@ -157,23 +123,7 @@ class Devices
      */
     public function onPurchase($id, array $data)
     {
-        $data = (new OptionsResolver())
-            ->setDefined('existing')
-            ->setAllowedTypes('existing', 'bool')
-            ->setRequired('purchases')
-            ->setAllowedTypes('purchases', 'array')
-            ->resolve($data);
-
-        foreach ($data['purchases'] as $key => $purchase) {
-            $data['purchases'][$key] = (new OptionsResolver())
-                ->setRequired('sku')
-                ->setAllowedTypes('sku', 'string')
-                ->setRequired('amount')
-                ->setAllowedTypes('amount', 'float')
-                ->setRequired('iso')
-                ->setAllowedTypes('iso', 'string')
-                ->resolve($purchase);
-        }
+        $data = $this->resolverFactory->createDevicePurchaseResolver()->resolve($data);
 
         return $this->api->request('POST', '/players/'.$id.'/on_purchase', [], json_encode($data));
     }
@@ -188,11 +138,7 @@ class Devices
      */
     public function onFocus($id, array $data)
     {
-        $data = (new OptionsResolver())
-            ->setDefault('state', 'ping')
-            ->setRequired('active_time')
-            ->setAllowedTypes('active_time', 'int')
-            ->resolve($data);
+        $data = $this->resolverFactory->createDeviceFocusResolver()->resolve($data);
 
         return $this->api->request('POST', '/players/'.$id.'/on_focus', [], json_encode($data));
     }
@@ -220,55 +166,5 @@ class Devices
         ];
 
         return $this->api->request('POST', $url, $headers, json_encode($body));
-    }
-
-    protected function resolve(array $data, callable $callback = null)
-    {
-        $resolver = new OptionsResolver();
-
-        if (is_callable($callback)) {
-            $callback($resolver);
-        }
-
-        $resolver
-            ->setDefined('identifier')
-            ->setAllowedTypes('identifier', 'string')
-            ->setDefined('language')
-            ->setAllowedTypes('language', 'string')
-            ->setDefined('timezone')
-            ->setAllowedTypes('timezone', 'int')
-            ->setDefined('game_version')
-            ->setAllowedTypes('game_version', 'string')
-            ->setDefined('device_model')
-            ->setAllowedTypes('device_model', 'string')
-            ->setDefined('device_os')
-            ->setAllowedTypes('device_os', 'string')
-            ->setDefined('ad_id')
-            ->setAllowedTypes('ad_id', 'string')
-            ->setDefined('sdk')
-            ->setAllowedTypes('sdk', 'string')
-            ->setDefined('session_count')
-            ->setAllowedTypes('session_count', 'int')
-            ->setDefined('tags')
-            ->setAllowedTypes('tags', 'array')
-            ->setDefined('amount_spent')
-            ->setAllowedTypes('amount_spent', 'float')
-            ->setDefined('created_at')
-            ->setAllowedTypes('created_at', 'int')
-            ->setDefined('playtime')
-            ->setAllowedTypes('playtime', 'int')
-            ->setDefined('badge_count')
-            ->setAllowedTypes('badge_count', 'int')
-            ->setDefined('last_active')
-            ->setAllowedTypes('last_active', 'int')
-            ->setDefined('notification_types')
-            ->setAllowedTypes('notification_types', 'int')
-            ->setAllowedValues('notification_types', [1, -2])
-            ->setDefined('test_type')
-            ->setAllowedTypes('test_type', 'int')
-            ->setAllowedValues('test_type', [1, 2])
-            ->setDefault('app_id', $this->api->getConfig()->getApplicationId());
-
-        return $resolver->resolve($data);
     }
 }
