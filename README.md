@@ -5,7 +5,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/norkunas/onesignal-php-api/badges/quality-score.png?b=0.1)](https://scrutinizer-ci.com/g/norkunas/onesignal-php-api/?branch=0.1)
 [![Total Downloads](https://poser.pugx.org/norkunas/onesignal-php-api/downloads)](https://packagist.org/packages/norkunas/onesignal-php-api)
 [![Build Status](https://travis-ci.org/norkunas/onesignal-php-api.svg?branch=0.1)](https://travis-ci.org/norkunas/onesignal-php-api)
-[![StyleCI](https://styleci.io/repos/34352212/shield?style=flat)](https://styleci.io/repos/34352212)
+[![StyleCI](https://styleci.io/repos/34352212/shield?style=flat&branch=0.1)](https://styleci.io/repos/34352212)
 [![License](https://poser.pugx.org/norkunas/onesignal-php-api/license)](https://packagist.org/packages/norkunas/onesignal-php-api)
 
 ## Install using Composer
