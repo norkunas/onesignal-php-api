@@ -5,9 +5,8 @@ sudo: false
 php:
     - 5.6
     - 7.0
-    - hhvm
+    - 7.1
     - nightly
 
-before_script:
-    - composer self-update
-    - composer install --no-interaction --prefer-source
+install:
+  - travis_retry composer install --no-interaction --prefer-source
