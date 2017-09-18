@@ -1,5 +1,5 @@
 {
-    "name": "norkunas/onesignal-php-api",
+    "name": "mariobalca/onesignal-php-api",
     "description": "OneSignal API for PHP",
     "keywords": ["onesignal", "api"],
     "license": "MIT",
