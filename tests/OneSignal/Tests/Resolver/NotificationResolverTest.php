@@ -59,6 +59,8 @@ class NotificationResolverTest extends \PHPUnit_Framework_TestCase
             'wp_wns_sound' => 'value',
             'data' => ['value'],
             'buttons' => [],
+            'android_channel_id' => '09228c02-6188-4307-b139-402600213d0e',
+            'existing_android_channel_id' => '09228c02-6188-4307-b139-402600213d0e',
             'android_background_layout' => ['value'],
             'small_icon' => 'value',
             'large_icon' => 'value',
@@ -147,6 +149,8 @@ class NotificationResolverTest extends \PHPUnit_Framework_TestCase
             [['wp_wns_sound' => 666]],
             [['data' => 666]],
             [['buttons' => 666]],
+            [['android_channel_id' => 666]],
+            [['existing_android_channel_id' => 666]],
             [['android_background_layout' => 666]],
             [['small_icon' => 666]],
             [['large_icon' => 666]],
@@ -325,8 +329,6 @@ class NotificationResolverTest extends \PHPUnit_Framework_TestCase
         $inputData = new \DateTime();
         $expectedData = $inputData->format(NotificationResolver::SEND_AFTER_FORMAT);
 
-        $this->assertEquals(
-            $expectedData,
-            $method->invokeArgs($this->notificationResolver, [new OptionsResolver(), $inputData, NotificationResolver::SEND_AFTER_FORMAT]));
+        $this->assertEquals($expectedData, $method->invokeArgs($this->notificationResolver, [new OptionsResolver(), $inputData, NotificationResolver::SEND_AFTER_FORMAT]));
     }
 }

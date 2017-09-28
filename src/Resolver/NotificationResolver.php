@@ -99,6 +99,10 @@ class NotificationResolver implements ResolverInterface
             ->setNormalizer('buttons', function (Options $options, array $values) {
                 return $this->normalizeButtons($values);
             })
+            ->setDefined('android_channel_id')
+            ->setAllowedTypes('android_channel_id', 'string')
+            ->setDefined('existing_android_channel_id')
+            ->setAllowedTypes('existing_android_channel_id', 'string')
             ->setDefined('android_background_layout')
             ->setAllowedTypes('android_background_layout', 'array')
             ->setAllowedValues('android_background_layout', function ($layouts) {
