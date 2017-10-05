@@ -1,6 +1,6 @@
 # Setup with Guzzle6
 
-```composer require php-http/guzzle6-adapter norkunas/onesignal-php-api:dev-master```
+```composer require php-http/guzzle6-adapter norkunas/onesignal-php-api```
 
 ```php
 <?php
