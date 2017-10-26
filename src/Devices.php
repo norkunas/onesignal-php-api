@@ -232,9 +232,11 @@ class Devices
      *
      * Application auth key must be set.
      *
+     * @param array $data extra data to pass to the csv_export endpoint
+     *
      * @return array
      */
-    public function csvExport()
+    public function csvExport(array $data = [])
     {
         $url = '/players/csv_export?app_id=' . $this->api->getConfig()->getApplicationId();
 
@@ -242,6 +244,7 @@ class Devices
             'headers' => [
                 'Authorization' => 'Basic ' . $this->api->getConfig()->getApplicationAuthKey(),
             ],
+            'json' => $data,
         ]);
     }
 
