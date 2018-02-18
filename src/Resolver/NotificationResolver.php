@@ -149,7 +149,7 @@ class NotificationResolver implements ResolverInterface
             })
             ->setDefined('send_after')
             ->setAllowedTypes('send_after', '\DateTimeInterface')
-            ->setNormalizer('send_after', function (Options $options, \DateTime $value) {
+            ->setNormalizer('send_after', function (Options $options, \DateTimeInterface $value) {
                 return $this->normalizeDateTime($options, $value, self::SEND_AFTER_FORMAT);
             })
             ->setDefined('delayed_option')
@@ -157,7 +157,7 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedValues('delayed_option', ['timezone', 'last-active'])
             ->setDefined('delivery_time_of_day')
             ->setAllowedTypes('delivery_time_of_day', '\DateTimeInterface')
-            ->setNormalizer('delivery_time_of_day', function (Options $options, \DateTime $value) {
+            ->setNormalizer('delivery_time_of_day', function (Options $options, \DateTimeInterface $value) {
                 return $this->normalizeDateTime($options, $value, self::DELIVERY_TIME_OF_DAY_FORMAT);
             })
             ->setDefined('android_led_color')
@@ -278,7 +278,7 @@ class NotificationResolver implements ResolverInterface
         return true;
     }
 
-    private function normalizeDateTime(Options $options, \DateTime $value, $format)
+    private function normalizeDateTime(Options $options, \DateTimeInterface $value, $format)
     {
         return $value->format($format);
     }
