@@ -204,7 +204,7 @@ class NotificationResolver implements ResolverInterface
             if (isset($filter['field'])) {
                 $filters[] = $filter;
             } elseif (isset($filter['operator'])) {
-                $filters[] = ['operator' => 'OR'];
+                $filters[] = $filter;
             }
         }
 
