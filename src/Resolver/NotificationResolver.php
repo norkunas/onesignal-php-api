@@ -193,6 +193,10 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('priority', 'int')
             ->setDefault('app_id', $this->config->getApplicationId())
             ->setAllowedTypes('app_id', 'string')
+            ->setDefined('email_subject')
+            ->setAllowedTypes('email_subject', 'string')
+            ->setDefined('email_body')
+            ->setAllowedTypes('email_body', 'string')
             ->resolve($data);
     }
 
