@@ -103,6 +103,10 @@ class NotificationResolverTest extends \PHPUnit_Framework_TestCase
             'ttl' => 23,
             'priority' => 10,
             'app_id' => 'value',
+            'email_subject' => 'value',
+            'email_body' => 'value',
+            'email_from_name' => 'value',
+            'email_from_address' => 'value',
         ];
 
         $expectedData = $inpuData;
@@ -186,6 +190,10 @@ class NotificationResolverTest extends \PHPUnit_Framework_TestCase
             [['ttl' => 'wrongType']],
             [['priority' => 'wrongType']],
             [['app_id' => 666]],
+            [['email_subject' => 666]],
+            [['email_body' => 666]],
+            [['email_from_name' => 666]],
+            [['email_from_address' => 666]],
         ];
     }
 
