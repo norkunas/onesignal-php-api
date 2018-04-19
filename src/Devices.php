@@ -19,6 +19,8 @@ class Devices
     const SAFARI = 7;
     const FIREFOX = 8;
     const MACOS = 9;
+    const ALEXA = 10;
+    const EMAIL = 11;
 
     protected $api;
 
