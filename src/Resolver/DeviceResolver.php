@@ -69,6 +69,12 @@ class DeviceResolver implements ResolverInterface
             ->setDefined('test_type')
             ->setAllowedTypes('test_type', 'int')
             ->setAllowedValues('test_type', [1, 2])
+            ->setDefined('long')
+            ->setAllowedTypes('long', 'double')
+            ->setDefined('lat')
+            ->setAllowedTypes('lat', 'double')
+            ->setDefined('country')
+            ->setAllowedTypes('country', 'string')
             ->setDefault('app_id', $this->config->getApplicationId())
             ->setAllowedTypes('app_id', 'string');
 
@@ -88,6 +94,8 @@ class DeviceResolver implements ResolverInterface
                     Devices::SAFARI,
                     Devices::FIREFOX,
                     Devices::MACOS,
+                    Devices::ALEXA,
+                    Devices::EMAIL,
                 ]);
         }
 

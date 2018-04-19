@@ -40,6 +40,9 @@ class DeviceResolverTest extends \PHPUnit_Framework_TestCase
             'last_active' => 98,
             'notification_types' => -2,
             'test_type' => 1,
+            'long' => 55.1684595,
+            'lat' => 22.7624291,
+            'country' => 'LT',
             'app_id' => 'value',
         ];
 
@@ -100,6 +103,9 @@ class DeviceResolverTest extends \PHPUnit_Framework_TestCase
             [['last_active' => 'wrongType']],
             [['notification_types' => 'wrongType']],
             [['test_type' => 'wrongType']],
+            [['long' => true]],
+            [['lat' => true]],
+            [['country' => false]],
             [['app_id' => 666]],
             [['device_type' => 666]],
         ];
