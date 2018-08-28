@@ -2,10 +2,10 @@
 
 [![Latest Stable Version](https://poser.pugx.org/norkunas/onesignal-php-api/v/stable)](https://packagist.org/packages/norkunas/onesignal-php-api)
 [![Latest Unstable Version](https://poser.pugx.org/norkunas/onesignal-php-api/v/unstable)](https://packagist.org/packages/norkunas/onesignal-php-api)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/norkunas/onesignal-php-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/norkunas/onesignal-php-api/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/norkunas/onesignal-php-api/badges/quality-score.png?b=1.0)](https://scrutinizer-ci.com/g/norkunas/onesignal-php-api/?branch=1.0)
 [![Total Downloads](https://poser.pugx.org/norkunas/onesignal-php-api/downloads)](https://packagist.org/packages/norkunas/onesignal-php-api)
-[![Build Status](https://travis-ci.org/norkunas/onesignal-php-api.svg?branch=master)](https://travis-ci.org/norkunas/onesignal-php-api)
-[![StyleCI](https://styleci.io/repos/34352212/shield?style=flat)](https://styleci.io/repos/34352212)
+[![Build Status](https://travis-ci.org/norkunas/onesignal-php-api.svg?branch=1.0)](https://travis-ci.org/norkunas/onesignal-php-api)
+[![StyleCI](https://styleci.io/repos/34352212/shield?style=flat&branch=1.0)](https://styleci.io/repos/34352212)
 [![License](https://poser.pugx.org/norkunas/onesignal-php-api/license)](https://packagist.org/packages/norkunas/onesignal-php-api)
 
 ## Install
