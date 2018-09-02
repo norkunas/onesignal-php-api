@@ -3,8 +3,9 @@
 namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\AppResolver;
+use PHPUnit\Framework\TestCase;
 
-class AppResolverTest extends \PHPUnit_Framework_TestCase
+class AppResolverTest extends TestCase
 {
     /**
      * @var AppResolver

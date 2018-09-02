@@ -3,8 +3,9 @@
 namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\DevicePurchaseResolver;
+use PHPUnit\Framework\TestCase;
 
-class DevicePurchaseResolverTest extends \PHPUnit_Framework_TestCase
+class DevicePurchaseResolverTest extends TestCase
 {
     /**
      * @var DevicePurchaseResolver
