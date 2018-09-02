@@ -10,8 +10,9 @@ use OneSignal\Resolver\DeviceSessionResolver;
 use OneSignal\Resolver\NotificationResolver;
 use OneSignal\Resolver\ResolverFactory;
 use OneSignal\Tests\ConfigMockerTrait;
+use PHPUnit\Framework\TestCase;
 
-class ResolverFactoryTest extends \PHPUnit_Framework_TestCase
+class ResolverFactoryTest extends TestCase
 {
     use ConfigMockerTrait;
 

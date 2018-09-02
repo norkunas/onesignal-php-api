@@ -5,8 +5,9 @@ namespace OneSignal\Tests;
 use OneSignal\OneSignal;
 use OneSignal\Resolver\ResolverFactory;
 use OneSignal\Resolver\ResolverInterface;
+use PHPUnit\Framework\TestCase;
 
-abstract class AbstractApiTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractApiTest extends TestCase
 {
     use ConfigMockerTrait;
 

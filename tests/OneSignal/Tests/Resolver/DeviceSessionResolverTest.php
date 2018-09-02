@@ -3,8 +3,9 @@
 namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\DeviceSessionResolver;
+use PHPUnit\Framework\TestCase;
 
-class DeviceSessionResolverTest extends \PHPUnit_Framework_TestCase
+class DeviceSessionResolverTest extends TestCase
 {
     /**
      * @var DeviceSessionResolver
