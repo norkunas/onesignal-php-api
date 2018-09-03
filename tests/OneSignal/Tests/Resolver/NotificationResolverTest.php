@@ -6,8 +6,9 @@ use OneSignal\Resolver\NotificationResolver;
 use OneSignal\Tests\ConfigMockerTrait;
 use OneSignal\Tests\PrivateAccessorTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use PHPUnit\Framework\TestCase;
 
-class NotificationResolverTest extends \PHPUnit_Framework_TestCase
+class NotificationResolverTest extends TestCase
 {
     use ConfigMockerTrait;
     use PrivateAccessorTrait;

@@ -5,8 +5,9 @@ namespace OneSignal\Tests;
 use OneSignal\Config;
 use OneSignal\OneSignal;
 use Psr\Http\Message\ResponseInterface;
+use PHPUnit\Framework\TestCase;
 
-class OneSignalTest extends \PHPUnit_Framework_TestCase
+class OneSignalTest extends TestCase
 {
     /**
      * @var OneSignal

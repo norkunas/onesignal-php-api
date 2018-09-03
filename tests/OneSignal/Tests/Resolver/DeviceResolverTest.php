@@ -5,8 +5,9 @@ namespace OneSignal\Tests\Resolver;
 use OneSignal\Devices;
 use OneSignal\Resolver\DeviceResolver;
 use OneSignal\Tests\ConfigMockerTrait;
+use PHPUnit\Framework\TestCase;
 
-class DeviceResolverTest extends \PHPUnit_Framework_TestCase
+class DeviceResolverTest extends TestCase
 {
     use ConfigMockerTrait;
 

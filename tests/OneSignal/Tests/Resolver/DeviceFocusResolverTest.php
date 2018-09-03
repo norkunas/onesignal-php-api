@@ -3,8 +3,9 @@
 namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\DeviceFocusResolver;
+use PHPUnit\Framework\TestCase;
 
-class DeviceFocusResolverTest extends \PHPUnit_Framework_TestCase
+class DeviceFocusResolverTest extends TestCase
 {
     /**
      * @var DeviceFocusResolver
