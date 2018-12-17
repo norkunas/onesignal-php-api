@@ -108,6 +108,7 @@ class NotificationResolverTest extends TestCase
             'email_body' => 'value',
             'email_from_name' => 'value',
             'email_from_address' => 'value',
+            'external_id' => 'value',
         ];
 
         $expectedData = $inpuData;
@@ -195,6 +196,7 @@ class NotificationResolverTest extends TestCase
             [['email_body' => 666]],
             [['email_from_name' => 666]],
             [['email_from_address' => 666]],
+            [['external_id' => 666]],
         ];
     }
 
