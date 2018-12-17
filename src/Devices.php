@@ -113,6 +113,24 @@ class Devices
     }
 
     /**
+     * Delete existing registered device from your application.
+     *
+     * @param string $id   Device ID
+     *
+     * @return array
+     */
+    public function delete($id)
+    {
+        $query = [
+            'app_id' => $this->api->getConfig()->getApplicationId(),
+        ];
+
+        return $this->api->request('DELETE', '/players/'.$id.'?'.http_build_query($query), [
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+        ]);
+    }
+    
+    /**
      * Call on new device session in your app.
      *
      * @param string $id   Device ID
