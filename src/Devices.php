@@ -101,6 +101,29 @@ class Devices
     }
 
     /**
+     * Delete existing registered device from your application.
+     *
+     * OneSignal supports DELETE on the players API endpoint which is not documented in their official documentation
+     * Reference: https://documentation.onesignal.com/docs/handling-personal-data#section-deleting-users-or-other-data-from-onesignal
+     *
+     * Application auth key must be set.
+     *
+     * @param string $id Device ID
+     *
+     * @return array
+     */
+    public function delete($id)
+    {
+        $query = [
+            'app_id' => $this->api->getConfig()->getApplicationId(),
+        ];
+
+        return $this->api->request('DELETE', '/players/'.$id.'?'.http_build_query($query), [
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+        ]);
+    }
+
+    /**
      * Call on new device session in your app.
      *
      * @param string $id   Device ID

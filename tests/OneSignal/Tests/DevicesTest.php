@@ -70,6 +70,19 @@ class DevicesTest extends AbstractApiTest
         $this->assertEquals($expectedRequest, $this->devices->update($fakeId, ['data' => 'myData']));
     }
 
+    public function testDelete()
+    {
+        $fakeId = 1234;
+        $expectedRequest = [
+            'DELETE',
+            '/players/'.$fakeId.'?app_id=fakeApplicationId',
+            ['Authorization' => 'Basic fakeApplicationAuthKey'],
+            null,
+        ];
+
+        $this->assertEquals($expectedRequest, $this->devices->delete($fakeId));
+    }
+
     public function testOnSession()
     {
         $fakeId = 1234;
