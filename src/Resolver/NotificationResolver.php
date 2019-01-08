@@ -210,6 +210,8 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('email_from_address', 'string')
             ->setDefined('external_id')
             ->setAllowedTypes('external_id', 'string')
+            ->setDefined('web_push_topic')
+            ->setAllowedTypes('web_push_topic', 'string')
             ->resolve($data);
     }
 
