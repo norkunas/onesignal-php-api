@@ -86,6 +86,7 @@ class NotificationResolverTest extends TestCase
             'chrome_web_image' => 'value',
             'firefox_icon' => 'value',
             'url' => 'http://url.com',
+            'web_url' => 'http://url.com',
             'send_after' => new \DateTime(),
             'delayed_option' => 'timezone',
             'delivery_time_of_day' => new \DateTime(),
@@ -110,6 +111,7 @@ class NotificationResolverTest extends TestCase
             'email_from_name' => 'value',
             'email_from_address' => 'value',
             'external_id' => 'value',
+            'web_push_topic' => 'value',
         ];
 
         $expectedData = $inpuData;
@@ -175,6 +177,7 @@ class NotificationResolverTest extends TestCase
             [['chrome_web_image' => 666]],
             [['firefox_icon' => 666]],
             [['url' => 666]],
+            [['web_url' => 666]],
             [['send_after' => 666]],
             [['delayed_option' => 666]],
             [['delivery_time_of_day' => 666]],
@@ -199,6 +202,7 @@ class NotificationResolverTest extends TestCase
             [['email_from_name' => 666]],
             [['email_from_address' => 666]],
             [['external_id' => 666]],
+            [['web_push_topic' => 666]],
         ];
     }
 
