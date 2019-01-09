@@ -110,7 +110,7 @@ class DeviceResolverTest extends TestCase
             [['country' => false]],
             [['app_id' => 666]],
             [['device_type' => 666]],
-            [['external_user_id' => 666]]
+            [['external_user_id' => 666]],
         ];
     }
 
