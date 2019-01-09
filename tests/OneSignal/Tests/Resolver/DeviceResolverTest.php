@@ -44,6 +44,7 @@ class DeviceResolverTest extends TestCase
             'long' => 55.1684595,
             'lat' => 22.7624291,
             'country' => 'LT',
+            'external_user_id' => 'value',
             'app_id' => 'value',
         ];
 
@@ -109,6 +110,7 @@ class DeviceResolverTest extends TestCase
             [['country' => false]],
             [['app_id' => 666]],
             [['device_type' => 666]],
+            [['external_user_id' => 666]]
         ];
     }
 
