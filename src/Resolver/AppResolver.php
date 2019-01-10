@@ -23,6 +23,8 @@ class AppResolver implements ResolverInterface
             ->setAllowedTypes('apns_p12_password', 'string')
             ->setDefined('gcm_key')
             ->setAllowedTypes('gcm_key', 'string')
+            ->setDefined('android_gcm_sender_id')
+            ->setAllowedTypes('android_gcm_sender_id', 'string')
             ->setDefined('chrome_key')
             ->setAllowedTypes('chrome_key', 'string')
             ->setDefined('safari_apns_p12')
