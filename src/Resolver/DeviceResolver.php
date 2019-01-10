@@ -75,6 +75,8 @@ class DeviceResolver implements ResolverInterface
             ->setAllowedTypes('lat', 'double')
             ->setDefined('country')
             ->setAllowedTypes('country', 'string')
+            ->setDefined('external_user_id')
+            ->setAllowedTypes('external_user_id', 'string')
             ->setDefault('app_id', $this->config->getApplicationId())
             ->setAllowedTypes('app_id', 'string');
 
