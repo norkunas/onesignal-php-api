@@ -16,7 +16,7 @@ This packages requires an http adapter to work. You can choose any from
 Example with Guzzle v6 adapter, install it with [Composer](https://getcomposer.org/):
 
 ```
-composer require php-http/guzzle6-adapter norkunas/onesignal-php-api
+composer require php-http/guzzle6-adapter:^1.1 norkunas/onesignal-php-api
 ```
 
 And now configure the service:
