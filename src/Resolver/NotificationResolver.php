@@ -191,6 +191,8 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('android_group', 'string')
             ->setDefined('android_group_message')
             ->setAllowedTypes('android_group_message', 'array')
+            ->setDefined('thread_id')
+            ->setAllowedTypes('thread_id', 'string')
             ->setDefined('adm_group')
             ->setAllowedTypes('adm_group', 'string')
             ->setDefined('adm_group_message')
