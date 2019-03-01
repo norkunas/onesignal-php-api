@@ -195,6 +195,12 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('adm_group', 'string')
             ->setDefined('adm_group_message')
             ->setAllowedTypes('adm_group_message', 'array')
+            ->setDefined('thread_id')
+            ->setAllowedTypes('thread_id', 'string')
+            ->setDefined('summary_arg')
+            ->setAllowedTypes('summary_arg', 'string')
+            ->setDefined('summary_arg_count')
+            ->setAllowedTypes('summary_arg_count', 'int')
             ->setDefined('ttl')
             ->setAllowedTypes('ttl', 'int')
             ->setDefined('priority')
@@ -233,7 +239,7 @@ class NotificationResolver implements ResolverInterface
 
     private function filterUrl($value)
     {
-        return (bool) filter_var($value, FILTER_VALIDATE_URL);
+        return (bool)filter_var($value, FILTER_VALIDATE_URL);
     }
 
     private function normalizeButtons($values)
