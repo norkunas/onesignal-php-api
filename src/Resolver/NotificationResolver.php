@@ -239,7 +239,7 @@ class NotificationResolver implements ResolverInterface
 
     private function filterUrl($value)
     {
-        return (bool)filter_var($value, FILTER_VALIDATE_URL);
+        return (bool) filter_var($value, FILTER_VALIDATE_URL);
     }
 
     private function normalizeButtons($values)
