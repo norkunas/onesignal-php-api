@@ -5,8 +5,8 @@ namespace OneSignal\Tests\Resolver;
 use OneSignal\Resolver\NotificationResolver;
 use OneSignal\Tests\ConfigMockerTrait;
 use OneSignal\Tests\PrivateAccessorTrait;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NotificationResolverTest extends TestCase
 {
@@ -103,6 +103,9 @@ class NotificationResolverTest extends TestCase
             'android_group_message' => ['value'],
             'adm_group' => 'value',
             'adm_group_message' => ['value'],
+            'thread_id' => 'value',
+            'summary_arg' => 'value',
+            'summary_arg_count' => 10,
             'ttl' => 23,
             'priority' => 10,
             'app_id' => 'value',
