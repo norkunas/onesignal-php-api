@@ -190,7 +190,7 @@ class Devices
      *
      * @return array
      */
-    public function csvExport(array $extraFields = [], $segmentName = null, int $lastActiveSince = null)
+    public function csvExport(array $extraFields = [], $segmentName = null, $lastActiveSince = null)
     {
         $url = '/players/csv_export?app_id='.$this->api->getConfig()->getApplicationId();
 
