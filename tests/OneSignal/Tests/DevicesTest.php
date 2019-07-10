@@ -113,13 +113,15 @@ class DevicesTest extends AbstractApiTest
 
     public function testCsvExport()
     {
+        $lastActiveSince = time() - 30*86400;
+
         $expectedRequest = [
             'POST',
             '/players/csv_export?app_id=fakeApplicationId',
             ['Authorization' => 'Basic fakeApplicationAuthKey'],
-            '{"extra_fields":["myField1","myField2"]}',
+            '{"extra_fields":["myField1","myField2"],"segment_name":"Active Users","last_active_since":"'.$lastActiveSince.'"}',
         ];
 
-        $this->assertEquals($expectedRequest, $this->devices->csvExport(['myField1', 'myField2']));
+        $this->assertEquals($expectedRequest, $this->devices->csvExport(['myField1', 'myField2'], 'Active Users', $lastActiveSince));
     }
 }
