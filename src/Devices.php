@@ -202,12 +202,12 @@ class Devices
             'extra_fields' => $extraFields,
         ];
 
-        if(!is_null($segmentName)) {
+        if (!is_null($segmentName)) {
             $body['segment_name'] = $segmentName;
         }
 
-        if(!is_null($lastActiveSince)) {
-            $body['last_active_since'] = (string)$lastActiveSince;
+        if (!is_null($lastActiveSince)) {
+            $body['last_active_since'] = (string) $lastActiveSince;
         }
 
         return $this->api->request('POST', $url, $headers, json_encode($body));

@@ -113,7 +113,7 @@ class DevicesTest extends AbstractApiTest
 
     public function testCsvExport()
     {
-        $lastActiveSince = time() - 30*86400;
+        $lastActiveSince = time() - 30 * 86400;
 
         $expectedRequest = [
             'POST',
