@@ -41,6 +41,7 @@ class AppResolverTest extends TestCase
             'chrome_web_gcm_sender_id' => 'value',
             'chrome_web_default_notification_icon' => 'value',
             'chrome_web_sub_domain' => 'value',
+            'organization_id' => 'value',
         ];
 
         $this->assertEquals($expectedData, $this->appResolver->resolve($expectedData));
@@ -78,6 +79,7 @@ class AppResolverTest extends TestCase
             [['chrome_web_gcm_sender_id' => 666]],
             [['chrome_web_default_notification_icon' => 666]],
             [['chrome_web_sub_domain' => 666]],
+            [['organization_id' => 666]],
         ];
     }
 
