@@ -173,12 +173,15 @@ class Devices
      *
      * Application auth key must be set.
      *
-     * @param array $extraFields Additional fields that you wish to include.
-     *                           Currently supports: "location", "country", "rooted"
+     * @param array  $extraFields     Additional fields that you wish to include.
+     *                                Currently supports: "location", "country", "rooted"
+     * @param string $segmentName     A segment name to filter the scv export by.
+     *                                Only devices from that segment will make it into the export
+     * @param int    $lastActiveSince An epoch to filter results to users active after this time
      *
      * @return array
      */
-    public function csvExport(array $extraFields = [])
+    public function csvExport(array $extraFields = [], $segmentName = null, $lastActiveSince = null)
     {
         $url = '/players/csv_export?app_id='.$this->api->getConfig()->getApplicationId();
 
@@ -189,6 +192,14 @@ class Devices
         $body = [
             'extra_fields' => $extraFields,
         ];
+
+        if (null !== $segmentName) {
+            $body['segment_name'] = $segmentName;
+        }
+
+        if (null !== $lastActiveSince) {
+            $body['last_active_since'] = (string) $lastActiveSince;
+        }
 
         return $this->api->request('POST', $url, $headers, json_encode($body));
     }
