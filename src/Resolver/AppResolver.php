@@ -55,6 +55,8 @@ class AppResolver implements ResolverInterface
             ->setAllowedTypes('chrome_web_default_notification_icon', 'string')
             ->setDefined('chrome_web_sub_domain')
             ->setAllowedTypes('chrome_web_sub_domain', 'string')
+            ->setDefined('organization_id')
+            ->setAllowedTypes('organization_id', 'string')
             ->resolve($data);
     }
 }
