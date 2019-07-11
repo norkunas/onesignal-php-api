@@ -187,6 +187,9 @@ class Devices
      *
      * @param array $extraFields Additional fields that you wish to include.
      *                           Currently supports: "location", "country", "rooted"
+     * @param string $segmentName A segment name to filter the scv export by.
+     *                           Only devices from that segment will make it into the export
+     * @param int $lastActiveSince An epoch to filter results to users active after this time
      *
      * @return array
      */
@@ -202,11 +205,11 @@ class Devices
             'extra_fields' => $extraFields,
         ];
 
-        if (!is_null($segmentName)) {
+        if (null !== $segmentName) {
             $body['segment_name'] = $segmentName;
         }
 
-        if (!is_null($lastActiveSince)) {
+        if (null !== $lastActiveSince) {
             $body['last_active_since'] = (string) $lastActiveSince;
         }
 
