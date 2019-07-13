@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class NotificationResolver implements ResolverInterface
 {
     const SEND_AFTER_FORMAT = 'Y-m-d H:i:sO';
+
     const DELIVERY_TIME_OF_DAY_FORMAT = 'g:iA';
 
     private $config;
