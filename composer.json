@@ -1,7 +1,7 @@
 {
     "name": "norkunas/onesignal-php-api",
     "description": "OneSignal API for PHP",
-    "keywords": ["onesignal", "api", "notifications"],
+    "keywords": ["onesignal", "api", "notifications", "push", "apns", "gcm"],
     "license": "MIT",
     "authors": [
         {
@@ -10,12 +10,12 @@
         }
     ],
     "require": {
-        "php": ">=5.6",
+        "php": ">=5.6|>=7.1",
         "ext-json": "*",
-        "php-http/client-common": "^1.9",
+        "php-http/client-common": "^1.9|^2.0",
         "php-http/client-implementation": "^1.0",
         "php-http/message": "^1.7",
-        "symfony/options-resolver": "~2.7|^3.0|^4.0"
+        "symfony/options-resolver": "^3.4|^4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8.36",
