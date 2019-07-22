@@ -2,7 +2,11 @@
 
 namespace OneSignal\Tests;
 
+use Http\Client\Common\HttpMethodsClient;
+use OneSignal\Apps;
 use OneSignal\Config;
+use OneSignal\Devices;
+use OneSignal\Notifications;
 use OneSignal\OneSignal;
 use Psr\Http\Message\ResponseInterface;
 use PHPUnit\Framework\TestCase;
@@ -21,15 +25,15 @@ class OneSignalTest extends TestCase
 
     public function testInstances()
     {
-        $this->assertInstanceOf('OneSignal\Apps', $this->api->apps);
-        $this->assertInstanceOf('OneSignal\Devices', $this->api->devices);
-        $this->assertInstanceOf('OneSignal\Notifications', $this->api->notifications);
+        $this->assertInstanceOf(Apps::class, $this->api->apps);
+        $this->assertInstanceOf(Devices::class, $this->api->devices);
+        $this->assertInstanceOf(Notifications::class, $this->api->notifications);
     }
 
     public function testIfInstanceIsCached()
     {
-        $this->assertInstanceOf('OneSignal\Apps', $this->api->apps);
-        $this->assertInstanceOf('OneSignal\Apps', $this->api->apps);
+        $this->assertInstanceOf(Apps::class, $this->api->apps);
+        $this->assertInstanceOf(Apps::class, $this->api->apps);
     }
 
     /**
@@ -42,31 +46,27 @@ class OneSignalTest extends TestCase
 
     public function testClientSetFromConstructor()
     {
-        $client = $this->getMockBuilder('Http\Client\Common\HttpMethodsClient')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(HttpMethodsClient::class);
 
         $api = new OneSignal(null, $client);
 
-        $this->assertInstanceOf('Http\Client\Common\HttpMethodsClient', $api->getClient());
+        $this->assertInstanceOf(HttpMethodsClient::class, $api->getClient());
     }
 
     public function testClientWithSetterAndGetter()
     {
-        $client = $this->getMockBuilder('Http\Client\Common\HttpMethodsClient')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(HttpMethodsClient::class);
 
         $this->api->setClient($client);
 
-        $this->assertInstanceOf('Http\Client\Common\HttpMethodsClient', $this->api->getClient());
+        $this->assertInstanceOf(HttpMethodsClient::class, $this->api->getClient());
     }
 
     public function testConfigWithSetterAndGetter()
     {
         $this->api->setConfig(new Config());
 
-        $this->assertInstanceOf('OneSignal\Config', $this->api->getConfig());
+        $this->assertInstanceOf(Config::class, $this->api->getConfig());
     }
 
     public function testRequestParseJSONResponse()
@@ -75,13 +75,10 @@ class OneSignalTest extends TestCase
             'content' => 'jsondata',
         ];
 
-        $fakeResponse = $this->getMockBuilder(ResponseInterface::class)
-            ->getMock();
+        $fakeResponse = $this->createMock(ResponseInterface::class);
         $fakeResponse->method('getBody')->willReturn(json_encode($expectedData));
 
-        $client = $this->getMockBuilder('Http\Client\Common\HttpMethodsClient')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(HttpMethodsClient::class);
         $client->method('send')->willReturn($fakeResponse);
 
         $this->api->setClient($client);
@@ -94,9 +91,7 @@ class OneSignalTest extends TestCase
      */
     public function testRequestHandleExceptions()
     {
-        $client = $this->getMockBuilder('Http\Client\Common\HttpMethodsClient')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $client = $this->createMock(HttpMethodsClient::class);
         $client->method('send')->will($this->throwException(new \Exception()));
 
         $this->api->setClient($client);
