@@ -8,7 +8,7 @@ trait ConfigMockerTrait
 {
     public function createMockedConfig()
     {
-        $config = $this->getMockBuilder(Config::class)->getMock();
+        $config = $this->createMock(Config::class);
         $config->method('getApplicationId')->willReturn('fakeApplicationId');
         $config->method('getApplicationAuthKey')->willReturn('fakeApplicationAuthKey');
         $config->method('getUserAuthKey')->willReturn('fakeUserAuthKey');
