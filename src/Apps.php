@@ -82,4 +82,38 @@ class Apps
             'Authorization' => 'Basic '.$this->api->getConfig()->getUserAuthKey(),
         ], json_encode($data));
     }
+
+    /**
+     * Create a new segment for application with provided data.
+     *
+     * @param string $appId ID of your application
+     * @param array  $data  Segment Data
+     *
+     * @return array
+     */
+    public function createSegment($appId, array $data)
+    {
+        $data = $this->resolverFactory->createSegmentResolver()->resolve($data);
+
+        return $this->api->request('POST', '/apps/'.$appId.'/segments', [
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+        ], json_encode($data));
+    }
+
+    /**
+     * Delete existing segment from your application.
+     *
+     * Application auth key must be set.
+     *
+     * @param string $appId     Application ID
+     * @param string $segmentId Segment ID
+     *
+     * @return array
+     */
+    public function deleteSegment($appId, $segmentId)
+    {
+        return $this->api->request('DELETE', '/apps/'.$appId.'/segments/'.$segmentId, [
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+        ]);
+    }
 }

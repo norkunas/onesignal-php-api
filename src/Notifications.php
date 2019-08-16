@@ -113,4 +113,26 @@ class Notifications
             'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
         ]);
     }
+
+    /**
+     * View the devices sent a notification.
+     *
+     * Application authentication key and ID must be set.
+     *
+     * @param string $id   Notification ID
+     * @param array  $data
+     *
+     * @return array
+     */
+    public function history($id, array $data)
+    {
+        $url = '/notifications/'.$id.'/history?app_id='.$this->api->getConfig()->getApplicationId();
+
+        $data = $this->resolverFactory->createNotificationResolver()->resolve($data);
+
+        return $this->api->request('POST', $url, [
+            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
+            'Cache-Control' => 'no-cache',
+        ], json_encode($data));
+    }
 }
