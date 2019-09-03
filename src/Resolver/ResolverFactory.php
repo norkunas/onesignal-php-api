@@ -18,6 +18,11 @@ class ResolverFactory
         return new AppResolver();
     }
 
+    public function createSegmentResolver()
+    {
+        return new SegmentResolver();
+    }
+
     public function createDeviceSessionResolver()
     {
         return new DeviceSessionResolver();
@@ -46,5 +51,10 @@ class ResolverFactory
     public function createNotificationResolver()
     {
         return new NotificationResolver($this->config);
+    }
+
+    public function createNotificationHistoryResolver()
+    {
+        return new NotificationHistoryResolver();
     }
 }

@@ -81,4 +81,17 @@ class NotificationsTest extends AbstractApiTest
 
         $this->assertEquals($expectedRequest, $this->notifications->cancel($fakeId));
     }
+
+    public function testHistory()
+    {
+        $fakeId = 1234;
+        $expectedRequest = [
+            'POST',
+            '/notifications/'.$fakeId.'/history?app_id=fakeApplicationId',
+            ['Authorization' => 'Basic fakeApplicationAuthKey', 'Cache-Control' => 'no-cache'],
+            '{"events":"sent","email":"example@example.com"}',
+        ];
+
+        $this->assertEquals($expectedRequest, $this->notifications->history($fakeId, ['events' => 'sent', 'email' => 'example@example.com']));
+    }
 }
