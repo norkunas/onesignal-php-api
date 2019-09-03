@@ -17,7 +17,7 @@ abstract class AbstractApiTest extends TestCase
     protected $api;
 
     /**
-     * @var ResolverFactory
+     * @var ResolverFactory|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $resolverFactory;
 
@@ -28,7 +28,7 @@ abstract class AbstractApiTest extends TestCase
 
         $resolverFactory = $this->createMock(ResolverFactory::class);
         $resolverMethods = array_filter(get_class_methods($resolverFactory), function ($method) {
-            return strpos($method, 'create') === 0;
+            return 0 === strpos($method, 'create');
         });
         foreach ($resolverMethods as $method) {
             $resolverFactory->method($method)->willReturn($mockResolver);
