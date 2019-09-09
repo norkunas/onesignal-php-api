@@ -63,6 +63,8 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('include_android_reg_ids', 'array')
             ->setDefined('include_external_user_ids')
             ->setAllowedTypes('include_external_user_ids', 'array')
+            ->setDefined('channel_for_external_user_ids')
+            ->setAllowedTypes('channel_for_external_user_ids', 'string')
             ->setDefined('include_wp_uris')
             ->setAllowedTypes('include_wp_uris', 'array')
             ->setDefined('include_wp_wns_uris')
