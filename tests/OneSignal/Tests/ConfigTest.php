@@ -4,15 +4,18 @@ namespace OneSignal\Tests;
 
 use OneSignal\Config;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 
 class ConfigTest extends TestCase
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var Config
      */
     private $config;
 
-    public function setUp()
+    public function doSetUp()
     {
         $this->config = new Config();
     }

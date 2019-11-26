@@ -6,17 +6,22 @@ use OneSignal\Devices;
 use OneSignal\Resolver\DeviceResolver;
 use OneSignal\Tests\ConfigMockerTrait;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
+use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 class DeviceResolverTest extends TestCase
 {
     use ConfigMockerTrait;
+    use SetUpTearDownTrait;
 
     /**
      * @var DeviceResolver
      */
     private $deviceResolver;
 
-    public function setUp()
+    public function doSetUp()
     {
         $this->deviceResolver = new DeviceResolver($this->createMockedConfig());
     }
@@ -76,11 +81,10 @@ class DeviceResolverTest extends TestCase
         $this->assertEquals(array_merge($inputData, $expectedData), $this->deviceResolver->resolve($inputData));
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
-     */
     public function testResolveWithMissingRequiredValue()
     {
+        $this->expectException(MissingOptionsException::class);
+
         $this->deviceResolver->setIsNewDevice(true);
         $this->deviceResolver->resolve([]);
     }
@@ -116,10 +120,11 @@ class DeviceResolverTest extends TestCase
 
     /**
      * @dataProvider wrongValueTypesProvider
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function testResolveWithWrongValueTypes($wrongOption)
     {
+        $this->expectException(InvalidOptionsException::class);
+
         $requiredOptions = [
             'device_type' => Devices::ANDROID,
         ];
@@ -128,11 +133,10 @@ class DeviceResolverTest extends TestCase
         $this->deviceResolver->resolve(array_merge($requiredOptions, $wrongOption));
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
-     */
     public function testResolveWithWrongOption()
     {
+        $this->expectException(UndefinedOptionsException::class);
+
         $this->deviceResolver->resolve(['wrongOption' => 'wrongValue']);
     }
 }

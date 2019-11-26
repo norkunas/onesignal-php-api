@@ -11,17 +11,19 @@ use OneSignal\Resolver\NotificationResolver;
 use OneSignal\Resolver\ResolverFactory;
 use OneSignal\Tests\ConfigMockerTrait;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 
 class ResolverFactoryTest extends TestCase
 {
     use ConfigMockerTrait;
+    use SetUpTearDownTrait;
 
     /**
      * @var ResolverFactory
      */
     private $resolverFactory;
 
-    public function setUp()
+    public function doSetUp()
     {
         $this->resolverFactory = new ResolverFactory($this->createMockedConfig());
     }

@@ -4,15 +4,21 @@ namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\DeviceFocusResolver;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
+use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 class DeviceFocusResolverTest extends TestCase
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var DeviceFocusResolver
      */
     private $deviceFocusResolver;
 
-    public function setUp()
+    public function doSetUp()
     {
         $this->deviceFocusResolver = new DeviceFocusResolver();
     }
@@ -37,11 +43,10 @@ class DeviceFocusResolverTest extends TestCase
         $this->assertEquals($expectedData, $this->deviceFocusResolver->resolve(['active_time' => 23]));
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
-     */
     public function testResolveWithMissingRequiredValue()
     {
+        $this->expectException(MissingOptionsException::class);
+
         $this->deviceFocusResolver->resolve([]);
     }
 
@@ -55,10 +60,11 @@ class DeviceFocusResolverTest extends TestCase
 
     /**
      * @dataProvider wrongValueTypesProvider
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function testResolveWithWrongValueTypes($wrongOption)
     {
+        $this->expectException(InvalidOptionsException::class);
+
         $requiredOptions = [
             'active_time' => 234,
         ];
@@ -66,11 +72,10 @@ class DeviceFocusResolverTest extends TestCase
         $this->deviceFocusResolver->resolve(array_merge($requiredOptions, $wrongOption));
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
-     */
     public function testResolveWithWrongOption()
     {
+        $this->expectException(UndefinedOptionsException::class);
+
         $this->deviceFocusResolver->resolve(['active_time' => 23, 'wrongOption' => 'wrongValue']);
     }
 }

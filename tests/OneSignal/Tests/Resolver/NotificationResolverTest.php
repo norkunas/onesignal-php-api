@@ -6,19 +6,23 @@ use OneSignal\Resolver\NotificationResolver;
 use OneSignal\Tests\ConfigMockerTrait;
 use OneSignal\Tests\PrivateAccessorTrait;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NotificationResolverTest extends TestCase
 {
     use ConfigMockerTrait;
     use PrivateAccessorTrait;
+    use SetUpTearDownTrait;
 
     /**
      * @var NotificationResolver
      */
     private $notificationResolver;
 
-    public function setUp()
+    public function doSetUp()
     {
         $this->notificationResolver = new NotificationResolver($this->createMockedConfig());
     }
@@ -211,10 +215,11 @@ class NotificationResolverTest extends TestCase
 
     /**
      * @dataProvider wrongValueTypesProvider
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function testResolveWithWrongValueTypes($wrongOption)
     {
+        $this->expectException(InvalidOptionsException::class);
+
         $this->notificationResolver->resolve($wrongOption);
     }
 
@@ -227,11 +232,10 @@ class NotificationResolverTest extends TestCase
         $this->assertEquals($expectedData, $this->notificationResolver->resolve([]));
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
-     */
     public function testResolveWithWrongOption()
     {
+        $this->expectException(UndefinedOptionsException::class);
+
         $this->notificationResolver->resolve(['wrongOption' => 'wrongValue']);
     }
 
