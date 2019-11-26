@@ -3,17 +3,20 @@
 namespace OneSignal\Tests;
 
 use OneSignal\Notifications;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 
 class NotificationsTest extends AbstractApiTest
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var Notifications
      */
     private $notifications;
 
-    public function setUp()
+    public function doSetUp()
     {
-        parent::setUp();
+        parent::doSetUp();
 
         $this->notifications = new Notifications($this->api, $this->resolverFactory);
     }

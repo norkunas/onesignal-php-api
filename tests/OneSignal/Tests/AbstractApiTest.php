@@ -6,10 +6,12 @@ use OneSignal\OneSignal;
 use OneSignal\Resolver\ResolverFactory;
 use OneSignal\Resolver\ResolverInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 
 abstract class AbstractApiTest extends TestCase
 {
     use ConfigMockerTrait;
+    use SetUpTearDownTrait;
 
     /**
      * @var OneSignal
@@ -21,7 +23,7 @@ abstract class AbstractApiTest extends TestCase
      */
     protected $resolverFactory;
 
-    public function setUp()
+    public function doSetUp()
     {
         $mockResolver = $this->createMock(ResolverInterface::class);
         $mockResolver->method('resolve')->willReturnArgument(0);

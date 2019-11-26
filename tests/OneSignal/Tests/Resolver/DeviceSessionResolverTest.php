@@ -4,15 +4,20 @@ namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\DeviceSessionResolver;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 class DeviceSessionResolverTest extends TestCase
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var DeviceSessionResolver
      */
     private $deviceSessionResolver;
 
-    public function setUp()
+    public function doSetUp()
     {
         $this->deviceSessionResolver = new DeviceSessionResolver();
     }
@@ -51,18 +56,18 @@ class DeviceSessionResolverTest extends TestCase
 
     /**
      * @dataProvider wrongValueTypesProvider
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function testResolveWithWrongValueTypes($wrongOption)
     {
+        $this->expectException(InvalidOptionsException::class);
+
         $this->deviceSessionResolver->resolve($wrongOption);
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
-     */
     public function testResolveWithWrongOption()
     {
+        $this->expectException(UndefinedOptionsException::class);
+
         $this->deviceSessionResolver->resolve(['wrongOption' => 'wrongValue']);
     }
 }

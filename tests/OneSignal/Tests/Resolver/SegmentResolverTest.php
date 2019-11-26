@@ -5,18 +5,22 @@ namespace OneSignal\Tests\Resolver;
 use OneSignal\Resolver\SegmentResolver;
 use OneSignal\Tests\PrivateAccessorTrait;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SegmentResolverTest extends TestCase
 {
     use PrivateAccessorTrait;
+    use SetUpTearDownTrait;
 
     /**
      * @var SegmentResolver
      */
     private $segmentResolver;
 
-    public function setUp()
+    public function doSetUp()
     {
         $this->segmentResolver = new SegmentResolver();
     }
@@ -43,18 +47,18 @@ class SegmentResolverTest extends TestCase
 
     /**
      * @dataProvider wrongValueTypesProvider
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function testResolveWithWrongValueTypes($wrongOption)
     {
+        $this->expectException(InvalidOptionsException::class);
+
         $this->segmentResolver->resolve($wrongOption);
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
-     */
     public function testResolveWithWrongOption()
     {
+        $this->expectException(UndefinedOptionsException::class);
+
         $this->segmentResolver->resolve(['wrongOption' => 'wrongValue']);
     }
 

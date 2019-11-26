@@ -3,17 +3,20 @@
 namespace OneSignal\Tests;
 
 use OneSignal\Devices;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 
 class DevicesTest extends AbstractApiTest
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var Devices;
      */
     private $devices;
 
-    public function setUp()
+    public function doSetUp()
     {
-        parent::setUp();
+        parent::doSetUp();
 
         $this->devices = new Devices($this->api, $this->resolverFactory);
     }

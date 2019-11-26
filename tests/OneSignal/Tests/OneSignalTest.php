@@ -6,19 +6,23 @@ use Http\Client\Common\HttpMethodsClient;
 use OneSignal\Apps;
 use OneSignal\Config;
 use OneSignal\Devices;
+use OneSignal\Exception\OneSignalException;
 use OneSignal\Notifications;
 use OneSignal\OneSignal;
 use Psr\Http\Message\ResponseInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 
 class OneSignalTest extends TestCase
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var OneSignal
      */
     private $api;
 
-    public function setUp()
+    public function doSetUp()
     {
         $this->api = new OneSignal();
     }
@@ -36,11 +40,10 @@ class OneSignalTest extends TestCase
         $this->assertInstanceOf(Apps::class, $this->api->apps);
     }
 
-    /**
-     * @expectedException \OneSignal\Exception\OneSignalException
-     */
     public function testBadInstance()
     {
+        $this->expectException(OneSignalException::class);
+
         $this->api->unknownInstance;
     }
 
@@ -86,11 +89,10 @@ class OneSignalTest extends TestCase
         $this->assertEquals($expectedData, $this->api->request('fakeMethod', 'fakeURI'));
     }
 
-    /**
-     * @expectedException \OneSignal\Exception\OneSignalException
-     */
     public function testRequestHandleExceptions()
     {
+        $this->expectException(OneSignalException::class);
+
         $client = $this->createMock(HttpMethodsClient::class);
         $client->method('send')->will($this->throwException(new \Exception()));
 
@@ -98,11 +100,10 @@ class OneSignalTest extends TestCase
         $this->api->request('DummyMethod', 'DummyURI');
     }
 
-    /**
-     * @expectedException \OneSignal\Exception\OneSignalException
-     */
     public function testMagicGetHandleRequest()
     {
+        $this->expectException(OneSignalException::class);
+
         $this->api->unexistingService;
     }
 }

@@ -4,15 +4,21 @@ namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\NotificationHistoryResolver;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
+use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 class NotificationHistoryResolverTest extends TestCase
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var NotificationHistoryResolver
      */
     private $notificationHistoryResolver;
 
-    public function setUp()
+    public function doSetUp()
     {
         $this->notificationHistoryResolver = new NotificationHistoryResolver();
     }
@@ -27,11 +33,10 @@ class NotificationHistoryResolverTest extends TestCase
         $this->assertEquals($expectedData, $this->notificationHistoryResolver->resolve($expectedData));
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
-     */
     public function testResolveWithMissingRequiredValue()
     {
+        $this->expectException(MissingOptionsException::class);
+
         $this->notificationHistoryResolver->resolve([]);
     }
 
@@ -45,18 +50,18 @@ class NotificationHistoryResolverTest extends TestCase
 
     /**
      * @dataProvider wrongValueTypesProvider
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function testResolveWithWrongValueTypes($wrongOption)
     {
+        $this->expectException(InvalidOptionsException::class);
+
         $this->notificationHistoryResolver->resolve($wrongOption);
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
-     */
     public function testResolveWithWrongOption()
     {
+        $this->expectException(UndefinedOptionsException::class);
+
         $this->notificationHistoryResolver->resolve(['events' => 'sent', 'wrongOption' => 'wrongValue']);
     }
 }

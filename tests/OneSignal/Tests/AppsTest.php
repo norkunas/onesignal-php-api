@@ -3,17 +3,20 @@
 namespace OneSignal\Tests;
 
 use OneSignal\Apps;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 
 class AppsTest extends AbstractApiTest
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var Apps
      */
     private $apps;
 
-    public function setUp()
+    public function doSetUp()
     {
-        parent::setUp();
+        parent::doSetUp();
 
         $this->apps = new Apps($this->api, $this->resolverFactory);
     }

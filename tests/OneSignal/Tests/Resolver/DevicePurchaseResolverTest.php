@@ -4,15 +4,21 @@ namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\DevicePurchaseResolver;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
+use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 class DevicePurchaseResolverTest extends TestCase
 {
+    use SetUpTearDownTrait;
+
     /**
      * @var DevicePurchaseResolver
      */
     private $devicePurchaseResolver;
 
-    public function setUp()
+    public function doSetUp()
     {
         $this->devicePurchaseResolver = new DevicePurchaseResolver();
     }
@@ -33,19 +39,17 @@ class DevicePurchaseResolverTest extends TestCase
         $this->assertEquals($expectedData, $this->devicePurchaseResolver->resolve($expectedData));
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
-     */
     public function testResolveWithMissingRequiredValue()
     {
+        $this->expectException(MissingOptionsException::class);
+
         $this->devicePurchaseResolver->resolve([]);
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\MissingOptionsException
-     */
     public function testResolveWithMissingRequiredPurchaseValue()
     {
+        $this->expectException(MissingOptionsException::class);
+
         $wrongData = [
             'existing' => false,
             'purchases' => [
@@ -87,10 +91,11 @@ class DevicePurchaseResolverTest extends TestCase
 
     /**
      * @dataProvider wrongValueTypesProvider
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
     public function testResolveWithWrongValueTypes($wrongOption)
     {
+        $this->expectException(InvalidOptionsException::class);
+
         $requiredOptions = [
             'purchases' => [[
                 'sku' => 'value',
@@ -102,11 +107,10 @@ class DevicePurchaseResolverTest extends TestCase
         $this->devicePurchaseResolver->resolve(array_merge($requiredOptions, $wrongOption));
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
-     */
     public function testResolveWithWrongPurchasesValueTypes()
     {
+        $this->expectException(InvalidOptionsException::class);
+
         $wrongData = [
             'existing' => true,
             'purchases' => [
@@ -121,11 +125,10 @@ class DevicePurchaseResolverTest extends TestCase
         $this->devicePurchaseResolver->resolve($wrongData);
     }
 
-    /**
-     * @expectedException \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
-     */
     public function testResolveWithWrongOption()
     {
+        $this->expectException(UndefinedOptionsException::class);
+
         $this->devicePurchaseResolver->resolve(['wrongOption' => 'wrongValue']);
     }
 }
