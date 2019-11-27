@@ -128,7 +128,7 @@ class Notifications
     {
         $url = '/notifications/'.$id.'/history?app_id='.$this->api->getConfig()->getApplicationId();
 
-        $data = $this->resolverFactory->createNotificationResolver()->resolve($data);
+        $data = $this->resolverFactory->createNotificationHistoryResolver()->resolve($data);
 
         return $this->api->request('POST', $url, [
             'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
