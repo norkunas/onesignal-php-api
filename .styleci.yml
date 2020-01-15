@@ -2,3 +2,4 @@ preset: symfony
 
 disabled:
     - yoda_style
+    - property_separation
