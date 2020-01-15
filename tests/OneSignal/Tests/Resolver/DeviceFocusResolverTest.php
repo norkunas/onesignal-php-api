@@ -1,29 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\DeviceFocusResolver;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 class DeviceFocusResolverTest extends TestCase
 {
-    use SetUpTearDownTrait;
-
     /**
      * @var DeviceFocusResolver
      */
     private $deviceFocusResolver;
 
-    public function doSetUp()
+    protected function setUp(): void
     {
         $this->deviceFocusResolver = new DeviceFocusResolver();
     }
 
-    public function testResolveWithValidValues()
+    public function testResolveWithValidValues(): void
     {
         $expectedData = [
             'state' => 'fakeState',
@@ -33,7 +32,7 @@ class DeviceFocusResolverTest extends TestCase
         $this->assertEquals($expectedData, $this->deviceFocusResolver->resolve($expectedData));
     }
 
-    public function testResolveDefaultValues()
+    public function testResolveDefaultValues(): void
     {
         $expectedData = [
             'state' => 'ping',
@@ -43,25 +42,23 @@ class DeviceFocusResolverTest extends TestCase
         $this->assertEquals($expectedData, $this->deviceFocusResolver->resolve(['active_time' => 23]));
     }
 
-    public function testResolveWithMissingRequiredValue()
+    public function testResolveWithMissingRequiredValue(): void
     {
         $this->expectException(MissingOptionsException::class);
 
         $this->deviceFocusResolver->resolve([]);
     }
 
-    public function wrongValueTypesProvider()
+    public function wrongValueTypesProvider(): iterable
     {
-        return [
-            [['state' => 666]],
-            [['active_time' => 'wrongType']],
-        ];
+        yield [['state' => 666]];
+        yield [['active_time' => 'wrongType']];
     }
 
     /**
      * @dataProvider wrongValueTypesProvider
      */
-    public function testResolveWithWrongValueTypes($wrongOption)
+    public function testResolveWithWrongValueTypes($wrongOption): void
     {
         $this->expectException(InvalidOptionsException::class);
 
@@ -72,7 +69,7 @@ class DeviceFocusResolverTest extends TestCase
         $this->deviceFocusResolver->resolve(array_merge($requiredOptions, $wrongOption));
     }
 
-    public function testResolveWithWrongOption()
+    public function testResolveWithWrongOption(): void
     {
         $this->expectException(UndefinedOptionsException::class);
 

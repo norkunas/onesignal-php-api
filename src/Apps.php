@@ -1,18 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal;
 
 use OneSignal\Resolver\ResolverFactory;
 
-class Apps
+class Apps extends AbstractApi
 {
-    protected $api;
-
     private $resolverFactory;
 
-    public function __construct(OneSignal $api, ResolverFactory $resolverFactory)
+    public function __construct(OneSignal $client, ResolverFactory $resolverFactory)
     {
-        $this->api = $api;
+        parent::__construct($client);
+
         $this->resolverFactory = $resolverFactory;
     }
 
@@ -22,28 +23,26 @@ class Apps
      * User authentication key must be set.
      *
      * @param string $id ID of your application
-     *
-     * @return array
      */
-    public function getOne($id)
+    public function getOne(string $id): array
     {
-        return $this->api->request('GET', '/apps/'.$id, [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getUserAuthKey(),
-        ]);
+        $request = $this->createRequest('GET', "/apps/$id");
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getUserAuthKey()}");
+
+        return $this->client->sendRequest($request);
     }
 
     /**
      * Get information about all your created applications.
      *
      * User authentication key must be set.
-     *
-     * @return array
      */
-    public function getAll()
+    public function getAll(): array
     {
-        return $this->api->request('GET', '/apps', [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getUserAuthKey(),
-        ]);
+        $request = $this->createRequest('GET', '/apps');
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getUserAuthKey()}");
+
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -52,16 +51,17 @@ class Apps
      * User authentication key must be set.
      *
      * @param array $data Application data
-     *
-     * @return array
      */
-    public function add(array $data)
+    public function add(array $data): array
     {
-        $data = $this->resolverFactory->createAppResolver()->resolve($data);
+        $resolvedData = $this->resolverFactory->createAppResolver()->resolve($data);
 
-        return $this->api->request('POST', '/apps', [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getUserAuthKey(),
-        ], json_encode($data));
+        $request = $this->createRequest('POST', '/apps');
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getUserAuthKey()}");
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withBody($this->createStream($resolvedData));
+
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -71,16 +71,17 @@ class Apps
      *
      * @param string $id   ID of your application
      * @param array  $data New application data
-     *
-     * @return array
      */
-    public function update($id, array $data)
+    public function update(string $id, array $data): array
     {
-        $data = $this->resolverFactory->createAppResolver()->resolve($data);
+        $resolvedData = $this->resolverFactory->createAppResolver()->resolve($data);
 
-        return $this->api->request('PUT', '/apps/'.$id, [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getUserAuthKey(),
-        ], json_encode($data));
+        $request = $this->createRequest('PUT', "/apps/$id");
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getUserAuthKey()}");
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withBody($this->createStream($resolvedData));
+
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -88,16 +89,17 @@ class Apps
      *
      * @param string $appId ID of your application
      * @param array  $data  Segment Data
-     *
-     * @return array
      */
-    public function createSegment($appId, array $data)
+    public function createSegment($appId, array $data): array
     {
-        $data = $this->resolverFactory->createSegmentResolver()->resolve($data);
+        $resolvedData = $this->resolverFactory->createSegmentResolver()->resolve($data);
 
-        return $this->api->request('POST', '/apps/'.$appId.'/segments', [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-        ], json_encode($data));
+        $request = $this->createRequest('POST', "/apps/$appId/segments");
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withBody($this->createStream($resolvedData));
+
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -107,13 +109,12 @@ class Apps
      *
      * @param string $appId     Application ID
      * @param string $segmentId Segment ID
-     *
-     * @return array
      */
-    public function deleteSegment($appId, $segmentId)
+    public function deleteSegment(string $appId, string $segmentId): array
     {
-        return $this->api->request('DELETE', '/apps/'.$appId.'/segments/'.$segmentId, [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-        ]);
+        $request = $this->createRequest('DELETE', "/apps/$appId/segments/$segmentId");
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
+
+        return $this->client->sendRequest($request);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Resolver;
 
 use OneSignal\Config;
@@ -13,48 +15,48 @@ class ResolverFactory
         $this->config = $config;
     }
 
-    public function createAppResolver()
+    public function createAppResolver(): AppResolver
     {
         return new AppResolver();
     }
 
-    public function createSegmentResolver()
+    public function createSegmentResolver(): SegmentResolver
     {
         return new SegmentResolver();
     }
 
-    public function createDeviceSessionResolver()
+    public function createDeviceSessionResolver(): DeviceSessionResolver
     {
         return new DeviceSessionResolver();
     }
 
-    public function createDevicePurchaseResolver()
+    public function createDevicePurchaseResolver(): DevicePurchaseResolver
     {
         return new DevicePurchaseResolver();
     }
 
-    public function createDeviceFocusResolver()
+    public function createDeviceFocusResolver(): DeviceFocusResolver
     {
         return new DeviceFocusResolver();
     }
 
-    public function createNewDeviceResolver()
+    public function createNewDeviceResolver(): DeviceResolver
     {
         return new DeviceResolver($this->config, true);
     }
 
-    public function createExistingDeviceResolver()
+    public function createExistingDeviceResolver(): DeviceResolver
     {
         return new DeviceResolver($this->config, false);
     }
 
-    public function createNotificationResolver()
+    public function createNotificationResolver(): NotificationResolver
     {
         return new NotificationResolver($this->config);
     }
 
-    public function createNotificationHistoryResolver()
+    public function createNotificationHistoryResolver(): NotificationHistoryResolver
     {
-        return new NotificationHistoryResolver();
+        return new NotificationHistoryResolver($this->config);
     }
 }

@@ -1,43 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Tests;
 
-use OneSignal\Config;
-use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
-
-class ConfigTest extends TestCase
+class ConfigTest extends OneSignalTestCase
 {
-    use SetUpTearDownTrait;
-
-    /**
-     * @var Config
-     */
-    private $config;
-
-    public function doSetUp()
+    public function testGetApplicationId(): void
     {
-        $this->config = new Config();
+        $this->assertSame('fakeApplicationId', ($this->createConfig())->getApplicationId());
     }
 
-    public function testApplicationId()
+    public function testGetApplicationAuthKey(): void
     {
-        $this->config->setApplicationId('application_id');
-
-        $this->assertEquals('application_id', $this->config->getApplicationId());
+        $this->assertSame('fakeApplicationAuthKey', ($this->createConfig())->getApplicationAuthKey());
     }
 
-    public function testApplicationAuthKey()
+    public function testGetUserAuthKey(): void
     {
-        $this->config->setApplicationAuthKey('application_auth_key');
-
-        $this->assertEquals('application_auth_key', $this->config->getApplicationAuthKey());
-    }
-
-    public function testUserAuthKey()
-    {
-        $this->config->setUserAuthKey('user_auth_key');
-
-        $this->assertEquals('user_auth_key', $this->config->getUserAuthKey());
+        $this->assertSame('fakeUserAuthKey', ($this->createConfig())->getUserAuthKey());
     }
 }

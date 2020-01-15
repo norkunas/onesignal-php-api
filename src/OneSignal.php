@@ -1,147 +1,115 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal;
 
-use Http\Client\Common\HttpMethodsClient as Client;
-use OneSignal\Exception\OneSignalException;
+use OneSignal\Exception\BadMethodCallException;
+use OneSignal\Exception\InvalidArgumentException;
+use OneSignal\Exception\JsonException;
 use OneSignal\Resolver\ResolverFactory;
-use Psr\Http\Message\StreamInterface;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 /**
- * @property-read Apps          $apps          Applications API service
- * @property-read Devices       $devices       Devices API service
- * @property-read Notifications $notifications Notifications API service
+ * @method Apps          apps()
+ * @method Devices       devices()
+ * @method Notifications notifications()
  */
 class OneSignal
 {
-    const API_URL = 'https://onesignal.com/api/v1';
+    public const API_URL = 'https://onesignal.com/api/v1';
 
-    /**
-     * @var Config
-     */
     private $config;
-
-    /**
-     * @var Client
-     */
-    private $client;
-
+    private $httpClient;
+    private $requestFactory;
+    private $streamFactory;
     private $resolverFactory;
 
-    /**
-     * @var array
-     */
-    private $services = [];
-
-    /**
-     * Constructor.
-     *
-     * @param Config $config
-     * @param Client $client
-     */
-    public function __construct(Config $config = null, Client $client = null)
+    public function __construct(Config $config, ClientInterface $httpClient, RequestFactoryInterface $requestFactory, StreamFactoryInterface $streamFactory)
     {
-        $this->config = ($config ?: new Config());
-
-        if (null !== $client) {
-            $this->client = $client;
-        }
-
+        $this->config = $config;
+        $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
+        $this->streamFactory = $streamFactory;
         $this->resolverFactory = new ResolverFactory($this->config);
     }
 
-    /**
-     * Set config.
-     *
-     * @param Config $config
-     */
-    public function setConfig(Config $config)
-    {
-        $this->config = $config;
-    }
-
-    /**
-     * Get config.
-     *
-     * @return Config
-     */
-    public function getConfig()
+    public function getConfig(): Config
     {
         return $this->config;
     }
 
-    /**
-     * Set client.
-     *
-     * @param Client $client
-     */
-    public function setClient(Client $client)
+    public function getRequestFactory(): RequestFactoryInterface
     {
-        $this->client = $client;
+        return $this->requestFactory;
     }
 
-    /**
-     * Get client.
-     *
-     * @return Client|null
-     */
-    public function getClient()
+    public function getStreamFactory(): StreamFactoryInterface
     {
-        return $this->client;
+        return $this->streamFactory;
     }
 
-    /**
-     * Make a custom api request.
-     *
-     * @param string                      $method  HTTP Method
-     * @param string                      $uri     URI template
-     * @param array                       $headers
-     * @param string|StreamInterface|null $body
-     *
-     * @throws OneSignalException
-     *
-     * @return array
-     */
-    public function request($method, $uri, array $headers = [], $body = null)
+    public function sendRequest(RequestInterface $request): array
     {
-        try {
-            $response = $this->client->send($method, self::API_URL.$uri, array_merge([
-                'Content-Type' => 'application/json',
-            ], $headers), $body);
+        $response = $this->httpClient->sendRequest($request);
 
-            return json_decode($response->getBody(), true);
-        } catch (\Throwable $t) {
-            throw new OneSignalException($t->getMessage());
-        } catch (\Exception $e) {
-            throw new OneSignalException($e->getMessage());
+        $contentType = $response->getHeader('Content-Type')[0] ?? 'application/json';
+
+        if (!preg_match('/\bjson\b/i', $contentType)) {
+            throw new JsonException("Response content-type is '$contentType' while a JSON-compatible one was expected.");
         }
+
+        $content = $response->getBody()->__toString();
+
+        try {
+            $content = json_decode($content, true, 512, JSON_BIGINT_AS_STRING | \JSON_THROW_ON_ERROR);
+        } catch (\JsonException $e) {
+            throw new JsonException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        if (!\is_array($content)) {
+            throw new JsonException(sprintf('JSON content was expected to decode to an array, %s returned.', \gettype($content)));
+        }
+
+        return $content;
     }
 
     /**
-     * Create required services on the fly.
-     *
-     * @param string $name
-     *
      * @return object
      *
-     * @throws OneSignalException If an invalid service name is given
+     * @throws InvalidArgumentException
      */
-    public function __get($name)
+    public function api(string $name)
     {
-        if (in_array($name, ['apps', 'devices', 'notifications'], true)) {
-            if (isset($this->services[$name])) {
-                return $this->services[$name];
-            }
+        switch ($name) {
+            case 'apps':
+                $api = new Apps($this, $this->resolverFactory);
 
-            $serviceName = __NAMESPACE__.'\\'.ucfirst($name);
+                break;
+            case 'devices':
+                $api = new Devices($this, $this->resolverFactory);
 
-            $this->services[$name] = new $serviceName($this, $this->resolverFactory);
+                break;
+            case 'notifications':
+                $api = new Notifications($this, $this->resolverFactory);
 
-            return $this->services[$name];
+                break;
+            default:
+                throw new InvalidArgumentException("Undefined api instance called: '$name'.");
         }
 
-        $trace = debug_backtrace();
+        return $api;
+    }
 
-        throw new OneSignalException(sprintf('Undefined property via __get(): %s in %s on line %u', $name, $trace[0]['file'], $trace[0]['line']));
+    public function __call($name, $args)
+    {
+        try {
+            return $this->api($name);
+        } catch (InvalidArgumentException $e) {
+            throw new BadMethodCallException("Undefined method called: '$name'.");
+        }
     }
 }

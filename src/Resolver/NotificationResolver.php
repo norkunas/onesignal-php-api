@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Resolver;
 
 use OneSignal\Config;
@@ -8,9 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NotificationResolver implements ResolverInterface
 {
-    const SEND_AFTER_FORMAT = 'Y-m-d H:i:sO';
-
-    const DELIVERY_TIME_OF_DAY_FORMAT = 'g:iA';
+    public const SEND_AFTER_FORMAT = 'Y-m-d H:i:sO';
+    public const DELIVERY_TIME_OF_DAY_FORMAT = 'g:iA';
 
     private $config;
 
@@ -22,7 +23,7 @@ class NotificationResolver implements ResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolve(array $data)
+    public function resolve(array $data): array
     {
         return (new OptionsResolver())
             ->setDefined('contents')
@@ -156,7 +157,7 @@ class NotificationResolver implements ResolverInterface
                 return $this->filterUrl($value);
             })
             ->setDefined('send_after')
-            ->setAllowedTypes('send_after', '\DateTimeInterface')
+            ->setAllowedTypes('send_after', \DateTimeInterface::class)
             ->setNormalizer('send_after', function (Options $options, \DateTimeInterface $value) {
                 return $this->normalizeDateTime($options, $value, self::SEND_AFTER_FORMAT);
             })
@@ -222,7 +223,7 @@ class NotificationResolver implements ResolverInterface
             ->resolve($data);
     }
 
-    private function normalizeFilters(Options $options, array $values)
+    private function normalizeFilters(Options $options, array $values): array
     {
         $filters = [];
 
@@ -237,12 +238,12 @@ class NotificationResolver implements ResolverInterface
         return $filters;
     }
 
-    private function filterUrl($value)
+    private function filterUrl($value): bool
     {
         return (bool) filter_var($value, FILTER_VALIDATE_URL);
     }
 
-    private function normalizeButtons($values)
+    private function normalizeButtons($values): array
     {
         $buttons = [];
 
@@ -252,16 +253,16 @@ class NotificationResolver implements ResolverInterface
             }
 
             $buttons[] = [
-                'id' => (isset($button['id']) ? $button['id'] : mt_rand()),
+                'id' => $button['id'] ?? random_int(0, PHP_INT_MAX),
                 'text' => $button['text'],
-                'icon' => (isset($button['icon']) ? $button['icon'] : null),
+                'icon' => $button['icon'] ?? null,
             ];
         }
 
         return $buttons;
     }
 
-    private function filterAndroidBackgroundLayout($layouts)
+    private function filterAndroidBackgroundLayout($layouts): bool
     {
         if (empty($layouts)) {
             return false;
@@ -278,7 +279,7 @@ class NotificationResolver implements ResolverInterface
         return true;
     }
 
-    private function filterIosAttachments($attachments)
+    private function filterIosAttachments($attachments): bool
     {
         foreach ($attachments as $key => $value) {
             if (!is_string($key) || !is_string($value)) {
@@ -289,14 +290,16 @@ class NotificationResolver implements ResolverInterface
         return true;
     }
 
-    private function filterWebButtons($buttons)
+    private function filterWebButtons($buttons): bool
     {
         $requiredKeys = ['id', 'text', 'icon', 'url'];
+
         foreach ($buttons as $button) {
             if (!is_array($button)) {
                 return false;
             }
-            if (count(array_intersect_key(array_flip($requiredKeys), $button)) != count($requiredKeys)) {
+
+            if (count(array_intersect_key(array_flip($requiredKeys), $button)) !== count($requiredKeys)) {
                 return false;
             }
         }
@@ -304,7 +307,7 @@ class NotificationResolver implements ResolverInterface
         return true;
     }
 
-    private function normalizeDateTime(Options $options, \DateTimeInterface $value, $format)
+    private function normalizeDateTime(Options $options, \DateTimeInterface $value, $format): string
     {
         return $value->format($format);
     }

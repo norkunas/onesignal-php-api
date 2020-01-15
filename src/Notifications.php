@@ -1,20 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal;
 
 use OneSignal\Resolver\ResolverFactory;
 
-class Notifications
+class Notifications extends AbstractApi
 {
-    const NOTIFICATIONS_LIMIT = 50;
-
-    protected $api;
-
     private $resolverFactory;
 
-    public function __construct(OneSignal $api, ResolverFactory $resolverFactory)
+    public function __construct(OneSignal $client, ResolverFactory $resolverFactory)
     {
-        $this->api = $api;
+        parent::__construct($client);
+
         $this->resolverFactory = $resolverFactory;
     }
 
@@ -24,16 +23,13 @@ class Notifications
      * Application authentication key and ID must be set.
      *
      * @param string $id Notification ID
-     *
-     * @return array
      */
-    public function getOne($id)
+    public function getOne(string $id): array
     {
-        $url = '/notifications/'.$id.'?app_id='.$this->api->getConfig()->getApplicationId();
+        $request = $this->createRequest('GET', "/notifications/$id?app_id={$this->client->getConfig()->getApplicationId()}");
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
 
-        return $this->api->request('GET', $url, [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-        ]);
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -43,38 +39,40 @@ class Notifications
      *
      * @param int $limit  How many notifications to return (max 50)
      * @param int $offset Results offset (results are sorted by ID)
-     *
-     * @return array
      */
-    public function getAll($limit = self::NOTIFICATIONS_LIMIT, $offset = 0)
+    public function getAll(int $limit = null, int $offset = null): array
     {
-        $query = [
-            'limit' => max(1, min(self::NOTIFICATIONS_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
-            'offset' => max(0, filter_var($offset, FILTER_VALIDATE_INT)),
-            'app_id' => $this->api->getConfig()->getApplicationId(),
-        ];
+        $query = ['app_id' => $this->client->getConfig()->getApplicationId()];
 
-        return $this->api->request('GET', '/notifications?'.http_build_query($query), [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-        ]);
+        if ($limit !== null) {
+            $query['limit'] = $limit;
+        }
+
+        if ($offset !== null) {
+            $query['offset'] = $offset;
+        }
+
+        $request = $this->createRequest('GET', '/notifications?'.http_build_query($query));
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
+
+        return $this->client->sendRequest($request);
     }
 
     /**
      * Send new notification with provided data.
      *
      * Application authentication key and ID must be set.
-     *
-     * @param array $data
-     *
-     * @return array
      */
-    public function add(array $data)
+    public function add(array $data): array
     {
-        $data = $this->resolverFactory->createNotificationResolver()->resolve($data);
+        $resolvedData = $this->resolverFactory->createNotificationResolver()->resolve($data);
 
-        return $this->api->request('POST', '/notifications', [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-        ], json_encode($data));
+        $request = $this->createRequest('POST', '/notifications');
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withBody($this->createStream($resolvedData));
+
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -83,17 +81,18 @@ class Notifications
      * Application authentication key and ID must be set.
      *
      * @param string $id Notification ID
-     *
-     * @return array
      */
-    public function open($id)
+    public function open(string $id): array
     {
-        return $this->api->request('PUT', '/notifications/'.$id, [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-        ], json_encode([
-            'app_id' => $this->api->getConfig()->getApplicationId(),
+        $request = $this->createRequest('PUT', "/notifications/$id");
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withBody($this->createStream([
+            'app_id' => $this->client->getConfig()->getApplicationId(),
             'opened' => true,
         ]));
+
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -102,16 +101,13 @@ class Notifications
      * Application authentication key and ID must be set.
      *
      * @param string $id Notification ID
-     *
-     * @return array
      */
-    public function cancel($id)
+    public function cancel(string $id): array
     {
-        $url = '/notifications/'.$id.'?app_id='.$this->api->getConfig()->getApplicationId();
+        $request = $this->createRequest('DELETE', "/notifications/$id?app_id={$this->client->getConfig()->getApplicationId()}");
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
 
-        return $this->api->request('DELETE', $url, [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-        ]);
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -119,20 +115,18 @@ class Notifications
      *
      * Application authentication key and ID must be set.
      *
-     * @param string $id   Notification ID
-     * @param array  $data
-     *
-     * @return array
+     * @param string $id Notification ID
      */
-    public function history($id, array $data)
+    public function history(string $id, array $data): array
     {
-        $url = '/notifications/'.$id.'/history?app_id='.$this->api->getConfig()->getApplicationId();
+        $resolvedData = $this->resolverFactory->createNotificationHistoryResolver()->resolve($data);
 
-        $data = $this->resolverFactory->createNotificationHistoryResolver()->resolve($data);
+        $request = $this->createRequest('POST', "/notifications/$id/history");
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
+        $request = $request->withHeader('Cache-Control', 'no-cache');
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withBody($this->createStream($resolvedData));
 
-        return $this->api->request('POST', $url, [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-            'Cache-Control' => 'no-cache',
-        ], json_encode($data));
+        return $this->client->sendRequest($request);
     }
 }

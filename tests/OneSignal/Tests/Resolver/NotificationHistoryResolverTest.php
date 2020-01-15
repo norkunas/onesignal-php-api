@@ -1,64 +1,62 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\NotificationHistoryResolver;
-use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use OneSignal\Tests\OneSignalTestCase;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
-class NotificationHistoryResolverTest extends TestCase
+class NotificationHistoryResolverTest extends OneSignalTestCase
 {
-    use SetUpTearDownTrait;
-
     /**
      * @var NotificationHistoryResolver
      */
     private $notificationHistoryResolver;
 
-    public function doSetUp()
+    protected function setUp(): void
     {
-        $this->notificationHistoryResolver = new NotificationHistoryResolver();
+        $this->notificationHistoryResolver = new NotificationHistoryResolver($this->createConfig());
     }
 
-    public function testResolveWithValidValues()
+    public function testResolveWithValidValues(): void
     {
         $expectedData = [
             'events' => 'sent',
             'email' => 'example@example.com',
+            'app_id' => 'fakeApplicationId',
         ];
 
         $this->assertEquals($expectedData, $this->notificationHistoryResolver->resolve($expectedData));
     }
 
-    public function testResolveWithMissingRequiredValue()
+    public function testResolveWithMissingRequiredValue(): void
     {
         $this->expectException(MissingOptionsException::class);
 
         $this->notificationHistoryResolver->resolve([]);
     }
 
-    public function wrongValueTypesProvider()
+    public function wrongValueTypesProvider(): iterable
     {
-        return [
-            [['events' => 666, 'email' => 'example@example.com']],
-            [['events' => 'sent', 'email' => 666]],
-        ];
+        yield [['events' => 666, 'email' => 'example@example.com']];
+        yield [['events' => 'sent', 'email' => 666]];
     }
 
     /**
      * @dataProvider wrongValueTypesProvider
      */
-    public function testResolveWithWrongValueTypes($wrongOption)
+    public function testResolveWithWrongValueTypes($wrongOption): void
     {
         $this->expectException(InvalidOptionsException::class);
 
         $this->notificationHistoryResolver->resolve($wrongOption);
     }
 
-    public function testResolveWithWrongOption()
+    public function testResolveWithWrongOption(): void
     {
         $this->expectException(UndefinedOptionsException::class);
 

@@ -14,24 +14,18 @@ matrix:
     fast_finish: true
     include:
         # Test minimum supported dependencies with the latest and oldest PHP version
-        - php: 7.1
-          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
-        - php: 7.2
-          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
         - php: 7.3
           env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
         - php: 7.4
           env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
 
         # Test the latest stable release
-        - php: 7.1
-        - php: 7.2
         - php: 7.3
         - php: 7.4
           env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text --coverage-clover=build/coverage.xml"
 
         # Test forcing symfony components version
-        - php: 7.1
+        - php: 7.3
           env: SYMFONY_VERSION=3.4.*
         - php: 7.4
           env: SYMFONY_VERSION=4.3.*

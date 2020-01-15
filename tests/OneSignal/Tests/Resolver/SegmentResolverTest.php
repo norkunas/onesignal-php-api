@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\SegmentResolver;
 use OneSignal\Tests\PrivateAccessorTrait;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,19 +14,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class SegmentResolverTest extends TestCase
 {
     use PrivateAccessorTrait;
-    use SetUpTearDownTrait;
 
     /**
      * @var SegmentResolver
      */
     private $segmentResolver;
 
-    public function doSetUp()
+    protected function setUp(): void
     {
         $this->segmentResolver = new SegmentResolver();
     }
 
-    public function testResolveWithValidValues()
+    public function testResolveWithValidValues(): void
     {
         $expectedData = [
             'id' => '52d5a7cb-59fe-4d0c-a0b9-9a39a21475ad',
@@ -36,26 +36,24 @@ class SegmentResolverTest extends TestCase
         $this->assertEquals($expectedData, $this->segmentResolver->resolve($expectedData));
     }
 
-    public function wrongValueTypesProvider()
+    public function wrongValueTypesProvider(): iterable
     {
-        return [
-            [['id' => 666, 'name' => '']],
-            [['name' => 666]],
-            [['filters' => 666, 'name' => '']],
-        ];
+        yield [['id' => 666, 'name' => '']];
+        yield [['name' => 666]];
+        yield [['filters' => 666, 'name' => '']];
     }
 
     /**
      * @dataProvider wrongValueTypesProvider
      */
-    public function testResolveWithWrongValueTypes($wrongOption)
+    public function testResolveWithWrongValueTypes($wrongOption): void
     {
         $this->expectException(InvalidOptionsException::class);
 
         $this->segmentResolver->resolve($wrongOption);
     }
 
-    public function testResolveWithWrongOption()
+    public function testResolveWithWrongOption(): void
     {
         $this->expectException(UndefinedOptionsException::class);
 
@@ -64,7 +62,7 @@ class SegmentResolverTest extends TestCase
 
     /****** Private functions testing ******/
 
-    public function testNormalizeFilters()
+    public function testNormalizeFilters(): void
     {
         $method = $this->getPrivateMethod(SegmentResolver::class, 'normalizeFilters');
 

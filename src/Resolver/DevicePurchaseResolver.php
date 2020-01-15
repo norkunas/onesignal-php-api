@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Resolver;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -9,7 +11,7 @@ class DevicePurchaseResolver implements ResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolve(array $data)
+    public function resolve(array $data): array
     {
         $data = (new OptionsResolver())
             ->setDefined('existing')

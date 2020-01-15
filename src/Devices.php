@@ -1,46 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal;
 
 use OneSignal\Resolver\ResolverFactory;
 
-class Devices
+class Devices extends AbstractApi
 {
-    const DEVICES_LIMIT = 300;
-
-    const IOS = 0;
-
-    const ANDROID = 1;
-
-    const AMAZON = 2;
-
-    const WINDOWS_PHONE = 3;
-
-    const WINDOWS_PHONE_MPNS = 3;
-
-    const CHROME_APP = 4;
-
-    const CHROME_WEB = 5;
-
-    const WINDOWS_PHONE_WNS = 6;
-
-    const SAFARI = 7;
-
-    const FIREFOX = 8;
-
-    const MACOS = 9;
-
-    const ALEXA = 10;
-
-    const EMAIL = 11;
-
-    protected $api;
+    public const IOS = 0;
+    public const ANDROID = 1;
+    public const AMAZON = 2;
+    public const WINDOWS_PHONE = 3;
+    public const WINDOWS_PHONE_MPNS = 3;
+    public const CHROME_APP = 4;
+    public const CHROME_WEB = 5;
+    public const WINDOWS_PHONE_WNS = 6;
+    public const SAFARI = 7;
+    public const FIREFOX = 8;
+    public const MACOS = 9;
+    public const ALEXA = 10;
+    public const EMAIL = 11;
 
     private $resolverFactory;
 
-    public function __construct(OneSignal $api, ResolverFactory $resolverFactory)
+    public function __construct(OneSignal $client, ResolverFactory $resolverFactory)
     {
-        $this->api = $api;
+        parent::__construct($client);
+
         $this->resolverFactory = $resolverFactory;
     }
 
@@ -48,16 +35,12 @@ class Devices
      * Get information about device with provided ID.
      *
      * @param string $id Device ID
-     *
-     * @return array
      */
-    public function getOne($id)
+    public function getOne(string $id): array
     {
-        $query = [
-            'app_id' => $this->api->getConfig()->getApplicationId(),
-        ];
+        $request = $this->createRequest('GET', "/players/$id?app_id={$this->client->getConfig()->getApplicationId()}");
 
-        return $this->api->request('GET', '/players/'.$id.'?'.http_build_query($query));
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -67,34 +50,39 @@ class Devices
      *
      * @param int $limit  How many devices to return. Max is 300. Default is 300
      * @param int $offset Result offset. Default is 0. Results are sorted by id
-     *
-     * @return array
      */
-    public function getAll($limit = self::DEVICES_LIMIT, $offset = 0)
+    public function getAll(int $limit = null, int $offset = null): array
     {
-        $query = [
-            'limit' => max(1, min(self::DEVICES_LIMIT, filter_var($limit, FILTER_VALIDATE_INT))),
-            'offset' => max(0, filter_var($offset, FILTER_VALIDATE_INT)),
-            'app_id' => $this->api->getConfig()->getApplicationId(),
-        ];
+        $query = ['app_id' => $this->client->getConfig()->getApplicationId()];
 
-        return $this->api->request('GET', '/players?'.http_build_query($query), [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-        ]);
+        if ($limit !== null) {
+            $query['limit'] = $limit;
+        }
+
+        if ($offset !== null) {
+            $query['offset'] = $offset;
+        }
+
+        $request = $this->createRequest('GET', '/players?'.http_build_query($query));
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
+
+        return $this->client->sendRequest($request);
     }
 
     /**
      * Register a device for your application.
      *
      * @param array $data Device data
-     *
-     * @return array
      */
-    public function add(array $data)
+    public function add(array $data): array
     {
-        $data = $this->resolverFactory->createNewDeviceResolver()->resolve($data);
+        $resolvedData = $this->resolverFactory->createNewDeviceResolver()->resolve($data);
 
-        return $this->api->request('POST', '/players', [], json_encode($data));
+        $request = $this->createRequest('POST', '/players');
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withBody($this->createStream($resolvedData));
+
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -102,14 +90,16 @@ class Devices
      *
      * @param string $id   Device ID
      * @param array  $data New device data
-     *
-     * @return array
      */
-    public function update($id, array $data)
+    public function update(string $id, array $data): array
     {
-        $data = $this->resolverFactory->createExistingDeviceResolver()->resolve($data);
+        $resolvedData = $this->resolverFactory->createExistingDeviceResolver()->resolve($data);
 
-        return $this->api->request('PUT', '/players/'.$id, [], json_encode($data));
+        $request = $this->createRequest('PUT', "/players/$id");
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withBody($this->createStream($resolvedData));
+
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -121,18 +111,13 @@ class Devices
      * Application auth key must be set.
      *
      * @param string $id Device ID
-     *
-     * @return array
      */
-    public function delete($id)
+    public function delete(string $id): array
     {
-        $query = [
-            'app_id' => $this->api->getConfig()->getApplicationId(),
-        ];
+        $request = $this->createRequest('DELETE', "/players/$id?app_id={$this->client->getConfig()->getApplicationId()}");
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
 
-        return $this->api->request('DELETE', '/players/'.$id.'?'.http_build_query($query), [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-        ]);
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -140,14 +125,16 @@ class Devices
      *
      * @param string $id   Device ID
      * @param array  $data Device data
-     *
-     * @return array
      */
-    public function onSession($id, array $data)
+    public function onSession(string $id, array $data): array
     {
-        $data = $this->resolverFactory->createDeviceSessionResolver()->resolve($data);
+        $resolvedData = $this->resolverFactory->createDeviceSessionResolver()->resolve($data);
 
-        return $this->api->request('POST', '/players/'.$id.'/on_session', [], json_encode($data));
+        $request = $this->createRequest('POST', "/players/$id/on_session");
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withBody($this->createStream($resolvedData));
+
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -155,14 +142,16 @@ class Devices
      *
      * @param string $id   Device ID
      * @param array  $data Device data
-     *
-     * @return array
      */
-    public function onPurchase($id, array $data)
+    public function onPurchase(string $id, array $data): array
     {
-        $data = $this->resolverFactory->createDevicePurchaseResolver()->resolve($data);
+        $resolvedData = $this->resolverFactory->createDevicePurchaseResolver()->resolve($data);
 
-        return $this->api->request('POST', '/players/'.$id.'/on_purchase', [], json_encode($data));
+        $request = $this->createRequest('POST', "/players/$id/on_purchase");
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withBody($this->createStream($resolvedData));
+
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -170,14 +159,16 @@ class Devices
      *
      * @param string $id   Device ID
      * @param array  $data Device data
-     *
-     * @return array
      */
-    public function onFocus($id, array $data)
+    public function onFocus(string $id, array $data): array
     {
-        $data = $this->resolverFactory->createDeviceFocusResolver()->resolve($data);
+        $resolvedData = $this->resolverFactory->createDeviceFocusResolver()->resolve($data);
 
-        return $this->api->request('POST', '/players/'.$id.'/on_focus', [], json_encode($data));
+        $request = $this->createRequest('POST', "/players/$id/on_focus");
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withBody($this->createStream($resolvedData));
+
+        return $this->client->sendRequest($request);
     }
 
     /**
@@ -190,29 +181,25 @@ class Devices
      * @param string $segmentName     A segment name to filter the scv export by.
      *                                Only devices from that segment will make it into the export
      * @param int    $lastActiveSince An epoch to filter results to users active after this time
-     *
-     * @return array
      */
-    public function csvExport(array $extraFields = [], $segmentName = null, $lastActiveSince = null)
+    public function csvExport(array $extraFields = [], string $segmentName = null, int $lastActiveSince = null): array
     {
-        $url = '/players/csv_export?app_id='.$this->api->getConfig()->getApplicationId();
+        $request = $this->createRequest('POST', "/players/csv_export?app_id={$this->client->getConfig()->getApplicationId()}");
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
+        $request = $request->withHeader('Content-Type', 'application/json');
 
-        $headers = [
-            'Authorization' => 'Basic '.$this->api->getConfig()->getApplicationAuthKey(),
-        ];
+        $body = ['extra_fields' => $extraFields];
 
-        $body = [
-            'extra_fields' => $extraFields,
-        ];
-
-        if (null !== $segmentName) {
+        if ($segmentName !== null) {
             $body['segment_name'] = $segmentName;
         }
 
-        if (null !== $lastActiveSince) {
+        if ($lastActiveSince !== null) {
             $body['last_active_since'] = (string) $lastActiveSince;
         }
 
-        return $this->api->request('POST', $url, $headers, json_encode($body));
+        $request = $request->withBody($this->createStream($body));
+
+        return $this->client->sendRequest($request);
     }
 }

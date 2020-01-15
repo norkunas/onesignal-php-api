@@ -1,35 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\NotificationResolver;
-use OneSignal\Tests\ConfigMockerTrait;
+use OneSignal\Tests\OneSignalTestCase;
 use OneSignal\Tests\PrivateAccessorTrait;
-use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class NotificationResolverTest extends TestCase
+class NotificationResolverTest extends OneSignalTestCase
 {
-    use ConfigMockerTrait;
     use PrivateAccessorTrait;
-    use SetUpTearDownTrait;
 
     /**
      * @var NotificationResolver
      */
     private $notificationResolver;
 
-    public function doSetUp()
+    protected function setUp(): void
     {
-        $this->notificationResolver = new NotificationResolver($this->createMockedConfig());
+        $this->notificationResolver = new NotificationResolver($this->createConfig());
     }
 
-    public function testResolveWithValidValues()
+    public function testResolveWithValidValues(): void
     {
-        $inpuData = [
+        $inputData = [
             'contents' => ['value'],
             'headings' => ['value'],
             'subtitle' => ['value'],
@@ -121,109 +119,107 @@ class NotificationResolverTest extends TestCase
             'web_push_topic' => 'value',
         ];
 
-        $expectedData = $inpuData;
+        $expectedData = $inputData;
         $expectedData['send_after'] = $expectedData['send_after']->format('Y-m-d H:i:sO');
         $expectedData['delivery_time_of_day'] = $expectedData['delivery_time_of_day']->format('g:iA');
 
-        $this->assertEquals($expectedData, $this->notificationResolver->resolve($inpuData));
+        $this->assertEquals($expectedData, $this->notificationResolver->resolve($inputData));
     }
 
-    public function wrongValueTypesProvider()
+    public function wrongValueTypesProvider(): iterable
     {
-        return [
-            [['contents' => 666]],
-            [['headings' => 666]],
-            [['subtitle' => 666]],
-            [['isIos' => 666]],
-            [['isAndroid' => 666]],
-            [['isWP' => 666]],
-            [['isWP_WNS' => 666]],
-            [['isAdm' => 666]],
-            [['isChrome' => 666]],
-            [['isChromeWeb' => 666]],
-            [['isFirefox' => 666]],
-            [['isSafari' => 666]],
-            [['isAnyWeb' => 666]],
-            [['included_segments' => 'wrongType']],
-            [['excluded_segments' => 'wrongType']],
-            [['include_player_ids' => 'wrongType']],
-            [['include_ios_tokens' => 'wrongType']],
-            [['include_android_reg_ids' => 666]],
-            [['include_external_user_ids' => 666]],
-            [['include_wp_uris' => 666]],
-            [['include_wp_wns_uris' => 666]],
-            [['include_amazon_reg_ids' => 666]],
-            [['include_chrome_reg_ids' => 666]],
-            [['include_chrome_web_reg_ids' => 666]],
-            [['app_ids' => 666]],
-            [['filters' => 666]],
-            [['ios_badgeType' => 'wrongType']],
-            [['ios_badgeCount' => 'wrongType']],
-            [['ios_sound' => 666]],
-            [['android_sound' => 666]],
-            [['adm_sound' => 666]],
-            [['wp_sound' => 666]],
-            [['wp_wns_sound' => 666]],
-            [['data' => 666]],
-            [['buttons' => 666]],
-            [['android_channel_id' => 666]],
-            [['existing_android_channel_id' => 666]],
-            [['android_background_layout' => 666]],
-            [['small_icon' => 666]],
-            [['large_icon' => 666]],
-            [['ios_attachments' => 666]],
-            [['big_picture' => 666]],
-            [['adm_small_icon' => 666]],
-            [['adm_large_icon' => 666]],
-            [['adm_big_picture' => 666]],
-            [['web_buttons' => 666]],
-            [['ios_category' => 666]],
-            [['chrome_icon' => 666]],
-            [['chrome_big_picture' => 666]],
-            [['chrome_web_icon' => 666]],
-            [['chrome_web_image' => 666]],
-            [['firefox_icon' => 666]],
-            [['url' => 666]],
-            [['web_url' => 666]],
-            [['send_after' => 666]],
-            [['delayed_option' => 666]],
-            [['delivery_time_of_day' => 666]],
-            [['android_led_color' => 666]],
-            [['android_accent_color' => 666]],
-            [['android_visibility' => 'wrongType']],
-            [['collapse_id' => 666]],
-            [['content_available' => 666]],
-            [['mutable_content' => 666]],
-            [['android_background_data' => 666]],
-            [['amazon_background_data' => 666]],
-            [['template_id' => 666]],
-            [['android_group' => 666]],
-            [['android_group_message' => 666]],
-            [['adm_group' => 666]],
-            [['adm_group_message' => 666]],
-            [['ttl' => 'wrongType']],
-            [['priority' => 'wrongType']],
-            [['app_id' => 666]],
-            [['email_subject' => 666]],
-            [['email_body' => 666]],
-            [['email_from_name' => 666]],
-            [['email_from_address' => 666]],
-            [['external_id' => 666]],
-            [['web_push_topic' => 666]],
-        ];
+        yield [['contents' => 666]];
+        yield [['headings' => 666]];
+        yield [['subtitle' => 666]];
+        yield [['isIos' => 666]];
+        yield [['isAndroid' => 666]];
+        yield [['isWP' => 666]];
+        yield [['isWP_WNS' => 666]];
+        yield [['isAdm' => 666]];
+        yield [['isChrome' => 666]];
+        yield [['isChromeWeb' => 666]];
+        yield [['isFirefox' => 666]];
+        yield [['isSafari' => 666]];
+        yield [['isAnyWeb' => 666]];
+        yield [['included_segments' => 'wrongType']];
+        yield [['excluded_segments' => 'wrongType']];
+        yield [['include_player_ids' => 'wrongType']];
+        yield [['include_ios_tokens' => 'wrongType']];
+        yield [['include_android_reg_ids' => 666]];
+        yield [['include_external_user_ids' => 666]];
+        yield [['include_wp_uris' => 666]];
+        yield [['include_wp_wns_uris' => 666]];
+        yield [['include_amazon_reg_ids' => 666]];
+        yield [['include_chrome_reg_ids' => 666]];
+        yield [['include_chrome_web_reg_ids' => 666]];
+        yield [['app_ids' => 666]];
+        yield [['filters' => 666]];
+        yield [['ios_badgeType' => 'wrongType']];
+        yield [['ios_badgeCount' => 'wrongType']];
+        yield [['ios_sound' => 666]];
+        yield [['android_sound' => 666]];
+        yield [['adm_sound' => 666]];
+        yield [['wp_sound' => 666]];
+        yield [['wp_wns_sound' => 666]];
+        yield [['data' => 666]];
+        yield [['buttons' => 666]];
+        yield [['android_channel_id' => 666]];
+        yield [['existing_android_channel_id' => 666]];
+        yield [['android_background_layout' => 666]];
+        yield [['small_icon' => 666]];
+        yield [['large_icon' => 666]];
+        yield [['ios_attachments' => 666]];
+        yield [['big_picture' => 666]];
+        yield [['adm_small_icon' => 666]];
+        yield [['adm_large_icon' => 666]];
+        yield [['adm_big_picture' => 666]];
+        yield [['web_buttons' => 666]];
+        yield [['ios_category' => 666]];
+        yield [['chrome_icon' => 666]];
+        yield [['chrome_big_picture' => 666]];
+        yield [['chrome_web_icon' => 666]];
+        yield [['chrome_web_image' => 666]];
+        yield [['firefox_icon' => 666]];
+        yield [['url' => 666]];
+        yield [['web_url' => 666]];
+        yield [['send_after' => 666]];
+        yield [['delayed_option' => 666]];
+        yield [['delivery_time_of_day' => 666]];
+        yield [['android_led_color' => 666]];
+        yield [['android_accent_color' => 666]];
+        yield [['android_visibility' => 'wrongType']];
+        yield [['collapse_id' => 666]];
+        yield [['content_available' => 666]];
+        yield [['mutable_content' => 666]];
+        yield [['android_background_data' => 666]];
+        yield [['amazon_background_data' => 666]];
+        yield [['template_id' => 666]];
+        yield [['android_group' => 666]];
+        yield [['android_group_message' => 666]];
+        yield [['adm_group' => 666]];
+        yield [['adm_group_message' => 666]];
+        yield [['ttl' => 'wrongType']];
+        yield [['priority' => 'wrongType']];
+        yield [['app_id' => 666]];
+        yield [['email_subject' => 666]];
+        yield [['email_body' => 666]];
+        yield [['email_from_name' => 666]];
+        yield [['email_from_address' => 666]];
+        yield [['external_id' => 666]];
+        yield [['web_push_topic' => 666]];
     }
 
     /**
      * @dataProvider wrongValueTypesProvider
      */
-    public function testResolveWithWrongValueTypes($wrongOption)
+    public function testResolveWithWrongValueTypes($wrongOption): void
     {
         $this->expectException(InvalidOptionsException::class);
 
         $this->notificationResolver->resolve($wrongOption);
     }
 
-    public function testResolveDefaultValues()
+    public function testResolveDefaultValues(): void
     {
         $expectedData = [
             'app_id' => 'fakeApplicationId',
@@ -232,7 +228,7 @@ class NotificationResolverTest extends TestCase
         $this->assertEquals($expectedData, $this->notificationResolver->resolve([]));
     }
 
-    public function testResolveWithWrongOption()
+    public function testResolveWithWrongOption(): void
     {
         $this->expectException(UndefinedOptionsException::class);
 
@@ -241,7 +237,7 @@ class NotificationResolverTest extends TestCase
 
     /****** Private functions testing ******/
 
-    public function testNormalizeFilters()
+    public function testNormalizeFilters(): void
     {
         $method = $this->getPrivateMethod(NotificationResolver::class, 'normalizeFilters');
 
@@ -265,7 +261,7 @@ class NotificationResolverTest extends TestCase
         $this->assertEquals($expectedData, $method->invokeArgs($this->notificationResolver, $inputData));
     }
 
-    public function testFilterUrl()
+    public function testFilterUrl(): void
     {
         $method = $this->getPrivateMethod(NotificationResolver::class, 'filterUrl');
 
@@ -273,7 +269,7 @@ class NotificationResolverTest extends TestCase
         $this->assertEquals(false, $method->invokeArgs($this->notificationResolver, ['wrongUrl']));
     }
 
-    public function testNormalizeButtons()
+    public function testNormalizeButtons(): void
     {
         $method = $this->getPrivateMethod(NotificationResolver::class, 'normalizeButtons');
 
@@ -291,7 +287,7 @@ class NotificationResolverTest extends TestCase
         $this->assertEquals($expectedData, $method->invokeArgs($this->notificationResolver, [$inputData]));
     }
 
-    public function testFilterAndroidBackgroundLayout()
+    public function testFilterAndroidBackgroundLayout(): void
     {
         $method = $this->getPrivateMethod(NotificationResolver::class, 'filterAndroidBackgroundLayout');
 
@@ -314,7 +310,7 @@ class NotificationResolverTest extends TestCase
         $this->assertEquals(false, $method->invokeArgs($this->notificationResolver, [$inputData]));
     }
 
-    public function testFilterIosAttachments()
+    public function testFilterIosAttachments(): void
     {
         $method = $this->getPrivateMethod(NotificationResolver::class, 'filterIosAttachments');
 
@@ -324,7 +320,7 @@ class NotificationResolverTest extends TestCase
         $this->assertEquals(true, $method->invokeArgs($this->notificationResolver, [['option' => 'value']]));
     }
 
-    public function testFilterWebButtons()
+    public function testFilterWebButtons(): void
     {
         $method = $this->getPrivateMethod(NotificationResolver::class, 'filterWebButtons');
 
@@ -346,7 +342,7 @@ class NotificationResolverTest extends TestCase
         $this->assertEquals(false, $method->invokeArgs($this->notificationResolver, [$inputData]));
     }
 
-    public function testDateTime()
+    public function testDateTime(): void
     {
         $method = $this->getPrivateMethod(NotificationResolver::class, 'normalizeDateTime');
 

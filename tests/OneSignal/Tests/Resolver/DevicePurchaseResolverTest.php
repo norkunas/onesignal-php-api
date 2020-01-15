@@ -1,29 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\DevicePurchaseResolver;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 class DevicePurchaseResolverTest extends TestCase
 {
-    use SetUpTearDownTrait;
-
     /**
      * @var DevicePurchaseResolver
      */
     private $devicePurchaseResolver;
 
-    public function doSetUp()
+    protected function setUp(): void
     {
         $this->devicePurchaseResolver = new DevicePurchaseResolver();
     }
 
-    public function testResolveWithValidValues()
+    public function testResolveWithValidValues(): void
     {
         $expectedData = [
             'existing' => false,
@@ -39,14 +38,14 @@ class DevicePurchaseResolverTest extends TestCase
         $this->assertEquals($expectedData, $this->devicePurchaseResolver->resolve($expectedData));
     }
 
-    public function testResolveWithMissingRequiredValue()
+    public function testResolveWithMissingRequiredValue(): void
     {
         $this->expectException(MissingOptionsException::class);
 
         $this->devicePurchaseResolver->resolve([]);
     }
 
-    public function testResolveWithMissingRequiredPurchaseValue()
+    public function testResolveWithMissingRequiredPurchaseValue(): void
     {
         $this->expectException(MissingOptionsException::class);
 
@@ -60,39 +59,37 @@ class DevicePurchaseResolverTest extends TestCase
         $this->devicePurchaseResolver->resolve($wrongData);
     }
 
-    public function wrongValueTypesProvider()
+    public function wrongValueTypesProvider(): iterable
     {
-        return [
-            [['existing' => 666]],
-            [['purchases' => 666]],
-            [[
-                'purchases' => [[
-                    'sku' => 666,
-                    'amount' => 56.4,
-                    'iso' => 'value',
-                ]],
+        yield [['existing' => 666]];
+        yield [['purchases' => 666]];
+        [[
+            'purchases' => [[
+                'sku' => 666,
+                'amount' => 56.4,
+                'iso' => 'value',
             ]],
-            [[
-                'purchases' => [[
-                    'sku' => 'value',
-                    'amount' => 'wrongType',
-                    'iso' => 'value',
-                ]],
+        ]];
+        yield [[
+            'purchases' => [[
+                'sku' => 'value',
+                'amount' => 'wrongType',
+                'iso' => 'value',
             ]],
-            [[
-                'purchases' => [[
-                    'sku' => 'value',
-                    'amount' => 56.4,
-                    'iso' => 666,
-                ]],
+        ]];
+        yield [[
+            'purchases' => [[
+                'sku' => 'value',
+                'amount' => 56.4,
+                'iso' => 666,
             ]],
-        ];
+        ]];
     }
 
     /**
      * @dataProvider wrongValueTypesProvider
      */
-    public function testResolveWithWrongValueTypes($wrongOption)
+    public function testResolveWithWrongValueTypes($wrongOption): void
     {
         $this->expectException(InvalidOptionsException::class);
 
@@ -107,7 +104,7 @@ class DevicePurchaseResolverTest extends TestCase
         $this->devicePurchaseResolver->resolve(array_merge($requiredOptions, $wrongOption));
     }
 
-    public function testResolveWithWrongPurchasesValueTypes()
+    public function testResolveWithWrongPurchasesValueTypes(): void
     {
         $this->expectException(InvalidOptionsException::class);
 
@@ -125,7 +122,7 @@ class DevicePurchaseResolverTest extends TestCase
         $this->devicePurchaseResolver->resolve($wrongData);
     }
 
-    public function testResolveWithWrongOption()
+    public function testResolveWithWrongOption(): void
     {
         $this->expectException(UndefinedOptionsException::class);
 

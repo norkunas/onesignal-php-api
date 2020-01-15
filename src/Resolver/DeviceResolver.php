@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Resolver;
 
 use OneSignal\Config;
@@ -9,19 +11,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class DeviceResolver implements ResolverInterface
 {
     private $config;
-
-    /**
-     * @var bool
-     */
     private $isNewDevice;
 
-    /**
-     * DeviceResolver constructor.
-     *
-     * @param Config $config
-     * @param bool   $isNewDevice
-     */
-    public function __construct(Config $config, $isNewDevice = false)
+    public function __construct(Config $config, bool $isNewDevice)
     {
         $this->config = $config;
         $this->isNewDevice = $isNewDevice;
@@ -30,7 +22,7 @@ class DeviceResolver implements ResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function resolve(array $data)
+    public function resolve(array $data): array
     {
         $resolver = (new OptionsResolver())
             ->setDefined('identifier')
@@ -104,19 +96,13 @@ class DeviceResolver implements ResolverInterface
         return $resolver->resolve($data);
     }
 
-    /**
-     * @return bool
-     */
-    public function getIsNewDevice()
-    {
-        return $this->isNewDevice;
-    }
-
-    /**
-     * @param bool $isNewDevice
-     */
-    public function setIsNewDevice($isNewDevice)
+    public function setIsNewDevice(bool $isNewDevice): void
     {
         $this->isNewDevice = $isNewDevice;
+    }
+
+    public function getIsNewDevice(): bool
+    {
+        return $this->isNewDevice;
     }
 }

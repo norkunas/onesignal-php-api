@@ -1,47 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Tests\Resolver;
 
-use OneSignal\Resolver\AppResolver;
-use OneSignal\Resolver\DeviceFocusResolver;
-use OneSignal\Resolver\DevicePurchaseResolver;
-use OneSignal\Resolver\DeviceResolver;
-use OneSignal\Resolver\DeviceSessionResolver;
-use OneSignal\Resolver\NotificationResolver;
 use OneSignal\Resolver\ResolverFactory;
-use OneSignal\Tests\ConfigMockerTrait;
-use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use OneSignal\Tests\OneSignalTestCase;
 
-class ResolverFactoryTest extends TestCase
+class ResolverFactoryTest extends OneSignalTestCase
 {
-    use ConfigMockerTrait;
-    use SetUpTearDownTrait;
-
     /**
      * @var ResolverFactory
      */
     private $resolverFactory;
 
-    public function doSetUp()
+    protected function setUp(): void
     {
-        $this->resolverFactory = new ResolverFactory($this->createMockedConfig());
+        $this->resolverFactory = new ResolverFactory($this->createConfig());
     }
 
-    public function testFactoryInstantiations()
+    public function testFactoryInstantiations(): void
     {
-        $this->assertInstanceOf(AppResolver::class, $this->resolverFactory->createAppResolver());
-        $this->assertInstanceOf(DeviceSessionResolver::class, $this->resolverFactory->createDeviceSessionResolver());
-        $this->assertInstanceOf(DevicePurchaseResolver::class, $this->resolverFactory->createDevicePurchaseResolver());
-        $this->assertInstanceOf(DeviceFocusResolver::class, $this->resolverFactory->createDeviceFocusResolver());
-        $this->assertInstanceOf(NotificationResolver::class, $this->resolverFactory->createNotificationResolver());
-
         $newDeviceResolver = $this->resolverFactory->createNewDeviceResolver();
-        $this->assertInstanceOf(DeviceResolver::class, $newDeviceResolver);
-        $this->assertEquals(true, $newDeviceResolver->getIsNewDevice());
+        $this->assertTrue($newDeviceResolver->getIsNewDevice());
 
         $existingDeviceResolver = $this->resolverFactory->createExistingDeviceResolver();
-        $this->assertInstanceOf(DeviceResolver::class, $existingDeviceResolver);
-        $this->assertEquals(false, $existingDeviceResolver->getIsNewDevice());
+        $this->assertFalse($existingDeviceResolver->getIsNewDevice());
     }
 }

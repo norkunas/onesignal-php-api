@@ -1,28 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Resolver\DeviceSessionResolver;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
 class DeviceSessionResolverTest extends TestCase
 {
-    use SetUpTearDownTrait;
-
     /**
      * @var DeviceSessionResolver
      */
     private $deviceSessionResolver;
 
-    public function doSetUp()
+    protected function setUp(): void
     {
         $this->deviceSessionResolver = new DeviceSessionResolver();
     }
 
-    public function testResolveWithValidValues()
+    public function testResolveWithValidValues(): void
     {
         $expectedData = [
             'identifier' => 'fakeIdentifier',
@@ -39,32 +38,30 @@ class DeviceSessionResolverTest extends TestCase
         $this->assertEquals($expectedData, $this->deviceSessionResolver->resolve($expectedData));
     }
 
-    public function wrongValueTypesProvider()
+    public function wrongValueTypesProvider(): iterable
     {
-        return [
-            [['identifier' => 666]],
-            [['language' => 666]],
-            [['timezone' => 'wrongType']],
-            [['game_version' => 666]],
-            [['device_model' => 666]],
-            [['device_os' => 666]],
-            [['ad_id' => 666]],
-            [['sdk' => 666]],
-            [['tags' => 666]],
-        ];
+        yield [['identifier' => 666]];
+        yield [['language' => 666]];
+        yield [['timezone' => 'wrongType']];
+        yield [['game_version' => 666]];
+        yield [['device_model' => 666]];
+        yield [['device_os' => 666]];
+        yield [['ad_id' => 666]];
+        yield [['sdk' => 666]];
+        yield [['tags' => 666]];
     }
 
     /**
      * @dataProvider wrongValueTypesProvider
      */
-    public function testResolveWithWrongValueTypes($wrongOption)
+    public function testResolveWithWrongValueTypes($wrongOption): void
     {
         $this->expectException(InvalidOptionsException::class);
 
         $this->deviceSessionResolver->resolve($wrongOption);
     }
 
-    public function testResolveWithWrongOption()
+    public function testResolveWithWrongOption(): void
     {
         $this->expectException(UndefinedOptionsException::class);
 

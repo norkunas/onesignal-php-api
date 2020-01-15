@@ -1,32 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal\Tests\Resolver;
 
 use OneSignal\Devices;
 use OneSignal\Resolver\DeviceResolver;
-use OneSignal\Tests\ConfigMockerTrait;
-use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
+use OneSignal\Tests\OneSignalTestCase;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\Exception\MissingOptionsException;
 use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
 
-class DeviceResolverTest extends TestCase
+class DeviceResolverTest extends OneSignalTestCase
 {
-    use ConfigMockerTrait;
-    use SetUpTearDownTrait;
-
     /**
      * @var DeviceResolver
      */
     private $deviceResolver;
 
-    public function doSetUp()
+    protected function setUp(): void
     {
-        $this->deviceResolver = new DeviceResolver($this->createMockedConfig());
+        $this->deviceResolver = new DeviceResolver($this->createConfig(), false);
     }
 
-    public function testResolveWithValidValues()
+    public function testResolveWithValidValues(): void
     {
         $expectedData = [
             'identifier' => 'value',
@@ -64,7 +61,7 @@ class DeviceResolverTest extends TestCase
         $this->assertEquals($expectedData, $this->deviceResolver->resolve($expectedData));
     }
 
-    public function testResolveDefaultValues()
+    public function testResolveDefaultValues(): void
     {
         $expectedData = [
             'app_id' => 'fakeApplicationId',
@@ -81,7 +78,7 @@ class DeviceResolverTest extends TestCase
         $this->assertEquals(array_merge($inputData, $expectedData), $this->deviceResolver->resolve($inputData));
     }
 
-    public function testResolveWithMissingRequiredValue()
+    public function testResolveWithMissingRequiredValue(): void
     {
         $this->expectException(MissingOptionsException::class);
 
@@ -89,39 +86,37 @@ class DeviceResolverTest extends TestCase
         $this->deviceResolver->resolve([]);
     }
 
-    public function wrongValueTypesProvider()
+    public function wrongValueTypesProvider(): iterable
     {
-        return [
-            [['identifier' => 666]],
-            [['language' => 666]],
-            [['timezone' => 'wrongType']],
-            [['game_version' => 666]],
-            [['device_model' => 666]],
-            [['device_os' => 666]],
-            [['ad_id' => 666]],
-            [['sdk' => 666]],
-            [['session_count' => 'wrongType']],
-            [['tags' => 666]],
-            [['amount_spent' => 'wrongType']],
-            [['created_at' => 'wrongType']],
-            [['playtime' => 'wrongType']],
-            [['badge_count' => 'wrongType']],
-            [['last_active' => 'wrongType']],
-            [['notification_types' => 'wrongType']],
-            [['test_type' => 'wrongType']],
-            [['long' => true]],
-            [['lat' => true]],
-            [['country' => false]],
-            [['app_id' => 666]],
-            [['device_type' => 666]],
-            [['external_user_id' => 666]],
-        ];
+        yield [['identifier' => 666]];
+        yield [['language' => 666]];
+        yield [['timezone' => 'wrongType']];
+        yield [['game_version' => 666]];
+        yield [['device_model' => 666]];
+        yield [['device_os' => 666]];
+        yield [['ad_id' => 666]];
+        yield [['sdk' => 666]];
+        yield [['session_count' => 'wrongType']];
+        yield [['tags' => 666]];
+        yield [['amount_spent' => 'wrongType']];
+        yield [['created_at' => 'wrongType']];
+        yield [['playtime' => 'wrongType']];
+        yield [['badge_count' => 'wrongType']];
+        yield [['last_active' => 'wrongType']];
+        yield [['notification_types' => 'wrongType']];
+        yield [['test_type' => 'wrongType']];
+        yield [['long' => true]];
+        yield [['lat' => true]];
+        yield [['country' => false]];
+        yield [['app_id' => 666]];
+        yield [['device_type' => 666]];
+        yield [['external_user_id' => 666]];
     }
 
     /**
      * @dataProvider wrongValueTypesProvider
      */
-    public function testResolveWithWrongValueTypes($wrongOption)
+    public function testResolveWithWrongValueTypes($wrongOption): void
     {
         $this->expectException(InvalidOptionsException::class);
 
@@ -133,7 +128,7 @@ class DeviceResolverTest extends TestCase
         $this->deviceResolver->resolve(array_merge($requiredOptions, $wrongOption));
     }
 
-    public function testResolveWithWrongOption()
+    public function testResolveWithWrongOption(): void
     {
         $this->expectException(UndefinedOptionsException::class);
 

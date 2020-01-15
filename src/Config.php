@@ -1,80 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OneSignal;
 
-class Config
+final class Config
 {
-    /**
-     * @var string
-     */
     private $applicationId;
-
-    /**
-     * @var string
-     */
     private $applicationAuthKey;
-
-    /**
-     * @var string
-     */
     private $userAuthKey;
 
-    /**
-     * Set OneSignal application id.
-     *
-     * @param string $applicationId
-     */
-    public function setApplicationId($applicationId)
+    public function __construct(string $applicationId, string $applicationAuthKey, string $userAuthKey = null)
     {
         $this->applicationId = $applicationId;
+        $this->applicationAuthKey = $applicationAuthKey;
+        $this->userAuthKey = $userAuthKey;
     }
 
     /**
      * Get OneSignal application id.
-     *
-     * @return string
      */
-    public function getApplicationId()
+    public function getApplicationId(): string
     {
         return $this->applicationId;
     }
 
     /**
-     * Set OneSignal application authentication key.
-     *
-     * @param string $applicationAuthKey
-     */
-    public function setApplicationAuthKey($applicationAuthKey)
-    {
-        $this->applicationAuthKey = $applicationAuthKey;
-    }
-
-    /**
      * Get OneSignal application authentication key.
-     *
-     * @return string
      */
-    public function getApplicationAuthKey()
+    public function getApplicationAuthKey(): string
     {
         return $this->applicationAuthKey;
     }
 
     /**
-     * Set user authentication key.
-     *
-     * @param string $userAuthKey
-     */
-    public function setUserAuthKey($userAuthKey)
-    {
-        $this->userAuthKey = $userAuthKey;
-    }
-
-    /**
      * Get user authentication key.
-     *
-     * @return string
      */
-    public function getUserAuthKey()
+    public function getUserAuthKey(): ?string
     {
         return $this->userAuthKey;
     }

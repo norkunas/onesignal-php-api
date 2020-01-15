@@ -5,11 +5,7 @@ namespace OneSignal\Resolver;
 interface ResolverInterface
 {
     /**
-     * Resolve option array.
-     *
-     * @param array $data
-     *
-     * @return array
+     * Resolve options array.
      */
-    public function resolve(array $data);
+    public function resolve(array $data): array;
 }
