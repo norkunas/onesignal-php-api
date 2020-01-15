@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OneSignal\Resolver;
 
+use OneSignal\Devices;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DeviceSessionResolver implements ResolverInterface
@@ -33,6 +34,23 @@ class DeviceSessionResolver implements ResolverInterface
             ->setAllowedTypes('sdk', 'string')
             ->setDefined('tags')
             ->setAllowedTypes('tags', 'array')
+            ->setDefined('device_type')
+            ->setAllowedTypes('device_type', 'int')
+            ->setAllowedValues('device_type', [
+                Devices::IOS,
+                Devices::ANDROID,
+                Devices::AMAZON,
+                Devices::WINDOWS_PHONE,
+                Devices::WINDOWS_PHONE_MPNS,
+                Devices::CHROME_APP,
+                Devices::CHROME_WEB,
+                Devices::WINDOWS_PHONE_WNS,
+                Devices::SAFARI,
+                Devices::FIREFOX,
+                Devices::MACOS,
+                Devices::ALEXA,
+                Devices::EMAIL,
+            ])
             ->resolve($data);
     }
 }
