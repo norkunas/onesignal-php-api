@@ -4,7 +4,14 @@ declare(strict_types=1);
 
 namespace OneSignal\Tests;
 
+use OneSignal\Apps;
+use OneSignal\Devices;
+use OneSignal\Exception\BadMethodCallException;
+use OneSignal\Exception\InvalidArgumentException;
 use OneSignal\Exception\JsonException;
+use OneSignal\Notifications;
+use OneSignal\OneSignal;
+use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -92,5 +99,39 @@ class OneSignalTest extends ApiTestCase
         $request = $request->withHeader('Accept', 'application/json');
 
         $oneSignal->sendRequest($request);
+    }
+
+    public function testApiReturnsInstances(): void
+    {
+        $oneSignal = $this->createClientMock();
+
+        $this->assertInstanceOf(Apps::class, $oneSignal->api('apps'));
+        $this->assertInstanceOf(Devices::class, $oneSignal->api('devices'));
+        $this->assertInstanceOf(Notifications::class, $oneSignal->api('notifications'));
+    }
+
+    public function testApiThrowsForUnknownService(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("Undefined api instance called: 'app'.");
+
+        $oneSignal = $this->createClientMock();
+        $oneSignal->api('app');
+    }
+
+    public function testMagicCallReturnsInstance(): void
+    {
+        $oneSignal = $this->createClientMock();
+
+        $this->assertInstanceOf(Apps::class, $oneSignal->apps());
+    }
+
+    public function testMagicCallThrowsWithWrongMethod(): void
+    {
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage("Undefined method called: 'app'.");
+
+        $oneSignal = $this->createClientMock();
+        $oneSignal->app();
     }
 }
