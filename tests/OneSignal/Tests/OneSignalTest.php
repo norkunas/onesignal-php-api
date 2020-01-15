@@ -10,8 +10,6 @@ use OneSignal\Exception\BadMethodCallException;
 use OneSignal\Exception\InvalidArgumentException;
 use OneSignal\Exception\JsonException;
 use OneSignal\Notifications;
-use OneSignal\OneSignal;
-use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
