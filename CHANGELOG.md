@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 2.0.1
+
+- Add missed chrome_web_badge option to NotificationResolver
+- Add create/update segments and notification history examples to readme
+
 ## Version 2.0.0
 
 - At least PHP 7.3 version is now required.
