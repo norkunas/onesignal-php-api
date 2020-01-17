@@ -74,6 +74,27 @@ $oneSignal->apps()->update('application_id', [
 ]);
 ```
 
+Create Segments ([official documentation](https://documentation.onesignal.com/reference#create-segments)):
+
+```php
+$oneSignal->apps()->createSegment('application_id', [
+    'name' => 'Segment Name',
+    'filters' => [
+        ['field' => 'session_count', 'relation' => '>', 'value' => 1],
+        ['operator' => 'AND'],
+        ['field' => 'tag', 'relation' => '!=', 'key' => 'tag_key', 'value' => '1'],
+        ['operator' => 'OR'],
+        ['field' => 'last_session', 'relation' => '<', 'value' => '30,'],
+    ],
+]);
+```
+
+Delete Segments ([official documentation](https://documentation.onesignal.com/reference#delete-segments)):
+
+```php
+$oneSignal->apps()->deleteSegment('application_id', 'segment_id');
+```
+
 ### Devices API
 
 View the details of multiple devices in one of your OneSignal apps ([official documentation](https://documentation.onesignal.com/reference#view-devices)):
@@ -165,6 +186,15 @@ Stop a scheduled or currently outgoing notification ([official documentation](ht
 
 ```php
 $oneSignal->notifications()->cancel('notification_id');
+```
+
+Notification History ([official documentation](https://documentation.onesignal.com/reference#notification-history)):
+
+```php
+$oneSignal->notifications()->history('notification_id', [
+    'events' => 'clicked', // or 'sent'
+    'email' => 'your_email@email.com',
+]);
 ```
 
 ## Questions?
