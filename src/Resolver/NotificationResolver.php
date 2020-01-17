@@ -144,6 +144,8 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('chrome_web_icon', 'string')
             ->setDefined('chrome_web_image')
             ->setAllowedTypes('chrome_web_image', 'string')
+            ->setDefined('chrome_web_badge')
+            ->setAllowedTypes('chrome_web_badge', 'string')
             ->setDefined('firefox_icon')
             ->setAllowedTypes('firefox_icon', 'string')
             ->setDefined('url')
