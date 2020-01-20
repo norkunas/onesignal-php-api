@@ -10,6 +10,8 @@
 
 ## Install
 
+Note: All examples are for v2, if you are using PHP <7.3 please read [v1 documentation](./blob/1.0/README.md).
+
 This packages requires a PSR-18 HTTP client and PSR-17 HTTP factories to work. You can choose any from
 [psr/http-client-implementation](https://packagist.org/providers/psr/http-client-implementation)
 and [psr/http-factory-implementation](https://packagist.org/providers/psr/http-factory-implementation)
