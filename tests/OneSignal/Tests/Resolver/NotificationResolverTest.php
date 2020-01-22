@@ -117,6 +117,7 @@ class NotificationResolverTest extends OneSignalTestCase
             'email_from_address' => 'value',
             'external_id' => 'value',
             'web_push_topic' => 'value',
+            'apns_push_type_override' => 'voip'
         ];
 
         $expectedData = $inputData;
@@ -207,6 +208,7 @@ class NotificationResolverTest extends OneSignalTestCase
         yield [['email_from_address' => 666]];
         yield [['external_id' => 666]];
         yield [['web_push_topic' => 666]];
+        yield [['apns_push_type_override' => 666]];
     }
 
     /**

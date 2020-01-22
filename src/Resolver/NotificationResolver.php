@@ -224,6 +224,7 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('web_push_topic', 'string')
             ->setDefined('apns_push_type_override')
             ->setAllowedTypes('apns_push_type_override', 'string')
+            ->setAllowedValues('apns_push_type_override', ['voip'])
             ->resolve($data);
     }
 
