@@ -222,6 +222,8 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('external_id', 'string')
             ->setDefined('web_push_topic')
             ->setAllowedTypes('web_push_topic', 'string')
+            ->setDefined('apns_push_type_override')
+            ->setAllowedTypes('apns_push_type_override', 'string')
             ->resolve($data);
     }
 
