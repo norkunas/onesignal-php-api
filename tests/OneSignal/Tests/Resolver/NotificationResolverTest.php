@@ -117,7 +117,7 @@ class NotificationResolverTest extends OneSignalTestCase
             'email_from_address' => 'value',
             'external_id' => 'value',
             'web_push_topic' => 'value',
-            'apns_push_type_override' => 'voip'
+            'apns_push_type_override' => 'voip',
         ];
 
         $expectedData = $inputData;
