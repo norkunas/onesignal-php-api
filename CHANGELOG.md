@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.0.2
+
+- Add field "apns_push_type_override"
+
 ## Version 2.0.1
 
 - Add missed chrome_web_badge option to NotificationResolver
