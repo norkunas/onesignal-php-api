@@ -47,6 +47,7 @@ class NotificationResolverTest extends OneSignalTestCase
             'include_ios_tokens' => ['value'],
             'include_android_reg_ids' => ['value'],
             'include_external_user_ids' => ['value'],
+            'include_email_tokens' => ['value'],
             'include_wp_uris' => ['value'],
             'include_wp_wns_uris' => ['value'],
             'include_amazon_reg_ids' => ['value'],
@@ -148,6 +149,7 @@ class NotificationResolverTest extends OneSignalTestCase
         yield [['include_ios_tokens' => 'wrongType']];
         yield [['include_android_reg_ids' => 666]];
         yield [['include_external_user_ids' => 666]];
+        yield [['include_email_tokens' => 666]];
         yield [['include_wp_uris' => 666]];
         yield [['include_wp_wns_uris' => 666]];
         yield [['include_amazon_reg_ids' => 666]];
