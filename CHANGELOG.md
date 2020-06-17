@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.1.0
+
+- Add "kind" argument to notifications getAll method
+
 ## Version 2.0.3
 
 - Add field "include_email_tokens"
