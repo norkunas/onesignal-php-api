@@ -39,9 +39,20 @@ class Notifications extends AbstractApi
      *
      * @param int $limit  How many notifications to return (max 50)
      * @param int $offset Results offset (results are sorted by ID)
+     * @param int $kind   Kind of notifications returned. Default (not set) is all notification types
      */
-    public function getAll(int $limit = null, int $offset = null): array
+    public function getAll(int $limit = null, int $offset = null/*, int $kind = null */): array
     {
+        if (func_num_args() > 2 && !is_int(func_get_arg(2))) {
+            trigger_deprecation('norkunas/onesignal-php-api', '2.1.0', 'Method %s() will have a third `int $kind` argument. Not defining it or passing a non integer value is deprecated.', __METHOD__);
+        } elseif (__CLASS__ !== static::class) {
+            $r = new \ReflectionMethod($this, __FUNCTION__);
+
+            if (\count($r->getParameters()) > 2) {
+                trigger_deprecation('norkunas/onesignal-php-api', '2.1.0', 'Method %s() will have a third `int $kind` argument. Not defining it or passing a non integer value is deprecated.', __METHOD__);
+            }
+        }
+
         $query = ['app_id' => $this->client->getConfig()->getApplicationId()];
 
         if ($limit !== null) {
@@ -50,6 +61,10 @@ class Notifications extends AbstractApi
 
         if ($offset !== null) {
             $query['offset'] = $offset;
+        }
+
+        if (func_num_args() > 2 && is_int(func_get_arg(2))) {
+            $query['kind'] = func_get_arg(2);
         }
 
         $request = $this->createRequest('GET', '/notifications?'.http_build_query($query));
