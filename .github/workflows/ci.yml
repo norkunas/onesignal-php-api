@@ -41,8 +41,12 @@ jobs:
         strategy:
             matrix:
                 include:
+                    - php-version: 7.3
+                      composer-flags: --prefer-stable --prefer-lowest
                     - php-version: 7.4
                       composer-flags: --prefer-stable --prefer-lowest
+                    - php-version: 7.4
+                      symfony-version: 3.4.*
                     - php-version: 7.4
                       symfony-version: 4.4.*
                     - php-version: 7.4
