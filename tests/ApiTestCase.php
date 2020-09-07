@@ -9,9 +9,13 @@ use OneSignal\Config;
 use OneSignal\OneSignal;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Psr18Client;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 abstract class ApiTestCase extends OneSignalTestCase
 {
+    /**
+     * @param callable|callable[]|ResponseInterface|ResponseInterface[]|iterable|null $response
+     */
     protected function createClientMock($response = null): OneSignal
     {
         $config = new Config('fakeApplicationId', 'fakeApplicationAuthKey', 'fakeUserAuthKey');
@@ -25,6 +29,12 @@ abstract class ApiTestCase extends OneSignalTestCase
 
     protected function loadFixture(string $fileName): string
     {
-        return file_get_contents(__DIR__."/Fixtures/$fileName");
+        $content = file_get_contents(__DIR__."/Fixtures/$fileName");
+
+        if ($content === false) {
+            throw new \RuntimeException(sprintf('Cannot read "%s" fixture file.', $fileName));
+        }
+
+        return $content;
     }
 }

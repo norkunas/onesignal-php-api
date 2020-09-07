@@ -66,7 +66,7 @@ class NotificationResolverTest extends OneSignalTestCase
             'buttons' => [],
             'android_channel_id' => '09228c02-6188-4307-b139-402600213d0e',
             'existing_android_channel_id' => '09228c02-6188-4307-b139-402600213d0e',
-            'android_background_layout' => ['value'],
+            'android_background_layout' => ['image' => 'https://example.com/image/png', 'headings_color' => 'FF0000FF', 'contents_color' => 'FFFF0000'],
             'small_icon' => 'value',
             'large_icon' => 'value',
             'ios_attachments' => ['key' => 'value'],
@@ -168,7 +168,7 @@ class NotificationResolverTest extends OneSignalTestCase
         yield [['buttons' => 666]];
         yield [['android_channel_id' => 666]];
         yield [['existing_android_channel_id' => 666]];
-        yield [['android_background_layout' => 666]];
+        yield [['android_background_layout' => ['wrongKey' => 'value']]];
         yield [['small_icon' => 666]];
         yield [['large_icon' => 666]];
         yield [['ios_attachments' => 666]];
@@ -216,7 +216,7 @@ class NotificationResolverTest extends OneSignalTestCase
     /**
      * @dataProvider wrongValueTypesProvider
      */
-    public function testResolveWithWrongValueTypes($wrongOption): void
+    public function testResolveWithWrongValueTypes(array $wrongOption): void
     {
         $this->expectException(InvalidOptionsException::class);
 

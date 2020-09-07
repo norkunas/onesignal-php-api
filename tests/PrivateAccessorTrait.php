@@ -6,7 +6,10 @@ namespace OneSignal\Tests;
 
 trait PrivateAccessorTrait
 {
-    public function getPrivateMethod($class, $method): \ReflectionMethod
+    /**
+     * @param class-string $class
+     */
+    public function getPrivateMethod(string $class, string $method): \ReflectionMethod
     {
         $class = new \ReflectionClass($class);
         $method = $class->getMethod($method);

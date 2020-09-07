@@ -22,9 +22,9 @@ class ResolverFactoryTest extends OneSignalTestCase
     public function testFactoryInstantiations(): void
     {
         $newDeviceResolver = $this->resolverFactory->createNewDeviceResolver();
-        $this->assertTrue($newDeviceResolver->getIsNewDevice());
+        self::assertTrue($newDeviceResolver->getIsNewDevice());
 
         $existingDeviceResolver = $this->resolverFactory->createExistingDeviceResolver();
-        $this->assertFalse($existingDeviceResolver->getIsNewDevice());
+        self::assertFalse($existingDeviceResolver->getIsNewDevice());
     }
 }

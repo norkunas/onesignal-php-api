@@ -1,4 +1,4 @@
-/.idea
+/.phpstan
 /vendor
 phpunit.xml
 composer.lock

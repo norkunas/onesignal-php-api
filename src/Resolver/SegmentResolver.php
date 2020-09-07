@@ -27,7 +27,7 @@ class SegmentResolver implements ResolverInterface
             ->resolve($data);
     }
 
-    private function normalizeFilters(Options $options, array $values)
+    private function normalizeFilters(Options $options, array $values): array
     {
         $filters = [];
 

@@ -104,7 +104,7 @@ class OneSignal
         return $api;
     }
 
-    public function __call($name, $args)
+    public function __call(string $name, array $args): object
     {
         try {
             return $this->api($name);

@@ -130,6 +130,7 @@ class OneSignalTest extends ApiTestCase
         $this->expectExceptionMessage("Undefined method called: 'app'.");
 
         $oneSignal = $this->createClientMock();
+        /* @phpstan-ignore-next-line */
         $oneSignal->app();
     }
 }

@@ -54,7 +54,7 @@ class DeviceSessionResolverTest extends TestCase
     /**
      * @dataProvider wrongValueTypesProvider
      */
-    public function testResolveWithWrongValueTypes($wrongOption): void
+    public function testResolveWithWrongValueTypes(array $wrongOption): void
     {
         $this->expectException(InvalidOptionsException::class);
 

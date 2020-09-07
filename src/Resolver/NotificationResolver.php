@@ -111,7 +111,7 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('existing_android_channel_id', 'string')
             ->setDefined('android_background_layout')
             ->setAllowedTypes('android_background_layout', 'array')
-            ->setAllowedValues('android_background_layout', function ($layouts) {
+            ->setAllowedValues('android_background_layout', function (array $layouts) {
                 return $this->filterAndroidBackgroundLayout($layouts);
             })
             ->setDefined('small_icon')
@@ -120,7 +120,7 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('large_icon', 'string')
             ->setDefined('ios_attachments')
             ->setAllowedTypes('ios_attachments', 'array')
-            ->setAllowedValues('ios_attachments', function ($attachments) {
+            ->setAllowedValues('ios_attachments', function (array $attachments) {
                 return $this->filterIosAttachments($attachments);
             })
             ->setDefined('big_picture')
@@ -133,7 +133,7 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('adm_big_picture', 'string')
             ->setDefined('web_buttons')
             ->setAllowedTypes('web_buttons', 'array')
-            ->setAllowedValues('web_buttons', function ($buttons) {
+            ->setAllowedValues('web_buttons', function (array $buttons) {
                 return $this->filterWebButtons($buttons);
             })
             ->setDefined('ios_category')
@@ -152,12 +152,12 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('firefox_icon', 'string')
             ->setDefined('url')
             ->setAllowedTypes('url', 'string')
-            ->setAllowedValues('url', function ($value) {
+            ->setAllowedValues('url', function (string $value) {
                 return $this->filterUrl($value);
             })
             ->setDefined('web_url')
             ->setAllowedTypes('web_url', 'string')
-            ->setAllowedValues('web_url', function ($value) {
+            ->setAllowedValues('web_url', function (string $value) {
                 return $this->filterUrl($value);
             })
             ->setDefined('send_after')
@@ -169,7 +169,7 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('delayed_option', 'string')
             ->setAllowedValues('delayed_option', ['timezone', 'last-active'])
             ->setDefined('delivery_time_of_day')
-            ->setAllowedTypes('delivery_time_of_day', '\DateTimeInterface')
+            ->setAllowedTypes('delivery_time_of_day', \DateTimeInterface::class)
             ->setNormalizer('delivery_time_of_day', function (Options $options, \DateTimeInterface $value) {
                 return $this->normalizeDateTime($options, $value, self::DELIVERY_TIME_OF_DAY_FORMAT);
             })
@@ -245,12 +245,15 @@ class NotificationResolver implements ResolverInterface
         return $filters;
     }
 
+    /**
+     * @param mixed $value
+     */
     private function filterUrl($value): bool
     {
         return (bool) filter_var($value, FILTER_VALIDATE_URL);
     }
 
-    private function normalizeButtons($values): array
+    private function normalizeButtons(array $values): array
     {
         $buttons = [];
 
@@ -269,16 +272,16 @@ class NotificationResolver implements ResolverInterface
         return $buttons;
     }
 
-    private function filterAndroidBackgroundLayout($layouts): bool
+    private function filterAndroidBackgroundLayout(array $layouts): bool
     {
-        if (empty($layouts)) {
+        if (count($layouts) === 0) {
             return false;
         }
 
         $requiredKeys = ['image', 'headings_color', 'contents_color'];
 
         foreach ($layouts as $k => $v) {
-            if (!in_array($k, $requiredKeys) || !is_string($v)) {
+            if (!is_string($v) || !in_array($k, $requiredKeys, true)) {
                 return false;
             }
         }
@@ -286,7 +289,7 @@ class NotificationResolver implements ResolverInterface
         return true;
     }
 
-    private function filterIosAttachments($attachments): bool
+    private function filterIosAttachments(array $attachments): bool
     {
         foreach ($attachments as $key => $value) {
             if (!is_string($key) || !is_string($value)) {
@@ -297,7 +300,7 @@ class NotificationResolver implements ResolverInterface
         return true;
     }
 
-    private function filterWebButtons($buttons): bool
+    private function filterWebButtons(array $buttons): bool
     {
         $requiredKeys = ['id', 'text', 'icon', 'url'];
 
@@ -314,7 +317,7 @@ class NotificationResolver implements ResolverInterface
         return true;
     }
 
-    private function normalizeDateTime(Options $options, \DateTimeInterface $value, $format): string
+    private function normalizeDateTime(Options $options, \DateTimeInterface $value, string $format): string
     {
         return $value->format($format);
     }

@@ -22,11 +22,18 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
         "nyholm/psr7": "^1.2",
+        "phpstan/phpstan": "^0.12.42",
+        "phpstan/phpstan-phpunit": "^0.12.16",
         "symfony/http-client": "^5.0",
-        "symfony/phpunit-bridge": "^5.0"
+        "symfony/phpunit-bridge": "^5.1.5"
     },
     "autoload": {
         "psr-4": { "OneSignal\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OneSignal\\Tests\\": "tests/"
+        }
     },
     "extra": {
         "branch-alias": {

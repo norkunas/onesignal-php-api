@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit backupGlobals="false"
-         backupStaticAttributes="false"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         backupGlobals="false"
+         bootstrap="vendor/autoload.php"
          colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
-         stopOnFailure="false"
-         bootstrap="tests/bootstrap.php"
-        >
+>
     <testsuites>
-        <testsuite name="OneSignal Tests">
-            <directory>./tests/OneSignal/</directory>
+        <testsuite name="OneSignal Test Suite">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
+
     <filter>
         <whitelist>
             <directory suffix=".php">src</directory>
