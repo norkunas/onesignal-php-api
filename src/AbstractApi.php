@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace OneSignal;
 
+use JsonException;
 use OneSignal\Exception\InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
+use const JSON_THROW_ON_ERROR;
 
 abstract class AbstractApi
 {
@@ -36,8 +38,8 @@ abstract class AbstractApi
         $flags = $flags ?? (JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_PRESERVE_ZERO_FRACTION);
 
         try {
-            $value = json_encode($value, $flags | \JSON_THROW_ON_ERROR, $maxDepth);
-        } catch (\JsonException $e) {
+            $value = json_encode($value, $flags | JSON_THROW_ON_ERROR, $maxDepth);
+        } catch (JsonException $e) {
             throw new InvalidArgumentException("Invalid value for json encoding: {$e->getMessage()}.");
         }
 

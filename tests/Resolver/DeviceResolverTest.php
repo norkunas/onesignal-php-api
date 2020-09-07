@@ -51,14 +51,14 @@ class DeviceResolverTest extends OneSignalTestCase
         ];
 
         $this->deviceResolver->setIsNewDevice(false);
-        $this->assertEquals($expectedData, $this->deviceResolver->resolve($expectedData));
+        self::assertEquals($expectedData, $this->deviceResolver->resolve($expectedData));
 
         $expectedData += [
             'device_type' => Devices::CHROME_APP,
         ];
 
         $this->deviceResolver->setIsNewDevice(true);
-        $this->assertEquals($expectedData, $this->deviceResolver->resolve($expectedData));
+        self::assertEquals($expectedData, $this->deviceResolver->resolve($expectedData));
     }
 
     public function testResolveDefaultValues(): void
@@ -68,14 +68,14 @@ class DeviceResolverTest extends OneSignalTestCase
         ];
 
         $this->deviceResolver->setIsNewDevice(false);
-        $this->assertEquals($expectedData, $this->deviceResolver->resolve([]));
+        self::assertEquals($expectedData, $this->deviceResolver->resolve([]));
 
         $inputData = [
             'device_type' => Devices::WINDOWS_PHONE,
         ];
 
         $this->deviceResolver->setIsNewDevice(true);
-        $this->assertEquals(array_merge($inputData, $expectedData), $this->deviceResolver->resolve($inputData));
+        self::assertEquals(array_merge($inputData, $expectedData), $this->deviceResolver->resolve($inputData));
     }
 
     public function testResolveWithMissingRequiredValue(): void

@@ -35,7 +35,7 @@ class DevicePurchaseResolverTest extends TestCase
             ],
         ];
 
-        $this->assertEquals($expectedData, $this->devicePurchaseResolver->resolve($expectedData));
+        self::assertEquals($expectedData, $this->devicePurchaseResolver->resolve($expectedData));
     }
 
     public function testResolveWithMissingRequiredValue(): void

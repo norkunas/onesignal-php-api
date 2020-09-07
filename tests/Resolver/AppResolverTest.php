@@ -49,7 +49,7 @@ class AppResolverTest extends TestCase
             'organization_id' => 'value',
         ];
 
-        $this->assertEquals($expectedData, $this->appResolver->resolve($expectedData));
+        self::assertEquals($expectedData, $this->appResolver->resolve($expectedData));
     }
 
     public function testResolveWithMissingRequiredValue(): void

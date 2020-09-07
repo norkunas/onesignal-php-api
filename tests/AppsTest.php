@@ -29,7 +29,7 @@ class AppsTest extends ApiTestCase
 
         $responseData = $apps->getOne('e4e87830-b954-11e3-811d-f3b376925f15');
 
-        $this->assertSame([
+        self::assertSame([
             'id' => 'e4e87830-b954-11e3-811d-f3b376925f15',
             'name' => 'Your app 1',
             'players' => 0,
@@ -72,7 +72,7 @@ class AppsTest extends ApiTestCase
 
         $responseData = $apps->getOne('a');
 
-        $this->assertSame([
+        self::assertSame([
             'errors' => 'Couldn\'t find app with id = a',
         ], $responseData);
     }
@@ -94,7 +94,7 @@ class AppsTest extends ApiTestCase
 
         $responseData = $apps->getAll();
 
-        $this->assertSame([
+        self::assertSame([
             [
                 'id' => '92911750-242d-4260-9e00-9d9034f139ce',
                 'name' => 'Your app 1',
@@ -167,7 +167,7 @@ class AppsTest extends ApiTestCase
 
         $responseData = $apps->getAll();
 
-        $this->assertSame([
+        self::assertSame([
             'errors' => [
                 'Please include a case-sensitive header of Authorization: Basic <YOUR-USER-AUTH-KEY-HERE> with a valid User Auth key.',
             ],
@@ -203,7 +203,7 @@ class AppsTest extends ApiTestCase
             'gcm_key' => 'a gcm push key',
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'id' => 'e4e87830-b954-11e3-811d-f3b376925f15',
             'name' => 'Your app 1',
             'players' => 0,
@@ -246,7 +246,7 @@ class AppsTest extends ApiTestCase
 
         $responseData = $apps->add(['name' => '']);
 
-        $this->assertSame([
+        self::assertSame([
             'errors' => [
                 'Name Enter an app name',
             ],
@@ -279,7 +279,7 @@ class AppsTest extends ApiTestCase
             'gcm_key' => 'a gcm push key',
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'id' => 'e4e87830-b954-11e3-811d-f3b376925f15',
             'name' => 'Your app 1',
             'players' => 0,
@@ -324,7 +324,7 @@ class AppsTest extends ApiTestCase
 
         $responseData = $apps->update('a', ['name' => 'Your app 1']);
 
-        $this->assertSame([
+        self::assertSame([
             'status' => 404,
             'error' => 'Not Found',
         ], $responseData);
@@ -375,7 +375,7 @@ class AppsTest extends ApiTestCase
             ],
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'success' => true,
             'id' => '7ed2887d-bd24-4a81-8220-4b256a08ab19',
         ], $responseData);
@@ -404,7 +404,7 @@ class AppsTest extends ApiTestCase
             'filters' => [],
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'success' => false,
             'errors' => ['Segment with the given id already exists.'],
         ], $responseData);
@@ -432,7 +432,7 @@ class AppsTest extends ApiTestCase
             'filters' => [],
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'success' => false,
             'errors' => ['name is required'],
         ], $responseData);

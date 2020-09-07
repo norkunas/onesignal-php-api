@@ -1,6 +1,6 @@
 /.phpstan
 /vendor
-phpunit.xml
-composer.lock
-.php_cs.cache
-.phpunit.result.cache
+/phpunit.xml
+/composer.lock
+/.php_cs.cache
+/.phpunit.result.cache

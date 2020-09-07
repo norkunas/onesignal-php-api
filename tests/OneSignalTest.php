@@ -31,7 +31,7 @@ class OneSignalTest extends ApiTestCase
 
         $responseData = $oneSignal->sendRequest($request);
 
-        $this->assertSame([
+        self::assertSame([
             'data' => [
                 ['id' => 1],
                 ['id' => 2],
@@ -103,9 +103,9 @@ class OneSignalTest extends ApiTestCase
     {
         $oneSignal = $this->createClientMock();
 
-        $this->assertInstanceOf(Apps::class, $oneSignal->api('apps'));
-        $this->assertInstanceOf(Devices::class, $oneSignal->api('devices'));
-        $this->assertInstanceOf(Notifications::class, $oneSignal->api('notifications'));
+        self::assertInstanceOf(Apps::class, $oneSignal->api('apps'));
+        self::assertInstanceOf(Devices::class, $oneSignal->api('devices'));
+        self::assertInstanceOf(Notifications::class, $oneSignal->api('notifications'));
     }
 
     public function testApiThrowsForUnknownService(): void
@@ -121,7 +121,7 @@ class OneSignalTest extends ApiTestCase
     {
         $oneSignal = $this->createClientMock();
 
-        $this->assertInstanceOf(Apps::class, $oneSignal->apps());
+        self::assertInstanceOf(Apps::class, $oneSignal->apps());
     }
 
     public function testMagicCallThrowsWithWrongMethod(): void

@@ -27,7 +27,7 @@ class NotificationsTest extends ApiTestCase
 
         $responseData = $notifications->getOne('481a2734-6b7d-11e4-a6ea-4b53294fa671');
 
-        $this->assertSame([
+        self::assertSame([
             'id' => '481a2734-6b7d-11e4-a6ea-4b53294fa671',
             'successful' => 15,
             'failed' => 1,
@@ -79,7 +79,7 @@ class NotificationsTest extends ApiTestCase
 
         $responseData = $notifications->getAll();
 
-        $this->assertSame([
+        self::assertSame([
             'total_count' => 1,
             'offset' => 0,
             'limit' => 50,
@@ -240,7 +240,7 @@ class NotificationsTest extends ApiTestCase
             ],
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'id' => '458dcec4-cf53-11e3-add2-000c2940e62c',
             'recipients' => 3,
         ], $responseData);
@@ -263,7 +263,7 @@ class NotificationsTest extends ApiTestCase
 
         $responseData = $notifications->open('458dcec4-cf53-11e3-add2-000c2940e62c');
 
-        $this->assertSame([
+        self::assertSame([
             'success' => true,
         ], $responseData);
     }
@@ -285,7 +285,7 @@ class NotificationsTest extends ApiTestCase
 
         $responseData = $notifications->cancel('458dcec4-cf53-11e3-add2-000c2940e62c');
 
-        $this->assertSame([
+        self::assertSame([
             'success' => true,
         ], $responseData);
     }
@@ -310,7 +310,7 @@ class NotificationsTest extends ApiTestCase
             'email' => 'your_email@email.com',
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'success' => true,
             'destination_url' => 'https://onesignal-aws-link.com',
         ], $responseData);

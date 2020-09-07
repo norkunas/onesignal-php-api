@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OneSignal\Tests\Resolver;
 
+use DateTime;
 use OneSignal\Resolver\NotificationResolver;
 use OneSignal\Tests\OneSignalTestCase;
 use OneSignal\Tests\PrivateAccessorTrait;
@@ -90,9 +91,9 @@ class NotificationResolverTest extends OneSignalTestCase
             'firefox_icon' => 'value',
             'url' => 'http://url.com',
             'web_url' => 'http://url.com',
-            'send_after' => new \DateTime(),
+            'send_after' => new DateTime(),
             'delayed_option' => 'timezone',
-            'delivery_time_of_day' => new \DateTime(),
+            'delivery_time_of_day' => new DateTime(),
             'android_led_color' => 'value',
             'android_accent_color' => 'value',
             'android_visibility' => -1,
@@ -125,7 +126,7 @@ class NotificationResolverTest extends OneSignalTestCase
         $expectedData['send_after'] = $expectedData['send_after']->format('Y-m-d H:i:sO');
         $expectedData['delivery_time_of_day'] = $expectedData['delivery_time_of_day']->format('g:iA');
 
-        $this->assertEquals($expectedData, $this->notificationResolver->resolve($inputData));
+        self::assertEquals($expectedData, $this->notificationResolver->resolve($inputData));
     }
 
     public function wrongValueTypesProvider(): iterable
@@ -229,7 +230,7 @@ class NotificationResolverTest extends OneSignalTestCase
             'app_id' => 'fakeApplicationId',
         ];
 
-        $this->assertEquals($expectedData, $this->notificationResolver->resolve([]));
+        self::assertEquals($expectedData, $this->notificationResolver->resolve([]));
     }
 
     public function testResolveWithWrongOption(): void
@@ -262,15 +263,15 @@ class NotificationResolverTest extends OneSignalTestCase
                 ['operator' => 'OR'],
             ];
 
-        $this->assertEquals($expectedData, $method->invokeArgs($this->notificationResolver, $inputData));
+        self::assertEquals($expectedData, $method->invokeArgs($this->notificationResolver, $inputData));
     }
 
     public function testFilterUrl(): void
     {
         $method = $this->getPrivateMethod(NotificationResolver::class, 'filterUrl');
 
-        $this->assertEquals(true, $method->invokeArgs($this->notificationResolver, ['http://fakeUrl.com']));
-        $this->assertEquals(false, $method->invokeArgs($this->notificationResolver, ['wrongUrl']));
+        self::assertEquals(true, $method->invokeArgs($this->notificationResolver, ['http://fakeUrl.com']));
+        self::assertEquals(false, $method->invokeArgs($this->notificationResolver, ['wrongUrl']));
     }
 
     public function testNormalizeButtons(): void
@@ -288,14 +289,14 @@ class NotificationResolverTest extends OneSignalTestCase
             ['text' => 'value', 'id' => 8, 'icon' => 'iconValue'],
         ];
 
-        $this->assertEquals($expectedData, $method->invokeArgs($this->notificationResolver, [$inputData]));
+        self::assertEquals($expectedData, $method->invokeArgs($this->notificationResolver, [$inputData]));
     }
 
     public function testFilterAndroidBackgroundLayout(): void
     {
         $method = $this->getPrivateMethod(NotificationResolver::class, 'filterAndroidBackgroundLayout');
 
-        $this->assertEquals(false, $method->invokeArgs($this->notificationResolver, [[]]));
+        self::assertEquals(false, $method->invokeArgs($this->notificationResolver, [[]]));
 
         $requiredData = [
             'image' => 'value',
@@ -303,25 +304,25 @@ class NotificationResolverTest extends OneSignalTestCase
             'contents_color' => 'value',
         ];
 
-        $this->assertEquals(true, $method->invokeArgs($this->notificationResolver, [$requiredData]));
+        self::assertEquals(true, $method->invokeArgs($this->notificationResolver, [$requiredData]));
 
         $inputData = array_merge($requiredData, ['image' => 45]);
 
-        $this->assertEquals(false, $method->invokeArgs($this->notificationResolver, [$inputData]));
+        self::assertEquals(false, $method->invokeArgs($this->notificationResolver, [$inputData]));
 
         $inputData = array_merge($requiredData, ['wrongOption' => 'wrongValue']);
 
-        $this->assertEquals(false, $method->invokeArgs($this->notificationResolver, [$inputData]));
+        self::assertEquals(false, $method->invokeArgs($this->notificationResolver, [$inputData]));
     }
 
     public function testFilterIosAttachments(): void
     {
         $method = $this->getPrivateMethod(NotificationResolver::class, 'filterIosAttachments');
 
-        $this->assertEquals(false, $method->invokeArgs($this->notificationResolver, [['option' => 666]]));
-        $this->assertEquals(false, $method->invokeArgs($this->notificationResolver, [[666 => 666]]));
-        $this->assertEquals(false, $method->invokeArgs($this->notificationResolver, [[666 => 'value']]));
-        $this->assertEquals(true, $method->invokeArgs($this->notificationResolver, [['option' => 'value']]));
+        self::assertEquals(false, $method->invokeArgs($this->notificationResolver, [['option' => 666]]));
+        self::assertEquals(false, $method->invokeArgs($this->notificationResolver, [[666 => 666]]));
+        self::assertEquals(false, $method->invokeArgs($this->notificationResolver, [[666 => 'value']]));
+        self::assertEquals(true, $method->invokeArgs($this->notificationResolver, [['option' => 'value']]));
     }
 
     public function testFilterWebButtons(): void
@@ -337,22 +338,22 @@ class NotificationResolverTest extends OneSignalTestCase
             ],
         ];
 
-        $this->assertEquals(true, $method->invokeArgs($this->notificationResolver, [$inputData]));
+        self::assertEquals(true, $method->invokeArgs($this->notificationResolver, [$inputData]));
 
-        $this->assertEquals(false, $method->invokeArgs($this->notificationResolver, [array_merge(['wrongOption' => 'wrongValue'], $inputData)]));
+        self::assertEquals(false, $method->invokeArgs($this->notificationResolver, [array_merge(['wrongOption' => 'wrongValue'], $inputData)]));
 
         unset($inputData[0]['url']);
 
-        $this->assertEquals(false, $method->invokeArgs($this->notificationResolver, [$inputData]));
+        self::assertEquals(false, $method->invokeArgs($this->notificationResolver, [$inputData]));
     }
 
     public function testDateTime(): void
     {
         $method = $this->getPrivateMethod(NotificationResolver::class, 'normalizeDateTime');
 
-        $inputData = new \DateTime();
+        $inputData = new DateTime();
         $expectedData = $inputData->format(NotificationResolver::SEND_AFTER_FORMAT);
 
-        $this->assertEquals($expectedData, $method->invokeArgs($this->notificationResolver, [new OptionsResolver(), $inputData, NotificationResolver::SEND_AFTER_FORMAT]));
+        self::assertEquals($expectedData, $method->invokeArgs($this->notificationResolver, [new OptionsResolver(), $inputData, NotificationResolver::SEND_AFTER_FORMAT]));
     }
 }

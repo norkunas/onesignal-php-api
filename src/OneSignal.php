@@ -12,6 +12,9 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use const JSON_THROW_ON_ERROR;
+use function gettype;
+use function is_array;
 
 /**
  * @method Apps          apps()
@@ -65,13 +68,13 @@ class OneSignal
         $content = $response->getBody()->__toString();
 
         try {
-            $content = json_decode($content, true, 512, JSON_BIGINT_AS_STRING | \JSON_THROW_ON_ERROR);
+            $content = json_decode($content, true, 512, JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
             throw new JsonException($e->getMessage(), $e->getCode(), $e);
         }
 
-        if (!\is_array($content)) {
-            throw new JsonException(sprintf('JSON content was expected to decode to an array, %s returned.', \gettype($content)));
+        if (!is_array($content)) {
+            throw new JsonException(sprintf('JSON content was expected to decode to an array, %s returned.', gettype($content)));
         }
 
         return $content;

@@ -30,7 +30,7 @@ class NotificationHistoryResolverTest extends OneSignalTestCase
             'app_id' => 'fakeApplicationId',
         ];
 
-        $this->assertEquals($expectedData, $this->notificationHistoryResolver->resolve($expectedData));
+        self::assertEquals($expectedData, $this->notificationHistoryResolver->resolve($expectedData));
     }
 
     public function testResolveWithMissingRequiredValue(): void

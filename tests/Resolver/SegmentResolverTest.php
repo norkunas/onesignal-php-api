@@ -33,7 +33,7 @@ class SegmentResolverTest extends TestCase
             'filters' => [],
         ];
 
-        $this->assertEquals($expectedData, $this->segmentResolver->resolve($expectedData));
+        self::assertEquals($expectedData, $this->segmentResolver->resolve($expectedData));
     }
 
     public function wrongValueTypesProvider(): iterable
@@ -87,6 +87,6 @@ class SegmentResolverTest extends TestCase
                 ['field' => 'last_session', 'relation' => '<', 'value' => '30'],
             ];
 
-        $this->assertEquals($expectedData, $method->invokeArgs($this->segmentResolver, $inputData));
+        self::assertEquals($expectedData, $method->invokeArgs($this->segmentResolver, $inputData));
     }
 }

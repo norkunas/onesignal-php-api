@@ -35,7 +35,7 @@ class DeviceSessionResolverTest extends TestCase
             'tags' => ['fakeTag'],
         ];
 
-        $this->assertEquals($expectedData, $this->deviceSessionResolver->resolve($expectedData));
+        self::assertEquals($expectedData, $this->deviceSessionResolver->resolve($expectedData));
     }
 
     public function wrongValueTypesProvider(): iterable

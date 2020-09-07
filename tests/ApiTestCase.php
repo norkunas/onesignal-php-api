@@ -7,6 +7,7 @@ namespace OneSignal\Tests;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use OneSignal\Config;
 use OneSignal\OneSignal;
+use RuntimeException;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Psr18Client;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -32,7 +33,7 @@ abstract class ApiTestCase extends OneSignalTestCase
         $content = file_get_contents(__DIR__."/Fixtures/$fileName");
 
         if ($content === false) {
-            throw new \RuntimeException(sprintf('Cannot read "%s" fixture file.', $fileName));
+            throw new RuntimeException(sprintf('Cannot read "%s" fixture file.', $fileName));
         }
 
         return $content;

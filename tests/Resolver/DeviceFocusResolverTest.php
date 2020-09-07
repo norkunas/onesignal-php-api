@@ -29,7 +29,7 @@ class DeviceFocusResolverTest extends TestCase
             'active_time' => 245,
         ];
 
-        $this->assertEquals($expectedData, $this->deviceFocusResolver->resolve($expectedData));
+        self::assertEquals($expectedData, $this->deviceFocusResolver->resolve($expectedData));
     }
 
     public function testResolveDefaultValues(): void
@@ -39,7 +39,7 @@ class DeviceFocusResolverTest extends TestCase
             'active_time' => 23,
         ];
 
-        $this->assertEquals($expectedData, $this->deviceFocusResolver->resolve(['active_time' => 23]));
+        self::assertEquals($expectedData, $this->deviceFocusResolver->resolve(['active_time' => 23]));
     }
 
     public function testResolveWithMissingRequiredValue(): void

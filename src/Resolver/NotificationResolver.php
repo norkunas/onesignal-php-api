@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OneSignal\Resolver;
 
+use DateTimeInterface;
 use OneSignal\Config;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -161,16 +162,16 @@ class NotificationResolver implements ResolverInterface
                 return $this->filterUrl($value);
             })
             ->setDefined('send_after')
-            ->setAllowedTypes('send_after', \DateTimeInterface::class)
-            ->setNormalizer('send_after', function (Options $options, \DateTimeInterface $value) {
+            ->setAllowedTypes('send_after', DateTimeInterface::class)
+            ->setNormalizer('send_after', function (Options $options, DateTimeInterface $value) {
                 return $this->normalizeDateTime($options, $value, self::SEND_AFTER_FORMAT);
             })
             ->setDefined('delayed_option')
             ->setAllowedTypes('delayed_option', 'string')
             ->setAllowedValues('delayed_option', ['timezone', 'last-active'])
             ->setDefined('delivery_time_of_day')
-            ->setAllowedTypes('delivery_time_of_day', \DateTimeInterface::class)
-            ->setNormalizer('delivery_time_of_day', function (Options $options, \DateTimeInterface $value) {
+            ->setAllowedTypes('delivery_time_of_day', DateTimeInterface::class)
+            ->setNormalizer('delivery_time_of_day', function (Options $options, DateTimeInterface $value) {
                 return $this->normalizeDateTime($options, $value, self::DELIVERY_TIME_OF_DAY_FORMAT);
             })
             ->setDefined('android_led_color')
@@ -317,7 +318,7 @@ class NotificationResolver implements ResolverInterface
         return true;
     }
 
-    private function normalizeDateTime(Options $options, \DateTimeInterface $value, string $format): string
+    private function normalizeDateTime(Options $options, DateTimeInterface $value, string $format): string
     {
         return $value->format($format);
     }

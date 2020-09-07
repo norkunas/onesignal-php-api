@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace OneSignal;
 
 use OneSignal\Resolver\ResolverFactory;
+use ReflectionMethod;
+use function count;
 
 class Notifications extends AbstractApi
 {
@@ -46,9 +48,9 @@ class Notifications extends AbstractApi
         if (func_num_args() > 2 && !is_int(func_get_arg(2))) {
             trigger_deprecation('norkunas/onesignal-php-api', '2.1.0', 'Method %s() will have a third `int $kind` argument. Not defining it or passing a non integer value is deprecated.', __METHOD__);
         } elseif (__CLASS__ !== static::class) {
-            $r = new \ReflectionMethod($this, __FUNCTION__);
+            $r = new ReflectionMethod($this, __FUNCTION__);
 
-            if (\count($r->getParameters()) > 2) {
+            if (count($r->getParameters()) > 2) {
                 trigger_deprecation('norkunas/onesignal-php-api', '2.1.0', 'Method %s() will have a third `int $kind` argument. Not defining it or passing a non integer value is deprecated.', __METHOD__);
             }
         }

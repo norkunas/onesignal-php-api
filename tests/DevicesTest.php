@@ -27,7 +27,7 @@ class DevicesTest extends ApiTestCase
 
         $responseData = $devices->getOne('e4e87830-b954-11e3-811d-f3b376925f15');
 
-        $this->assertSame([
+        self::assertSame([
             'identifier' => 'ce777617da7f548fe7a9ab6febb56cf39fba6d382000c0395666288d961ee566',
             'session_count' => 1,
             'language' => 'en',
@@ -62,7 +62,7 @@ class DevicesTest extends ApiTestCase
 
         $responseData = $devices->getOne('a');
 
-        $this->assertSame([
+        self::assertSame([
             'errors' => ['No user with this id found'],
         ], $responseData);
     }
@@ -84,7 +84,7 @@ class DevicesTest extends ApiTestCase
 
         $responseData = $devices->getAll();
 
-        $this->assertSame([
+        self::assertSame([
             'total_count' => 1,
             'offset' => 0,
             'limit' => 300,
@@ -137,7 +137,7 @@ class DevicesTest extends ApiTestCase
             'tags' => ['a' => '1', 'foo' => 'bar'],
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'success' => true,
             'id' => 'ffffb794-ba37-11e3-8077-031d62f86ebf',
         ], $responseData);
@@ -167,7 +167,7 @@ class DevicesTest extends ApiTestCase
             'tags' => ['a' => '1', 'foo' => ''],
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'success' => true,
         ], $responseData);
     }
@@ -189,7 +189,7 @@ class DevicesTest extends ApiTestCase
 
         $responseData = $devices->delete('e4e87830-b954-11e3-811d-f3b376925f15');
 
-        $this->assertSame([
+        self::assertSame([
             'success' => true,
         ], $responseData);
     }
@@ -216,7 +216,7 @@ class DevicesTest extends ApiTestCase
             'device_os' => '7.0.4',
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'success' => true,
         ], $responseData);
     }
@@ -246,7 +246,7 @@ class DevicesTest extends ApiTestCase
             ],
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'success' => true,
         ], $responseData);
     }
@@ -271,7 +271,7 @@ class DevicesTest extends ApiTestCase
             'active_time' => 60,
         ]);
 
-        $this->assertSame([
+        self::assertSame([
             'success' => true,
         ], $responseData);
     }
@@ -293,7 +293,7 @@ class DevicesTest extends ApiTestCase
 
         $responseData = $devices->csvExport(['country', 'notification_types', 'external_user_id', 'location', 'rooted', 'ip', 'country', 'web_auth', 'web_p256'], 'Active Users', 1469392779);
 
-        $this->assertSame([
+        self::assertSame([
             'csv_file_url' => 'https://onesignal.com/csv_exports/b2f7f966-d8cc-11e4-bed1-df8f05be55ba/users_184948440ec0e334728e87228011ff41_2015-11-10.csv.gz',
         ], $responseData);
     }
