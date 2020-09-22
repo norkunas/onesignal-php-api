@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.1.1
+
+- Allow to install on php 8.0
+
 ## Version 2.1.0
 
 - Add "kind" argument to notifications getAll method
