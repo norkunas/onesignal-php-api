@@ -128,6 +128,7 @@ class NotificationsTest extends ApiTestCase
                     'id' => 'e664a747-324c-406a-bafb-ab51db71c960',
                     'include_player_ids' => null,
                     'include_external_user_ids' => null,
+                    'channel_for_external_user_ids' => 'push',
                     'included_segments' => ['All'],
                     'thread_id' => null,
                     'ios_badgeCount' => 1,
