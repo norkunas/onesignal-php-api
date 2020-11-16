@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.2.0
+
+- Add channel_for_external_user_ids option in NotificationResolver
+
 ## Version 2.1.1
 
 - Allow to install on php 8.0
