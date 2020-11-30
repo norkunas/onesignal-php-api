@@ -12,7 +12,7 @@ jobs:
             - name: "Setup PHP"
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: 8.0
+                  php-version: 7.4
                   tools: cs2pr
             - name: "Install dependencies with composer"
               run: |
@@ -29,7 +29,7 @@ jobs:
             - name: "Setup PHP"
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: 8.0
+                  php-version: 7.4
                   tools: cs2pr
             - name: "Install dependencies with composer"
               run: composer install --prefer-dist --no-progress --no-suggest
@@ -45,13 +45,11 @@ jobs:
                       composer-flags: --prefer-stable --prefer-lowest
                     - php-version: 7.4
                       composer-flags: --prefer-stable --prefer-lowest
-                    - php-version: 8.0
-                      composer-flags: --prefer-stable --prefer-lowest
                     - php-version: 7.4
                       symfony-version: 4.4.*
                     - php-version: 7.4
                       symfony-version: 5.1.*
-                    - php-version: 8.0
+                    - php-version: 7.4
                       symfony-version: 5.2.*
         steps:
             - name: "Checkout"
@@ -64,7 +62,7 @@ jobs:
             - name: "Install dependencies (fixed Symfony version) with composer"
               if: matrix.symfony-version
               run: |
-                  composer require symfony/options-resolver:${{ matrix.symfony-version }} --no-interaction --no-update
+                  composer require symfony/filesystem:${{ matrix.symfony-version }} symfony/process:${{ matrix.symfony-version }} --no-interaction --no-update
                   composer update --no-interaction --no-progress --no-suggest
             - name: "Install dependencies (lowest dependencies) with composer"
               if: matrix.composer-flags
@@ -78,7 +76,7 @@ jobs:
         strategy:
             matrix:
                 include:
-                    - php-version: 8.0
+                    - php-version: 7.4
                       symfony-version: 5.2.*
         steps:
             - name: "Checkout"
@@ -90,7 +88,7 @@ jobs:
                   php-version: ${{ matrix.php-version }}
             - name: "Install dependencies with composer"
               run: |
-                  composer require symfony/options-resolver:${{ matrix.symfony-version }} --no-interaction --no-update
+                  composer require symfony/filesystem:${{ matrix.symfony-version }} symfony/process:${{ matrix.symfony-version }} --no-interaction --no-update
                   composer update --no-interaction --no-progress --no-suggest
             - name: "Run tests with phpunit/phpunit"
               run: |
