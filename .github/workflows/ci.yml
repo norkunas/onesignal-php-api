@@ -75,6 +75,8 @@ jobs:
     codecov:
         name: "Code coverage"
         runs-on: ubuntu-latest
+        env:
+            ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         strategy:
             matrix:
                 include:
