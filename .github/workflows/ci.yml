@@ -55,9 +55,9 @@ jobs:
                       symfony-version: 5.2.*
         steps:
             - name: "Checkout"
-              uses: actions/checkout@v2.0.0
+              uses: actions/checkout@v2
             - name: "Setup PHP"
-              uses: shivammathur/setup-php@2.4.2
+              uses: shivammathur/setup-php@v2
               with:
                   coverage: none
                   php-version: ${{ matrix.php-version }}
@@ -77,6 +77,7 @@ jobs:
         runs-on: ubuntu-latest
         env:
             ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+            XDEBUG_MODE: 'coverage'
         strategy:
             matrix:
                 include:
@@ -84,9 +85,9 @@ jobs:
                       symfony-version: 5.2.*
         steps:
             - name: "Checkout"
-              uses: actions/checkout@v2.0.0
+              uses: actions/checkout@v2
             - name: "Setup PHP"
-              uses: shivammathur/setup-php@2.4.2
+              uses: shivammathur/setup-php@v2
               with:
                   coverage: xdebug
                   php-version: ${{ matrix.php-version }}
