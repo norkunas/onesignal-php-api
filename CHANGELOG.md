@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.3.0
+
+- Add app_url option in NotificationResolver
+
 ## Version 2.2.0
 
 - Add channel_for_external_user_ids option in NotificationResolver

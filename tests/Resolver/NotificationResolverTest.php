@@ -92,6 +92,7 @@ class NotificationResolverTest extends OneSignalTestCase
             'firefox_icon' => 'value',
             'url' => 'http://url.com',
             'web_url' => 'http://url.com',
+            'app_url' => 'myapp://path',
             'send_after' => new DateTime(),
             'delayed_option' => 'timezone',
             'delivery_time_of_day' => new DateTime(),
@@ -188,6 +189,7 @@ class NotificationResolverTest extends OneSignalTestCase
         yield [['firefox_icon' => 666]];
         yield [['url' => 666]];
         yield [['web_url' => 666]];
+        yield [['app_url' => 666]];
         yield [['send_after' => 666]];
         yield [['delayed_option' => 666]];
         yield [['delivery_time_of_day' => 666]];

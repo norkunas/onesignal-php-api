@@ -164,6 +164,8 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedValues('web_url', function (string $value) {
                 return $this->filterUrl($value);
             })
+            ->setDefined('app_url')
+            ->setAllowedTypes('app_url', 'string')
             ->setDefined('send_after')
             ->setAllowedTypes('send_after', DateTimeInterface::class)
             ->setNormalizer('send_after', function (Options $options, DateTimeInterface $value) {
