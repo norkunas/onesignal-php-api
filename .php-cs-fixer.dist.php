@@ -1,13 +1,12 @@
 <?php
 
-$finder = PhpCsFixer\Finder::create()
+$finder = (new PhpCsFixer\Finder())
     ->in([
         __DIR__.'/src',
         __DIR__.'/tests',
     ]);
 
-return PhpCsFixer\Config::create()
-    ->setUsingCache(true)
+return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
@@ -26,8 +25,6 @@ return PhpCsFixer\Config::create()
         ],
         'yoda_style' => false,
         'static_lambda' => true,
-        'array_syntax' => ['syntax' => 'short'],
-        'list_syntax' => ['syntax' => 'short'],
         'align_multiline_comment' => true,
         'php_unit_test_case_static_method_calls' => ['call_type' => 'self'],
     ])
