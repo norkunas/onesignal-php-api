@@ -200,7 +200,7 @@ $oneSignal->notifications()->history('notification_id', [
 
 ## Questions?
 
-If you have any questions please [open an issue](https://github.com/norkunas/onesignal-php-api/issues/new).
+If you have any questions please [open a discussion](https://github.com/norkunas/onesignal-php-api/discussions/new).
 
 ## License
 
