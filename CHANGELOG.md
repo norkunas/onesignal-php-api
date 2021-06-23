@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.4.0
+
+- Add new device types
+
 ## Version 2.3.0
 
 - Add app_url option in NotificationResolver
