@@ -21,6 +21,8 @@ class Devices extends AbstractApi
     public const MACOS = 9;
     public const ALEXA = 10;
     public const EMAIL = 11;
+    public const HUAWEI = 13;
+    public const SMS = 14;
 
     private $resolverFactory;
 
