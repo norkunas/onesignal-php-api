@@ -50,6 +50,8 @@ class DeviceSessionResolver implements ResolverInterface
                 Devices::MACOS,
                 Devices::ALEXA,
                 Devices::EMAIL,
+                Devices::HUAWEI,
+                Devices::SMS,
             ])
             ->resolve($data);
     }
