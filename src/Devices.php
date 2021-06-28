@@ -204,4 +204,21 @@ class Devices extends AbstractApi
 
         return $this->client->sendRequest($request);
     }
+
+    /**
+     * Update an existing device's tags using the External User ID.
+     *
+     * @param string $externalUserId External User ID
+     * @param array  $data           Tags data
+     */
+    public function editTags(string $externalUserId, array $data): array
+    {
+        $resolvedData = $this->resolverFactory->createDeviceTagsResolver()->resolve($data);
+
+        $request = $this->createRequest('PUT', "/apps/{$this->client->getConfig()->getApplicationId()}/users/$externalUserId");
+        $request = $request->withHeader('Content-Type', 'application/json');
+        $request = $request->withBody($this->createStream($resolvedData));
+
+        return $this->client->sendRequest($request);
+    }
 }

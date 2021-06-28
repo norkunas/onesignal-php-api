@@ -50,6 +50,11 @@ class ResolverFactory
         return new DeviceResolver($this->config, false);
     }
 
+    public function createDeviceTagsResolver(): DeviceTagsResolver
+    {
+        return new DeviceTagsResolver();
+    }
+
     public function createNotificationResolver(): NotificationResolver
     {
         return new NotificationResolver($this->config);
