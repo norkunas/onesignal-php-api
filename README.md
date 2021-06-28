@@ -121,6 +121,20 @@ $newDevice = $oneSignal->devices()->add([
 ]);
 ```
 
+Update an existing device's tags in one of your OneSignal apps using the External User ID ([official documentation](https://documentation.onesignal.com/reference/edit-tags-with-external-user-id)):
+
+```php
+use OneSignal\Api\Devices;
+
+$externalUserId = '12345';
+$newDevice = $oneSignal->devices()->editTags($externalUserId, [
+    'tags' => [
+        'a' => '1',
+        'foo' => '',
+    ],
+]);
+```
+
 Update an existing device in your configured OneSignal application ([official documentation](https://documentation.onesignal.com/reference#edit-device)):
 
 ```php

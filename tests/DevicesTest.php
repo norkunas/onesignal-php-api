@@ -297,4 +297,28 @@ class DevicesTest extends ApiTestCase
             'csv_file_url' => 'https://onesignal.com/csv_exports/b2f7f966-d8cc-11e4-bed1-df8f05be55ba/users_184948440ec0e334728e87228011ff41_2015-11-10.csv.gz',
         ], $responseData);
     }
+
+    public function testEditTags(): void
+    {
+        $client = $this->createClientMock(function (string $method, string $url, array $options): ResponseInterface {
+            $this->assertSame('PUT', $method);
+            $this->assertSame(OneSignal::API_URL.'/apps/fakeApplicationId/users/12345', $url);
+            $this->assertArrayHasKey('accept', $options['normalized_headers']);
+            $this->assertArrayHasKey('content-type', $options['normalized_headers']);
+            $this->assertSame('Accept: application/json', $options['normalized_headers']['accept'][0]);
+            $this->assertSame('Content-Type: application/json', $options['normalized_headers']['content-type'][0]);
+
+            return new MockResponse($this->loadFixture('devices_edit_tags.json'), ['http_code' => 200]);
+        });
+
+        $devices = new Devices($client, new ResolverFactory($client->getConfig()));
+
+        $responseData = $devices->editTags('12345', [
+            'tags' => ['a' => '1', 'foo' => ''],
+        ]);
+
+        self::assertSame([
+            'success' => true,
+        ], $responseData);
+    }
 }
