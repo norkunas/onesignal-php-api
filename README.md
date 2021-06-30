@@ -96,6 +96,24 @@ Delete Segments ([official documentation](https://documentation.onesignal.com/re
 $oneSignal->apps()->deleteSegment('application_id', 'segment_id');
 ```
 
+View the details of all the outcomes associated with your app ([official documentation](https://documentation.onesignal.com/reference/view-outcomes)):
+
+```php
+use OneSignal\Apps;
+use OneSignal\Devices;
+
+$outcomes = $oneSignal->apps()->outcomes('application_id', [
+    'outcome_names' => [
+        'os__session_duration.count',
+        'os__click.count',
+        'Sales, Purchase.sum',
+    ],
+    'outcome_time_range' => Apps::OUTCOME_TIME_RANGE_MONTH,
+    'outcome_platforms' => [Devices::IOS, Devices::ANDROID],
+    'outcome_attribution' => Apps::OUTCOME_ATTRIBUTION_DIRECT,
+]);
+```
+
 ### Devices API
 
 View the details of multiple devices in one of your OneSignal apps ([official documentation](https://documentation.onesignal.com/reference#view-devices)):
@@ -113,25 +131,11 @@ $device = $oneSignal->devices()->getOne('device_id');
 Register a new device to your configured OneSignal application ([official documentation](https://documentation.onesignal.com/reference#add-a-device)):
 
 ```php
-use OneSignal\Api\Devices;
+use OneSignal\Devices;
 
 $newDevice = $oneSignal->devices()->add([
     'device_type' => Devices::ANDROID,
     'identifier' => 'abcdefghijklmn',
-]);
-```
-
-Update an existing device's tags in one of your OneSignal apps using the External User ID ([official documentation](https://documentation.onesignal.com/reference/edit-tags-with-external-user-id)):
-
-```php
-use OneSignal\Api\Devices;
-
-$externalUserId = '12345';
-$newDevice = $oneSignal->devices()->editTags($externalUserId, [
-    'tags' => [
-        'a' => '1',
-        'foo' => '',
-    ],
 ]);
 ```
 
@@ -140,6 +144,18 @@ Update an existing device in your configured OneSignal application ([official do
 ```php
 $oneSignal->devices()->update('device_id', [
     'session_count' => 2,
+]);
+```
+
+Update an existing device's tags in one of your OneSignal apps using the External User ID ([official documentation](https://documentation.onesignal.com/reference/edit-tags-with-external-user-id)):
+
+```php
+$externalUserId = '12345';
+$response = $oneSignal->devices()->editTags($externalUserId, [
+    'tags' => [
+        'a' => '1',
+        'foo' => '',
+    ],
 ]);
 ```
 

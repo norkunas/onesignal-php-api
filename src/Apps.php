@@ -8,6 +8,15 @@ use OneSignal\Resolver\ResolverFactory;
 
 class Apps extends AbstractApi
 {
+    public const OUTCOME_ATTRIBUTION_TOTAL = 'total';
+    public const OUTCOME_ATTRIBUTION_UNATTRIBUTED = 'unattributed';
+    public const OUTCOME_ATTRIBUTION_INFLUENCED = 'influenced';
+    public const OUTCOME_ATTRIBUTION_DIRECT = 'direct';
+
+    public const OUTCOME_TIME_RANGE_MONTH = '1mo';
+    public const OUTCOME_TIME_RANGE_HOUR = '1h';
+    public const OUTCOME_TIME_RANGE_DAY = '1d';
+
     private $resolverFactory;
 
     public function __construct(OneSignal $client, ResolverFactory $resolverFactory)
@@ -113,6 +122,24 @@ class Apps extends AbstractApi
     public function deleteSegment(string $appId, string $segmentId): array
     {
         $request = $this->createRequest('DELETE', "/apps/$appId/segments/$segmentId");
+        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
+
+        return $this->client->sendRequest($request);
+    }
+
+    /**
+     * View the details of all the outcomes associated with your app.
+     *
+     * @param string $appId Application ID
+     * @param array  $data  Outcome data filters
+     */
+    public function outcomes(string $appId, array $data): array
+    {
+        $resolvedData = $this->resolverFactory->createOutcomesResolver()->resolve($data);
+
+        $queryString = preg_replace('/%5B\d+%5D/', '%5B%5D', http_build_query($resolvedData));
+
+        $request = $this->createRequest('GET', "/apps/$appId/outcomes?$queryString");
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
 
         return $this->client->sendRequest($request);
