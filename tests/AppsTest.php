@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OneSignal\Tests;
 
 use OneSignal\Apps;
+use OneSignal\Devices;
 use OneSignal\OneSignal;
 use OneSignal\Resolver\ResolverFactory;
 use Symfony\Component\HttpClient\Response\MockResponse;
@@ -435,6 +436,53 @@ class AppsTest extends ApiTestCase
         self::assertSame([
             'success' => false,
             'errors' => ['name is required'],
+        ], $responseData);
+    }
+
+    public function testOutcomes(): void
+    {
+        $client = $this->createClientMock(function (string $method, string $url, array $options): ResponseInterface {
+            $this->assertSame('GET', $method);
+            $this->assertSame(OneSignal::API_URL.'/apps/fakeApplicationId/outcomes?outcome_time_range=1h&outcome_attribution=direct&outcome_names%5B%5D=os__session_duration.count&outcome_names%5B%5D=os__click.count&outcome_names%5B%5D=Sales%2C+Purchase.sum&outcome_platforms=0%2C1', $url);
+            $this->assertArrayHasKey('accept', $options['normalized_headers']);
+            $this->assertArrayHasKey('authorization', $options['normalized_headers']);
+            $this->assertSame('Accept: application/json', $options['normalized_headers']['accept'][0]);
+            $this->assertSame('Authorization: Basic fakeApplicationAuthKey', $options['normalized_headers']['authorization'][0]);
+
+            return new MockResponse($this->loadFixture('apps_outcomes.json'), ['http_code' => 200]);
+        });
+
+        $apps = new Apps($client, new ResolverFactory($client->getConfig()));
+
+        $responseData = $apps->outcomes('fakeApplicationId', [
+            'outcome_names' => [
+                'os__session_duration.count',
+                'os__click.count',
+                'Sales, Purchase.sum',
+            ],
+            'outcome_time_range' => '1h',
+            'outcome_platforms' => [Devices::IOS, Devices::ANDROID],
+            'outcome_attribution' => Apps::OUTCOME_ATTRIBUTION_DIRECT,
+        ]);
+
+        self::assertSame([
+            'outcomes' => [
+                [
+                    'id' => 'os__session_duration',
+                    'value' => 100,
+                    'aggregation' => 'sum',
+                ],
+                [
+                    'id' => 'os__click',
+                    'value' => 4,
+                    'aggregation' => 'count',
+                ],
+                [
+                    'id' => 'Sales, Purchase.count',
+                    'value' => 348,
+                    'aggregation' => 'sum',
+                ],
+            ],
         ], $responseData);
     }
 }

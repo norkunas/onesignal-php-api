@@ -25,6 +25,11 @@ class ResolverFactory
         return new SegmentResolver();
     }
 
+    public function createOutcomesResolver(): AppOutcomesResolver
+    {
+        return new AppOutcomesResolver();
+    }
+
     public function createDeviceSessionResolver(): DeviceSessionResolver
     {
         return new DeviceSessionResolver();
