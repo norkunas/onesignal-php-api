@@ -1,11 +1,10 @@
 # OneSignal API for PHP
 
-[![Latest Stable Version](https://poser.pugx.org/norkunas/onesignal-php-api/v/stable)](https://packagist.org/packages/norkunas/onesignal-php-api)
-[![Latest Unstable Version](https://poser.pugx.org/norkunas/onesignal-php-api/v/unstable)](https://packagist.org/packages/norkunas/onesignal-php-api)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/norkunas/onesignal-php-api/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/norkunas/onesignal-php-api/?branch=1.0)
-[![Total Downloads](https://poser.pugx.org/norkunas/onesignal-php-api/downloads)](https://packagist.org/packages/norkunas/onesignal-php-api)
-![CI Status](https://github.com/norkunas/youtube-dl-php/workflows/CI/badge.svg?branch=master)
-[![License](https://poser.pugx.org/norkunas/onesignal-php-api/license)](https://packagist.org/packages/norkunas/onesignal-php-api)
+[![Latest Stable Version](https://img.shields.io/packagist/v/norkunas/onesignal-php-api.svg?color=%23039be5)](https://packagist.org/packages/norkunas/onesignal-php-api)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/norkunas/onesignal-php-api.svg?color=%23039be5)](https://scrutinizer-ci.com/g/norkunas/onesignal-php-api)
+[![Total Downloads](https://img.shields.io/packagist/dt/norkunas/onesignal-php-api.svg?color=%23039be5)](https://packagist.org/packages/norkunas/onesignal-php-api)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/norkunas/onesignal-php-api/CI?color=%23039be5)
+![GitHub](https://img.shields.io/github/license/norkunas/onesignal-php-api?color=%23039be5)
 
 ## Install
 
