@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 2.5.0
+
+- Implement 'Edit tags with external user id' API endpoint
+- Implement View Outcomes endpoint
+
 ## Version 2.4.0
 
 - Add new device types
