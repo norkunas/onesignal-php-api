@@ -4,7 +4,7 @@
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/norkunas/onesignal-php-api.svg?color=%23039be5)](https://scrutinizer-ci.com/g/norkunas/onesignal-php-api)
 [![Total Downloads](https://img.shields.io/packagist/dt/norkunas/onesignal-php-api.svg?color=%23039be5)](https://packagist.org/packages/norkunas/onesignal-php-api)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/norkunas/onesignal-php-api/CI?color=%23039be5)
-![GitHub](https://img.shields.io/github/license/norkunas/onesignal-php-api?color=%23039be5)
+[![Software License](https://img.shields.io/github/license/norkunas/onesignal-php-api?color=%23039be5)](LICENSE)
 
 ## Install
 
