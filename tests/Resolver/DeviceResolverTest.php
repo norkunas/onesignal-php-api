@@ -48,16 +48,20 @@ class DeviceResolverTest extends OneSignalTestCase
             'country' => 'LT',
             'external_user_id' => 'value',
             'app_id' => 'value',
+            'ip' => '127.0.0.1',
         ];
 
         $this->deviceResolver->setIsNewDevice(false);
         self::assertEquals($expectedData, $this->deviceResolver->resolve($expectedData));
+
+        unset($expectedData['ip']);
 
         $expectedData += [
             'device_type' => Devices::CHROME_APP,
         ];
 
         $this->deviceResolver->setIsNewDevice(true);
+
         self::assertEquals($expectedData, $this->deviceResolver->resolve($expectedData));
     }
 
@@ -86,7 +90,7 @@ class DeviceResolverTest extends OneSignalTestCase
         $this->deviceResolver->resolve([]);
     }
 
-    public function wrongValueTypesProvider(): iterable
+    public function newDeviceWrongValueTypesProvider(): iterable
     {
         yield [['identifier' => 666]];
         yield [['language' => 666]];
@@ -114,9 +118,9 @@ class DeviceResolverTest extends OneSignalTestCase
     }
 
     /**
-     * @dataProvider wrongValueTypesProvider
+     * @dataProvider newDeviceWrongValueTypesProvider
      */
-    public function testResolveWithWrongValueTypes(array $wrongOption): void
+    public function testResolveNewDeviceWithWrongValueTypes(array $wrongOption): void
     {
         $this->expectException(InvalidOptionsException::class);
 
@@ -126,6 +130,24 @@ class DeviceResolverTest extends OneSignalTestCase
 
         $this->deviceResolver->setIsNewDevice(true);
         $this->deviceResolver->resolve(array_merge($requiredOptions, $wrongOption));
+    }
+
+    public function existingDeviceWrongValueTypesProvider(): iterable
+    {
+        yield [['ip' => 100]];
+        yield [['ip' => 'wrongIP']];
+        yield [['ip' => '12222237.0.0.1']];
+    }
+
+    /**
+     * @dataProvider existingDeviceWrongValueTypesProvider
+     */
+    public function testResolveExistingDeviceWithWrongValueTypes(array $wrongOption): void
+    {
+        $this->expectException(InvalidOptionsException::class);
+
+        $this->deviceResolver->setIsNewDevice(false);
+        $this->deviceResolver->resolve($wrongOption);
     }
 
     public function testResolveWithWrongOption(): void

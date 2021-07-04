@@ -143,6 +143,7 @@ Update an existing device in your configured OneSignal application ([official do
 ```php
 $oneSignal->devices()->update('device_id', [
     'session_count' => 2,
+    'ip' => '127.0.0.1', // Optional. New IP Address of your device
 ]);
 ```
 
