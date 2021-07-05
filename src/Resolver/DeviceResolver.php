@@ -93,6 +93,13 @@ class DeviceResolver implements ResolverInterface
                     Devices::HUAWEI,
                     Devices::SMS,
                 ]);
+        } else {
+            $resolver
+                ->setDefined('ip')
+                ->setAllowedTypes('ip', 'string')
+                ->setAllowedValues('ip', static function (string $ip): bool {
+                    return (bool) filter_var($ip, FILTER_VALIDATE_IP);
+                });
         }
 
         return $resolver->resolve($data);

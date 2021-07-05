@@ -164,6 +164,7 @@ class DevicesTest extends ApiTestCase
             'game_version' => '1.0',
             'device_os' => '7.0.4',
             'device_model' => 'iPhone',
+            'ip' => '127.0.0.1',
             'tags' => ['a' => '1', 'foo' => ''],
         ]);
 
