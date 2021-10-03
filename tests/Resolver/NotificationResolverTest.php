@@ -29,7 +29,7 @@ class NotificationResolverTest extends OneSignalTestCase
     public function testResolveWithValidValues(): void
     {
         $inputData = [
-            'name' => 'name',
+            'name' => 'value',
             'contents' => ['value'],
             'headings' => ['value'],
             'subtitle' => ['value'],
