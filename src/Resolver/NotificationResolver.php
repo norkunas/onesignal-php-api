@@ -27,6 +27,8 @@ class NotificationResolver implements ResolverInterface
     public function resolve(array $data): array
     {
         return (new OptionsResolver())
+            ->setDefined('name')
+            ->setAllowedTypes('name', 'string')
             ->setDefined('contents')
             ->setAllowedTypes('contents', 'array')
             ->setDefined('headings')
