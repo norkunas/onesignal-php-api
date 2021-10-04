@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 2.6.0
+
+- Add ability to update device IP address
+- add "name" to Notifications payload
+
 ## Version 2.5.0
 
 - Implement 'Edit tags with external user id' API endpoint
