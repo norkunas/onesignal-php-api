@@ -29,6 +29,7 @@ class NotificationResolverTest extends OneSignalTestCase
     public function testResolveWithValidValues(): void
     {
         $inputData = [
+            'name' => 'value',
             'contents' => ['value'],
             'headings' => ['value'],
             'subtitle' => ['value'],
@@ -133,6 +134,7 @@ class NotificationResolverTest extends OneSignalTestCase
 
     public function wrongValueTypesProvider(): iterable
     {
+        yield [['name' => 666]];
         yield [['contents' => 666]];
         yield [['headings' => 666]];
         yield [['subtitle' => 666]];

@@ -220,6 +220,7 @@ class NotificationsTest extends ApiTestCase
         $notifications = new Notifications($client, new ResolverFactory($client->getConfig()));
 
         $responseData = $notifications->add([
+            'name' => 'My Notification Name',
             'contents' => [
                 'en' => 'English Message',
             ],
