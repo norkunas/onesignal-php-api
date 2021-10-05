@@ -235,6 +235,10 @@ class NotificationResolver implements ResolverInterface
             ->setDefined('apns_push_type_override')
             ->setAllowedTypes('apns_push_type_override', 'string')
             ->setAllowedValues('apns_push_type_override', ['voip'])
+            ->setDefined('sms_from')
+            ->setAllowedTypes('sms_from', 'string')
+            ->setDefined('sms_media_urls')
+            ->setAllowedTypes('sms_media_urls', 'array')
             ->resolve($data);
     }
 
