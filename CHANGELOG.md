@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 2.7.0
+
+- Additional SMS related fields (on the Notifications payload)
+
 ## Version 2.6.0
 
 - Add ability to update device IP address
