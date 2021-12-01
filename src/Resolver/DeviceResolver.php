@@ -69,6 +69,8 @@ class DeviceResolver implements ResolverInterface
             ->setAllowedTypes('country', 'string')
             ->setDefined('external_user_id')
             ->setAllowedTypes('external_user_id', 'string')
+            ->setDefined('external_user_id_auth_hash')
+            ->setAllowedTypes('external_user_id_auth_hash', 'string')
             ->setDefault('app_id', $this->config->getApplicationId())
             ->setAllowedTypes('app_id', 'string');
 
