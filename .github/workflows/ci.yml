@@ -12,7 +12,7 @@ jobs:
             - name: "Setup PHP"
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: 8.0
+                  php-version: 8.1
                   tools: cs2pr
             - name: "Install dependencies with composer"
               run: |
@@ -51,24 +51,18 @@ jobs:
                       symfony-version: 4.4.*
                     - php-version: 8.0
                       symfony-version: 4.4.*
+                    - php-version: 8.1
+                      symfony-version: 4.4.*
                     - php-version: 7.4
-                      symfony-version: 5.3.*
-                    - php-version: 8.0
-                      symfony-version: 5.3.*
+                      symfony-version: 5.4.*
                     - php-version: 8.0
                       symfony-version: 5.4.*
-                      dev: true
-                    - php-version: 8.0
-                      symfony-version: 6.0.*
-                      dev: true
-                    - php-version: 8.1
-                      symfony-version: 5.3.*
                     - php-version: 8.1
                       symfony-version: 5.4.*
-                      dev: true
+                    - php-version: 8.0
+                      symfony-version: 6.0.*
                     - php-version: 8.1
                       symfony-version: 6.0.*
-                      dev: true
         steps:
             - name: "Checkout"
               uses: actions/checkout@v2
@@ -77,14 +71,10 @@ jobs:
               with:
                   coverage: none
                   php-version: ${{ matrix.php-version }}
-            - name: "Configure minimum stability"
-              if: matrix.dev
-              run: |
-                  composer config minimum-stability dev
-                  composer remove --dev friendsofphp/php-cs-fixer
             - name: "Install dependencies (fixed Symfony version) with composer"
               if: matrix.symfony-version
               run: |
+                  composer remove --dev friendsofphp/php-cs-fixer
                   composer require symfony/options-resolver:${{ matrix.symfony-version }} --no-interaction --no-update
                   composer update --no-interaction --no-progress --no-suggest
             - name: "Install dependencies (lowest dependencies) with composer"
@@ -103,8 +93,8 @@ jobs:
         strategy:
             matrix:
                 include:
-                    - php-version: 8.0
-                      symfony-version: 5.3.*
+                    - php-version: 8.1
+                      symfony-version: 6.0.*
         steps:
             - name: "Checkout"
               uses: actions/checkout@v2
@@ -115,6 +105,7 @@ jobs:
                   php-version: ${{ matrix.php-version }}
             - name: "Install dependencies with composer"
               run: |
+                  composer remove --dev friendsofphp/php-cs-fixer
                   composer require symfony/options-resolver:${{ matrix.symfony-version }} --no-interaction --no-update
                   composer update --no-interaction --no-progress --no-suggest
             - name: "Run tests with phpunit/phpunit"
