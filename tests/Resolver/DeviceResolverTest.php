@@ -27,6 +27,7 @@ class DeviceResolverTest extends OneSignalTestCase
     {
         $expectedData = [
             'identifier' => 'value',
+            'identifier_auth_hash' => 'value',
             'language' => 'value',
             'timezone' => 3564,
             'game_version' => 'value',
@@ -47,6 +48,7 @@ class DeviceResolverTest extends OneSignalTestCase
             'lat' => 22.7624291,
             'country' => 'LT',
             'external_user_id' => 'value',
+            'external_user_id_auth_hash' => 'value',
             'app_id' => 'value',
             'ip' => '127.0.0.1',
         ];
@@ -93,6 +95,7 @@ class DeviceResolverTest extends OneSignalTestCase
     public function newDeviceWrongValueTypesProvider(): iterable
     {
         yield [['identifier' => 666]];
+        yield [['identifier_auth_hash' => 666]];
         yield [['language' => 666]];
         yield [['timezone' => 'wrongType']];
         yield [['game_version' => 666]];
@@ -115,6 +118,7 @@ class DeviceResolverTest extends OneSignalTestCase
         yield [['app_id' => 666]];
         yield [['device_type' => 666]];
         yield [['external_user_id' => 666]];
+        yield [['external_user_id_auth_hash' => 666]];
     }
 
     /**
