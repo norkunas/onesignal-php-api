@@ -27,6 +27,8 @@ class DeviceResolver implements ResolverInterface
         $resolver = (new OptionsResolver())
             ->setDefined('identifier')
             ->setAllowedTypes('identifier', 'string')
+            ->setDefined('identifier_auth_hash')
+            ->setAllowedTypes('identifier_auth_hash', 'string')
             ->setDefined('language')
             ->setAllowedTypes('language', 'string')
             ->setDefined('timezone')
