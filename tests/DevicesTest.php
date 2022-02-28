@@ -44,6 +44,7 @@ class DevicesTest extends ApiTestCase
             'invalid_identifier' => false,
             'badge_count' => 0,
             'external_user_id' => null,
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -64,6 +65,7 @@ class DevicesTest extends ApiTestCase
 
         self::assertSame([
             'errors' => ['No user with this id found'],
+            '_status_code' => 400,
         ], $responseData);
     }
 
@@ -108,6 +110,7 @@ class DevicesTest extends ApiTestCase
                     'external_user_id' => null,
                 ],
             ],
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -140,6 +143,7 @@ class DevicesTest extends ApiTestCase
         self::assertSame([
             'success' => true,
             'id' => 'ffffb794-ba37-11e3-8077-031d62f86ebf',
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -170,6 +174,7 @@ class DevicesTest extends ApiTestCase
 
         self::assertSame([
             'success' => true,
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -192,6 +197,7 @@ class DevicesTest extends ApiTestCase
 
         self::assertSame([
             'success' => true,
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -219,6 +225,7 @@ class DevicesTest extends ApiTestCase
 
         self::assertSame([
             'success' => true,
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -249,6 +256,7 @@ class DevicesTest extends ApiTestCase
 
         self::assertSame([
             'success' => true,
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -274,6 +282,7 @@ class DevicesTest extends ApiTestCase
 
         self::assertSame([
             'success' => true,
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -296,6 +305,7 @@ class DevicesTest extends ApiTestCase
 
         self::assertSame([
             'csv_file_url' => 'https://onesignal.com/csv_exports/b2f7f966-d8cc-11e4-bed1-df8f05be55ba/users_184948440ec0e334728e87228011ff41_2015-11-10.csv.gz',
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -320,6 +330,7 @@ class DevicesTest extends ApiTestCase
 
         self::assertSame([
             'success' => true,
+            '_status_code' => 200,
         ], $responseData);
     }
 }

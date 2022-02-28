@@ -59,6 +59,7 @@ class NotificationsTest extends ApiTestCase
                     'errored' => 0,
                 ],
             ],
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -199,6 +200,7 @@ class NotificationsTest extends ApiTestCase
                     ],
                 ],
             ],
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -245,6 +247,7 @@ class NotificationsTest extends ApiTestCase
         self::assertSame([
             'id' => '458dcec4-cf53-11e3-add2-000c2940e62c',
             'recipients' => 3,
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -267,6 +270,7 @@ class NotificationsTest extends ApiTestCase
 
         self::assertSame([
             'success' => true,
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -289,6 +293,7 @@ class NotificationsTest extends ApiTestCase
 
         self::assertSame([
             'success' => true,
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -315,6 +320,7 @@ class NotificationsTest extends ApiTestCase
         self::assertSame([
             'success' => true,
             'destination_url' => 'https://onesignal-aws-link.com',
+            '_status_code' => 200,
         ], $responseData);
     }
 }

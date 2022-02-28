@@ -36,6 +36,7 @@ class OneSignalTest extends ApiTestCase
                 ['id' => 1],
                 ['id' => 2],
             ],
+            '_status_code' => 200,
         ], $responseData);
     }
 
