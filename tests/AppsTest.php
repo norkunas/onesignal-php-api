@@ -53,6 +53,7 @@ class AppsTest extends ApiTestCase
             'safari_icon_256_256' => 'http://onesignal.com/safari_packages/e4e87830-b954-11e3-811d-f3b376925f15/128x128@2x.png',
             'site_name' => 'The URL to your website for Web Push',
             'basic_auth_key' => 'NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj',
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -75,6 +76,7 @@ class AppsTest extends ApiTestCase
 
         self::assertSame([
             'errors' => 'Couldn\'t find app with id = a',
+            '_status_code' => 404,
         ], $responseData);
     }
 
@@ -148,6 +150,7 @@ class AppsTest extends ApiTestCase
                 'site_name' => 'The URL to your website for Web Push',
                 'basic_auth_key' => 'NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj',
             ],
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -175,6 +178,7 @@ class AppsTest extends ApiTestCase
             'reference' => [
                 'https://documentation.onesignal.com/docs/accounts-and-keys#section-user-auth-key',
             ],
+            '_status_code' => 400,
         ], $responseData);
     }
 
@@ -227,6 +231,7 @@ class AppsTest extends ApiTestCase
             'safari_icon_256_256' => 'http://onesignal.com/safari_packages/e4e87830-b954-11e3-811d-f3b376925f15/128x128@2x.png',
             'site_name' => 'The URL to your website for Web Push',
             'basic_auth_key' => 'NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj',
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -251,6 +256,7 @@ class AppsTest extends ApiTestCase
             'errors' => [
                 'Name Enter an app name',
             ],
+            '_status_code' => 400,
         ], $responseData);
     }
 
@@ -303,6 +309,7 @@ class AppsTest extends ApiTestCase
             'safari_icon_256_256' => 'http://onesignal.com/safari_packages/e4e87830-b954-11e3-811d-f3b376925f15/128x128@2x.png',
             'site_name' => 'The URL to your website for Web Push',
             'basic_auth_key' => 'NGEwMGZmMjItY2NkNy0xMWUzLTk5ZDUtMDAwYzI5NDBlNjJj',
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -328,6 +335,7 @@ class AppsTest extends ApiTestCase
         self::assertSame([
             'status' => 404,
             'error' => 'Not Found',
+            '_status_code' => 404,
         ], $responseData);
     }
 
@@ -379,6 +387,7 @@ class AppsTest extends ApiTestCase
         self::assertSame([
             'success' => true,
             'id' => '7ed2887d-bd24-4a81-8220-4b256a08ab19',
+            '_status_code' => 200,
         ], $responseData);
     }
 
@@ -408,6 +417,7 @@ class AppsTest extends ApiTestCase
         self::assertSame([
             'success' => false,
             'errors' => ['Segment with the given id already exists.'],
+            '_status_code' => 409,
         ], $responseData);
     }
 
@@ -436,6 +446,7 @@ class AppsTest extends ApiTestCase
         self::assertSame([
             'success' => false,
             'errors' => ['name is required'],
+            '_status_code' => 400,
         ], $responseData);
     }
 
@@ -483,6 +494,7 @@ class AppsTest extends ApiTestCase
                     'aggregation' => 'sum',
                 ],
             ],
+            '_status_code' => 200,
         ], $responseData);
     }
 }
