@@ -8,16 +8,16 @@ class ConfigTest extends OneSignalTestCase
 {
     public function testGetApplicationId(): void
     {
-        self::assertSame('fakeApplicationId', ($this->createConfig())->getApplicationId());
+        self::assertSame('fakeApplicationId', $this->createConfig()->getApplicationId());
     }
 
     public function testGetApplicationAuthKey(): void
     {
-        self::assertSame('fakeApplicationAuthKey', ($this->createConfig())->getApplicationAuthKey());
+        self::assertSame('fakeApplicationAuthKey', $this->createConfig()->getApplicationAuthKey());
     }
 
     public function testGetUserAuthKey(): void
     {
-        self::assertSame('fakeUserAuthKey', ($this->createConfig())->getUserAuthKey());
+        self::assertSame('fakeUserAuthKey', $this->createConfig()->getUserAuthKey());
     }
 }
