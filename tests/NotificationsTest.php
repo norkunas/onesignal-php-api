@@ -139,6 +139,7 @@ class NotificationsTest extends ApiTestCase
                     'apns_alert' => null,
                     'isAdm' => false,
                     'isAndroid' => true,
+                    'isHuawei' => false,
                     'isChrome' => false,
                     'isChromeWeb' => true,
                     'isAlexa' => false,

@@ -35,6 +35,7 @@ class NotificationResolverTest extends OneSignalTestCase
             'subtitle' => ['value'],
             'isIos' => false,
             'isAndroid' => false,
+            'isHuawei' => false,
             'isWP' => false,
             'isWP_WNS' => false,
             'isAdm' => false,
@@ -142,6 +143,7 @@ class NotificationResolverTest extends OneSignalTestCase
         yield [['subtitle' => 666]];
         yield [['isIos' => 666]];
         yield [['isAndroid' => 666]];
+        yield [['isHuawei' => 666]];
         yield [['isWP' => 666]];
         yield [['isWP_WNS' => 666]];
         yield [['isAdm' => 666]];
