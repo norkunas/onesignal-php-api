@@ -216,6 +216,8 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('summary_arg', 'string')
             ->setDefined('summary_arg_count')
             ->setAllowedTypes('summary_arg_count', 'int')
+            ->setDefined('ios_interruption_level')
+            ->setAllowedTypes('ios_interruption_level', 'string')
             ->setDefined('ttl')
             ->setAllowedTypes('ttl', 'int')
             ->setDefined('priority')
