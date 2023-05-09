@@ -161,6 +161,7 @@ class NotificationsTest extends ApiTestCase
                     'tags' => null,
                     'filters' => null,
                     'template_id' => null,
+                    'ios_interruption_level' => 'active',
                     'ttl' => null,
                     'url' => 'https://mysite.com',
                     'web_url' => null,
