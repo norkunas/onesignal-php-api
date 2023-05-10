@@ -114,6 +114,7 @@ class NotificationResolverTest extends OneSignalTestCase
             'thread_id' => 'value',
             'summary_arg' => 'value',
             'summary_arg_count' => 10,
+            'ios_interruption_level' => 'value',
             'ttl' => 23,
             'priority' => 10,
             'app_id' => 'value',
@@ -212,6 +213,7 @@ class NotificationResolverTest extends OneSignalTestCase
         yield [['android_group_message' => 666]];
         yield [['adm_group' => 666]];
         yield [['adm_group_message' => 666]];
+        yield [['ios_interruption_level' => 666]];
         yield [['ttl' => 'wrongType']];
         yield [['priority' => 'wrongType']];
         yield [['app_id' => 666]];
