@@ -155,9 +155,9 @@ class NotificationResolverTest extends OneSignalTestCase
         yield [['isSafari' => 666]];
         yield [['isAnyWeb' => 666]];
         yield [['included_segments' => 'wrongType']];
-        yield [['excluded_segments' => 'wrongType']];
-        yield [['include_subscription_ids' => 'wrongType']];
+        yield [['excluded_segments' => 'wrongType']];        
         yield [['include_player_ids' => 'wrongType']];
+        yield [['include_subscription_ids' => 'wrongType']];
         yield [['include_ios_tokens' => 'wrongType']];
         yield [['include_android_reg_ids' => 666]];
         yield [['include_external_user_ids' => 666]];
