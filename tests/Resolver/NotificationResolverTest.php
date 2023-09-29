@@ -46,6 +46,7 @@ class NotificationResolverTest extends OneSignalTestCase
             'isAnyWeb' => false,
             'included_segments' => ['value'],
             'excluded_segments' => ['value'],
+            'include_subscription_ids' => ['value'],
             'include_player_ids' => ['value'],
             'include_ios_tokens' => ['value'],
             'include_android_reg_ids' => ['value'],
@@ -155,6 +156,7 @@ class NotificationResolverTest extends OneSignalTestCase
         yield [['isAnyWeb' => 666]];
         yield [['included_segments' => 'wrongType']];
         yield [['excluded_segments' => 'wrongType']];
+        yield [['include_subscription_ids' => 'wrongType']];
         yield [['include_player_ids' => 'wrongType']];
         yield [['include_ios_tokens' => 'wrongType']];
         yield [['include_android_reg_ids' => 666]];
