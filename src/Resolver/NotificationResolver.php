@@ -261,7 +261,7 @@ class NotificationResolver implements ResolverInterface
     }
 
     /**
-     * @param mixed $value
+     * @param mixed $value Url value to filter
      */
     private function filterUrl($value): bool
     {
