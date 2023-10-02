@@ -32,8 +32,6 @@ abstract class AbstractApi
     }
 
     /**
-     * @param mixed $value
-     *
      * @phpstan-param int<1, max> $maxDepth
      */
     protected function createStream($value, int $flags = null, int $maxDepth = 512): StreamInterface

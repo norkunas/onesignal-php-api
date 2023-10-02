@@ -21,9 +21,6 @@ class NotificationResolver implements ResolverInterface
         $this->config = $config;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function resolve(array $data): array
     {
         return (new OptionsResolver())
@@ -263,9 +260,6 @@ class NotificationResolver implements ResolverInterface
         return $filters;
     }
 
-    /**
-     * @param mixed $value
-     */
     private function filterUrl($value): bool
     {
         return (bool) filter_var($value, FILTER_VALIDATE_URL);
