@@ -21,9 +21,6 @@ class NotificationResolver implements ResolverInterface
         $this->config = $config;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function resolve(array $data): array
     {
         return (new OptionsResolver())
@@ -61,6 +58,8 @@ class NotificationResolver implements ResolverInterface
             ->setAllowedTypes('included_segments', 'array')
             ->setDefined('excluded_segments')
             ->setAllowedTypes('excluded_segments', 'array')
+            ->setDefined('include_subscription_ids')
+            ->setAllowedTypes('include_subscription_ids', 'array')
             ->setDefined('include_player_ids')
             ->setAllowedTypes('include_player_ids', 'array')
             ->setDefined('include_ios_tokens')
@@ -262,7 +261,7 @@ class NotificationResolver implements ResolverInterface
     }
 
     /**
-     * @param mixed $value
+     * @param mixed $value Url value to filter
      */
     private function filterUrl($value): bool
     {
