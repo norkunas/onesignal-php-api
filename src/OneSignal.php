@@ -106,6 +106,10 @@ class OneSignal
                 $api = new Notifications($this, $this->resolverFactory);
 
                 break;
+            case 'segments':
+                $api = new Segments($this, $this->resolverFactory);
+
+                break;
             default:
                 throw new InvalidArgumentException("Undefined api instance called: '$name'.");
         }
