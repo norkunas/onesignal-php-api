@@ -24,7 +24,6 @@ class Segments extends AbstractApi
      *
      * @param int $limit  How many segments to return (max 50)
      * @param int $offset Results offset
-     *
      */
     public function getAll(int $limit = null, int $offset = null): array
     {
