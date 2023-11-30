@@ -13,6 +13,9 @@ class FilterConditional implements AbstractDto
      */
     protected string $operator;
 
+    /**
+     * @param 'AND'|'OR' $operator
+     */
     public function __construct(string $operator)
     {
         $this->operator = $operator;
