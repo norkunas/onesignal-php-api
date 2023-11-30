@@ -107,7 +107,7 @@ class OneSignal
 
                 break;
             case 'segments':
-                $api = new Segments($this, $this->resolverFactory);
+                $api = new Segments($this);
 
                 break;
             default:

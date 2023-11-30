@@ -8,13 +8,9 @@ use OneSignal\Resolver\ResolverFactory;
 
 class Segments extends AbstractApi
 {
-    private $resolverFactory;
-
-    public function __construct(OneSignal $client, ResolverFactory $resolverFactory)
+    public function __construct(OneSignal $client)
     {
         parent::__construct($client);
-
-        $this->resolverFactory = $resolverFactory;
     }
 
     /**
@@ -49,7 +45,7 @@ class Segments extends AbstractApi
      * Create new segment with provided data.
      *
      * Application authentication key and ID must be set.
-     * 
+     *
      * @param array{name: string, filters: array<int, array>} $data Payload
      */
     public function add(array $data): array
