@@ -8,9 +8,9 @@ use OneSignal\Dto\AbstractDto;
 
 class Pagination implements AbstractDto
 {
-    protected ?int $limit;
+    protected ?int $limit = null;
 
-    protected ?int $offset;
+    protected ?int $offset = null;
 
     public function __construct(?int $limit = null, ?int $offset = null)
     {

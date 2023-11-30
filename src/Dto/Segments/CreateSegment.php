@@ -10,7 +10,7 @@ class CreateSegment implements AbstractDto
 {
     protected string $name;
 
-    protected array $filters;
+    protected array $filters = [];
 
     /**
      * @param array<int, array> $filters
@@ -42,7 +42,7 @@ class CreateSegment implements AbstractDto
     {
         return [
             'name' => $this->name,
-            'filters' => $this->filters
+            'filters' => $this->filters,
         ];
     }
 }
