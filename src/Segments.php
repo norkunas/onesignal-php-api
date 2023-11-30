@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OneSignal;
 
 use OneSignal\Dto\Segments\CreateSegment;
-use OneSignal\Dto\Support\Pagination;
+use OneSignal\Dto\Segments\ListSegments;
 
 class Segments extends AbstractApi
 {
@@ -19,11 +19,11 @@ class Segments extends AbstractApi
      *
      * Application authentication key and ID must be set.
      */
-    public function list(Pagination $paginationDto): array
+    public function list(ListSegments $listSegmentsDto): array
     {
         $app_id = $this->client->getConfig()->getApplicationId();
 
-        $request = $this->createRequest('GET', '/apps/'.$app_id.'/segments?'.http_build_query($paginationDto->toArray()));
+        $request = $this->createRequest('GET', '/apps/'.$app_id.'/segments?'.http_build_query($listSegmentsDto->toArray()));
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
 
         return $this->client->sendRequest($request);

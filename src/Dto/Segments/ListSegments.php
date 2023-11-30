@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace OneSignal\Dto\Support;
+namespace OneSignal\Dto\Segments;
 
 use OneSignal\Dto\AbstractDto;
 
-class Pagination implements AbstractDto
+class ListSegments implements AbstractDto
 {
     protected ?int $limit = null;
 
