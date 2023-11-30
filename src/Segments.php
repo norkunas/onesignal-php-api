@@ -49,16 +49,17 @@ class Segments extends AbstractApi
      * Create new segment with provided data.
      *
      * Application authentication key and ID must be set.
+     * 
+     * @param array{name: string, filters: array<int, array>} $data Payload
      */
     public function add(array $data): array
     {
         $app_id = $this->client->getConfig()->getApplicationId();
-        $resolvedData = $this->resolverFactory->createSegmentResolver()->resolve($data);
 
         $request = $this->createRequest('POST', '/apps/'.$app_id.'/segments');
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
         $request = $request->withHeader('Content-Type', 'application/json');
-        $request = $request->withBody($this->createStream($resolvedData));
+        $request = $request->withBody($this->createStream($data));
 
         return $this->client->sendRequest($request);
     }
