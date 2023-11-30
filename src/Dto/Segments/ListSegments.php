@@ -8,24 +8,30 @@ use OneSignal\Dto\AbstractDto;
 
 class ListSegments implements AbstractDto
 {
-    protected ?int $limit = null;
+    /**
+     * @var int<0, 2147483648> $limit
+     */
+    protected int $limit;
 
-    protected ?int $offset = null;
+    /**
+     * @var int<0, 2147483648> $offset
+     */
+    protected int $offset;
 
-    public function __construct(?int $limit = null, ?int $offset = null)
+    public function __construct(int $limit = 0, int $offset = 0)
     {
         $this->limit = $limit;
         $this->offset = $offset;
     }
 
-    public function setLimit(?int $limit = null): self
+    public function setLimit(int $limit = 0): self
     {
         $this->limit = $limit;
 
         return $this;
     }
 
-    public function setOffset(?int $offset = null): self
+    public function setOffset(int $offset = 0): self
     {
         $this->offset = $offset;
 
@@ -36,11 +42,11 @@ class ListSegments implements AbstractDto
     {
         $query = [];
 
-        if ($this->limit !== null) {
+        if ($this->limit > 0) {
             $query['limit'] = $this->limit;
         }
 
-        if ($this->offset !== null) {
+        if ($this->offset > 0) {
             $query['offset'] = $this->offset;
         }
 

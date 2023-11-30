@@ -8,8 +8,14 @@ use OneSignal\Dto\AbstractDto;
 
 class CreateSegment implements AbstractDto
 {
+    /**
+     * @var non-empty-string $name
+     */
     protected string $name;
 
+    /**
+     * @param array<int, array> $filters
+     */
     protected array $filters = [];
 
     /**
@@ -21,6 +27,9 @@ class CreateSegment implements AbstractDto
         $this->filters = $filters;
     }
 
+    /**
+     * @var non-empty-string $name
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
