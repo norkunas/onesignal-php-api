@@ -31,7 +31,7 @@ class CreateSegment implements AbstractDto
     /**
      * @param array<int, array> $filters
      */
-    public function setFilters(string $filters): self
+    public function setFilters(array $filters): self
     {
         $this->filters = $filters;
 
