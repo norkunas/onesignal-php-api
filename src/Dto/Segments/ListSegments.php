@@ -11,12 +11,12 @@ class ListSegments implements AbstractDto
     /**
      * @var int<0, 2147483648> $limit
      */
-    protected int $limit;
+    protected int $limit = 0;
 
     /**
      * @var int<0, 2147483648> $offset
      */
-    protected int $offset;
+    protected int $offset = 0;
 
     /**
      * @var int<0, 2147483648> $limit
