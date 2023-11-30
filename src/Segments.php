@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace OneSignal;
 
-use OneSignal\Resolver\ResolverFactory;
-
 class Segments extends AbstractApi
 {
     public function __construct(OneSignal $client)
