@@ -21,9 +21,9 @@ class Segments extends AbstractApi
      */
     public function list(ListSegments $listSegmentsDto): array
     {
-        $app_id = $this->client->getConfig()->getApplicationId();
+        $appId = $this->client->getConfig()->getApplicationId();
 
-        $request = $this->createRequest('GET', '/apps/'.$app_id.'/segments?'.http_build_query($listSegmentsDto->toArray()));
+        $request = $this->createRequest('GET', '/apps/'.$appId.'/segments?'.http_build_query($listSegmentsDto->toArray()));
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
 
         return $this->client->sendRequest($request);
@@ -36,9 +36,9 @@ class Segments extends AbstractApi
      */
     public function create(CreateSegment $createSegmentDto): array
     {
-        $app_id = $this->client->getConfig()->getApplicationId();
+        $appId = $this->client->getConfig()->getApplicationId();
 
-        $request = $this->createRequest('POST', '/apps/'.$app_id.'/segments');
+        $request = $this->createRequest('POST', '/apps/'.$appId.'/segments');
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
         $request = $request->withHeader('Content-Type', 'application/json');
         $request = $request->withBody($this->createStream($createSegmentDto->toArray()));
@@ -55,9 +55,9 @@ class Segments extends AbstractApi
      */
     public function delete(string $id): array
     {
-        $app_id = $this->client->getConfig()->getApplicationId();
+        $appId = $this->client->getConfig()->getApplicationId();
 
-        $request = $this->createRequest('DELETE', '/apps/'.$app_id.'/segments/'.$id);
+        $request = $this->createRequest('DELETE', '/apps/'.$appId.'/segments/'.$id);
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
 
         return $this->client->sendRequest($request);
