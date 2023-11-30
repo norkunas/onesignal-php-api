@@ -12,13 +12,13 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "Checkout"
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: "Setup PHP"
               uses: shivammathur/setup-php@v2
               with:
                   coverage: none
-                  php-version: 8.2
+                  php-version: 8.3
 
             - name: "Install Dependencies with Composer"
               uses: ramsey/composer-install@v2
@@ -33,13 +33,13 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "Checkout"
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: "Setup PHP"
               uses: shivammathur/setup-php@v2
               with:
                   coverage: none
-                  php-version: 8.1
+                  php-version: 8.3
                   tools: cs2pr
 
             - name: "Install Dependencies with Composer"
@@ -53,45 +53,47 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
+                dependencies: ['highest']
+                php-version: ['7.4', '8.0', '8.1', '8.2', '8.3']
                 include:
                     - php-version: 7.4
-                      composer-flags: --prefer-stable --prefer-lowest
+                      dependencies: 'lowest'
                     - php-version: 8.0
-                      composer-flags: --prefer-stable --prefer-lowest
+                      dependencies: 'lowest'
                     - php-version: 8.1
-                      composer-flags: --prefer-stable --prefer-lowest
+                      dependencies: 'lowest'
                     - php-version: 8.2
-                      composer-flags: --prefer-stable --prefer-lowest
-                    - php-version: 7.4
-                      symfony-version: 5.4.*
-                    - php-version: 8.0
-                      symfony-version: 6.0.*
-                    - php-version: 8.1
-                      symfony-version: 6.0.*
+                      dependencies: 'lowest'
+                    - php-version: 8.3
+                      dependencies: 'lowest'
                     - php-version: 8.2
-                      symfony-version: 6.0.*
+                      symfony-version: 6.3.*
                     - php-version: 8.2
-                      symfony-version: 6.1.*
-                    - php-version: 8.2
-                      symfony-version: 6.2.*
+                      symfony-version: 6.4.*
+                    - php-version: 8.3
+                      symfony-version: 6.3.*
+                    - php-version: 8.3
+                      symfony-version: 6.4.*
+                    - php-version: 8.3
+                      symfony-version: 7.0.*
         steps:
             - name: "Checkout"
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
+
             - name: "Setup PHP"
               uses: shivammathur/setup-php@v2
               with:
-                  coverage: none
                   php-version: ${{ matrix.php-version }}
-            - name: "Install dependencies (fixed Symfony version) with composer"
-              if: matrix.symfony-version
-              run: |
-                  composer remove --dev friendsofphp/php-cs-fixer
-                  composer require symfony/options-resolver:${{ matrix.symfony-version }} --no-interaction --no-update
-                  composer update --no-interaction --no-progress --no-suggest
-            - name: "Install dependencies (lowest dependencies) with composer"
-              if: matrix.composer-flags
-              run: |
-                  composer update ${{ matrix.composer-flags }} --no-interaction --no-progress --no-suggest
+                  tools: flex
+                  coverage: none
+
+            - name: "Install Dependencies with Composer"
+              uses: ramsey/composer-install@v2
+              env:
+                  SYMFONY_REQUIRE: ${{ matrix.symfony-version }}
+              with:
+                  composer-options: "--optimize-autoloader"
+                  dependency-versions: "${{ matrix.dependencies }}"
 
             - name: "Run tests with PHPUnit"
               env:
@@ -103,13 +105,13 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "Checkout"
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: "Setup PHP"
               uses: shivammathur/setup-php@v2
               with:
                   coverage: pcov
-                  php-version: 8.2
+                  php-version: 8.3
 
             - name: "Install Dependencies with Composer"
               uses: ramsey/composer-install@v2
