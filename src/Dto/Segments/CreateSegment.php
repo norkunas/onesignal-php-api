@@ -19,6 +19,7 @@ class CreateSegment implements AbstractDto
     protected array $filters = [];
 
     /**
+     * @var non-empty-string $name
      * @param array<int, array> $filters
      */
     public function __construct(string $name, array $filters = [])
