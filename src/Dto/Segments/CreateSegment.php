@@ -9,17 +9,17 @@ use OneSignal\Dto\AbstractDto;
 class CreateSegment implements AbstractDto
 {
     /**
-     * @var non-empty-string $name
+     * @var non-empty-string
      */
     protected string $name;
 
     /**
-     * @param array<int, array> $filters
+     * @var array<int, array>
      */
     protected array $filters = [];
 
     /**
-     * @var non-empty-string $name
+     * @param non-empty-string $name
      * @param array<int, array> $filters
      */
     public function __construct(string $name, array $filters = [])
@@ -29,7 +29,7 @@ class CreateSegment implements AbstractDto
     }
 
     /**
-     * @var non-empty-string $name
+     * @param non-empty-string $name
      */
     public function setName(string $name): self
     {

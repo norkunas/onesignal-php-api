@@ -9,18 +9,18 @@ use OneSignal\Dto\AbstractDto;
 class ListSegments implements AbstractDto
 {
     /**
-     * @var int<0, 2147483648> $limit
+     * @var int<0, 2147483648>
      */
     protected int $limit = 0;
 
     /**
-     * @var int<0, 2147483648> $offset
+     * @var int<0, 2147483648>
      */
     protected int $offset = 0;
 
     /**
-     * @var int<0, 2147483648> $limit
-     * @var int<0, 2147483648> $offset
+     * @param int<0, 2147483648> $limit
+     * @param int<0, 2147483648> $offset
      */
     public function __construct(int $limit = 0, int $offset = 0)
     {
@@ -29,7 +29,7 @@ class ListSegments implements AbstractDto
     }
 
     /**
-     * @var int<0, 2147483648> $limit
+     * @param int<0, 2147483648> $limit
      */
     public function setLimit(int $limit = 0): self
     {
@@ -39,7 +39,7 @@ class ListSegments implements AbstractDto
     }
 
     /**
-     * @var int<0, 2147483648> $offset
+     * @param int<0, 2147483648> $offset
      */
     public function setOffset(int $offset = 0): self
     {
