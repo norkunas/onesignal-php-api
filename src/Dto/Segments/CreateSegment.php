@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace OneSignal\Dto\Segments;
 
 use OneSignal\Dto\AbstractDto;
+use OneSignal\Dto\Filters\FilterConditional;
+use OneSignal\Dto\Filters\FilterField;
 
 class CreateSegment implements AbstractDto
 {
@@ -14,13 +16,13 @@ class CreateSegment implements AbstractDto
     protected string $name;
 
     /**
-     * @var array<int, array>
+     * @var array<int, FilterField|FilterConditional>
      */
     protected array $filters = [];
 
     /**
-     * @param non-empty-string  $name
-     * @param array<int, array> $filters
+     * @param non-empty-string                          $name
+     * @param array<int, FilterField|FilterConditional> $filters
      */
     public function __construct(string $name, array $filters = [])
     {
@@ -39,7 +41,7 @@ class CreateSegment implements AbstractDto
     }
 
     /**
-     * @param array<int, array> $filters
+     * @param array<int, FilterField|FilterConditional> $filters
      */
     public function setFilters(array $filters): self
     {
@@ -50,6 +52,10 @@ class CreateSegment implements AbstractDto
 
     public function toArray(): array
     {
+        foreach ($this->filters as &$filter) {
+            $filter = $filter->toArray();
+        }
+
         return [
             'name' => $this->name,
             'filters' => $this->filters,
