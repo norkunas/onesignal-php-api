@@ -18,12 +18,19 @@ class ListSegments implements AbstractDto
      */
     protected int $offset;
 
+    /**
+     * @var int<0, 2147483648> $limit
+     * @var int<0, 2147483648> $offset
+     */
     public function __construct(int $limit = 0, int $offset = 0)
     {
         $this->limit = $limit;
         $this->offset = $offset;
     }
 
+    /**
+     * @var int<0, 2147483648> $limit
+     */
     public function setLimit(int $limit = 0): self
     {
         $this->limit = $limit;
@@ -31,6 +38,9 @@ class ListSegments implements AbstractDto
         return $this;
     }
 
+    /**
+     * @var int<0, 2147483648> $offset
+     */
     public function setOffset(int $offset = 0): self
     {
         $this->offset = $offset;
