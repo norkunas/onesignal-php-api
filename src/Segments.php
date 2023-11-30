@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace OneSignal;
 
+use OneSignal\Dto\Segments\CreateSegment;
+use OneSignal\Dto\Support\Pagination;
+
 class Segments extends AbstractApi
 {
     public function __construct(OneSignal $client)
@@ -15,25 +18,12 @@ class Segments extends AbstractApi
      * Get information about all segments.
      *
      * Application authentication key and ID must be set.
-     *
-     * @param int $limit  How many segments to return (max 50)
-     * @param int $offset Results offset
      */
-    public function getAll(int $limit = null, int $offset = null): array
+    public function list(Pagination $paginationDto): array
     {
         $app_id = $this->client->getConfig()->getApplicationId();
 
-        $query = [];
-
-        if ($limit !== null) {
-            $query['limit'] = $limit;
-        }
-
-        if ($offset !== null) {
-            $query['offset'] = $offset;
-        }
-
-        $request = $this->createRequest('GET', '/apps/'.$app_id.'/segments?'.http_build_query($query));
+        $request = $this->createRequest('GET', '/apps/'.$app_id.'/segments?'.http_build_query($paginationDto->toArray()));
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
 
         return $this->client->sendRequest($request);
@@ -43,17 +33,15 @@ class Segments extends AbstractApi
      * Create new segment with provided data.
      *
      * Application authentication key and ID must be set.
-     *
-     * @param array{name: string, filters: array<int, array>} $data Payload
      */
-    public function add(array $data): array
+    public function create(CreateSegment $createSegmentDto): array
     {
         $app_id = $this->client->getConfig()->getApplicationId();
 
         $request = $this->createRequest('POST', '/apps/'.$app_id.'/segments');
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
         $request = $request->withHeader('Content-Type', 'application/json');
-        $request = $request->withBody($this->createStream($data));
+        $request = $request->withBody($this->createStream($createSegmentDto->toArray()));
 
         return $this->client->sendRequest($request);
     }
