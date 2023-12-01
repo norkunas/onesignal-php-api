@@ -8,13 +8,17 @@ use OneSignal\Dto\AbstractDto;
 
 class FilterConditional implements AbstractDto
 {
+    public const AND = 'AND';
+
+    public const OR = 'OR';
+
     /**
-     * @var 'AND'|'OR'
+     * @var self::AND|self::OR
      */
     protected string $operator;
 
     /**
-     * @param 'AND'|'OR' $operator
+     * @param self::AND|self::OR $operator
      */
     public function __construct(string $operator)
     {
@@ -22,7 +26,7 @@ class FilterConditional implements AbstractDto
     }
 
     /**
-     * @param 'AND'|'OR' $operator
+     * @param self::AND|self::OR $operator
      */
     public function setOperator(string $operator): self
     {
