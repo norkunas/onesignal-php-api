@@ -19,14 +19,14 @@ class FilterField implements AbstractDto
     protected $value;
 
     /**
-     * @var array<'key'|'radius'|'lat'|'long', string|int|float>
+     * @var array<'relation'|'key'|'radius'|'lat'|'long', string|int|float>
      */
     protected array $extraParams = [];
 
     /**
      * @param 'last_session'|'first_session'|'session_count'|'session_time'|'amount_spent'|'bought_sku'|'tag'|'language'|'app_version'|'location'|'country' $field
      * @param string|int|float                                                                                                                              $value
-     * @param array<'key'|'radius'|'lat'|'long', string|int|float>                                                                                          $extraParams
+     * @param array<'relation'|'key'|'radius'|'lat'|'long', string|int|float>                                                                               $extraParams
      */
     public function __construct(string $field, $value, array $extraParams = [])
     {
@@ -56,7 +56,7 @@ class FilterField implements AbstractDto
     }
 
     /**
-     * @param array<'key'|'radius'|'lat'|'long', string|int|float> $extraParams
+     * @param array<'relation'|'key'|'radius'|'lat'|'long', string|int|float> $extraParams
      */
     public function setExtraParams(array $extraParams): self
     {
