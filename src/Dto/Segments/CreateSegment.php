@@ -5,8 +5,18 @@ declare(strict_types=1);
 namespace OneSignal\Dto\Segments;
 
 use OneSignal\Dto\AbstractDto;
+use OneSignal\Dto\Filters\FilterAmountSpent;
+use OneSignal\Dto\Filters\FilterAppVersion;
+use OneSignal\Dto\Filters\FilterBoughtSku;
 use OneSignal\Dto\Filters\FilterConditional;
-use OneSignal\Dto\Filters\FilterField;
+use OneSignal\Dto\Filters\FilterCountry;
+use OneSignal\Dto\Filters\FilterFirstSession;
+use OneSignal\Dto\Filters\FilterLanguage;
+use OneSignal\Dto\Filters\FilterLastSession;
+use OneSignal\Dto\Filters\FilterLocation;
+use OneSignal\Dto\Filters\FilterSessionCount;
+use OneSignal\Dto\Filters\FilterSessionTime;
+use OneSignal\Dto\Filters\FilterTag;
 
 class CreateSegment implements AbstractDto
 {
@@ -16,13 +26,13 @@ class CreateSegment implements AbstractDto
     protected string $name;
 
     /**
-     * @var array<int, FilterField|FilterConditional>
+     * @var array<int, FilterAmountSpent|FilterAppVersion|FilterBoughtSku|FilterConditional|FilterCountry|FilterFirstSession|FilterLanguage|FilterLastSession|FilterLocation|FilterSessionCount|FilterSessionTime|FilterTag>
      */
     protected array $filters = [];
 
     /**
-     * @param non-empty-string                          $name
-     * @param array<int, FilterField|FilterConditional> $filters
+     * @param non-empty-string                                                                                                                                                                                                 $name
+     * @param array<int, FilterAmountSpent|FilterAppVersion|FilterBoughtSku|FilterConditional|FilterCountry|FilterFirstSession|FilterLanguage|FilterLastSession|FilterLocation|FilterSessionCount|FilterSessionTime|FilterTag> $filters
      */
     public function __construct(string $name, array $filters = [])
     {
@@ -41,7 +51,7 @@ class CreateSegment implements AbstractDto
     }
 
     /**
-     * @param array<int, FilterField|FilterConditional> $filters
+     * @param array<int, FilterAmountSpent|FilterAppVersion|FilterBoughtSku|FilterConditional|FilterCountry|FilterFirstSession|FilterLanguage|FilterLastSession|FilterLocation|FilterSessionCount|FilterSessionTime|FilterTag> $filters
      */
     public function setFilters(array $filters): self
     {
@@ -52,13 +62,11 @@ class CreateSegment implements AbstractDto
 
     public function toArray(): array
     {
-        foreach ($this->filters as &$filter) {
-            $filter = $filter->toArray();
-        }
-
         return [
             'name' => $this->name,
-            'filters' => $this->filters,
+            'filters' => array_map(static function (AbstractDto $filter): array {
+                return $filter->toArray();
+            }, $this->filters),
         ];
     }
 }
