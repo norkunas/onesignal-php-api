@@ -14,24 +14,17 @@ class FilterField implements AbstractDto
     protected string $field;
 
     /**
-     * @var string|int|float
-     */
-    protected $value;
-
-    /**
-     * @var array<'relation'|'key'|'radius'|'lat'|'long', string|int|float>
+     * @var array<'value'|'relation'|'key'|'radius'|'lat'|'long', string|int|float>
      */
     protected array $extraParams = [];
 
     /**
      * @param 'last_session'|'first_session'|'session_count'|'session_time'|'amount_spent'|'bought_sku'|'tag'|'language'|'app_version'|'location'|'country' $field
-     * @param string|int|float                                                                                                                              $value
-     * @param array<'relation'|'key'|'radius'|'lat'|'long', string|int|float>                                                                               $extraParams
+     * @param array<'value'|'relation'|'key'|'radius'|'lat'|'long', string|int|float>                                                                       $extraParams
      */
-    public function __construct(string $field, $value, array $extraParams = [])
+    public function __construct(string $field, array $extraParams = [])
     {
         $this->field = $field;
-        $this->value = $value;
         $this->extraParams = $extraParams;
     }
 
@@ -46,17 +39,7 @@ class FilterField implements AbstractDto
     }
 
     /**
-     * @param string|int|float $value
-     */
-    public function setValue($value): self
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
-    /**
-     * @param array<'relation'|'key'|'radius'|'lat'|'long', string|int|float> $extraParams
+     * @param array<'value'|'relation'|'key'|'radius'|'lat'|'long', string|int|float> $extraParams
      */
     public function setExtraParams(array $extraParams): self
     {
@@ -69,7 +52,6 @@ class FilterField implements AbstractDto
     {
         $data = [
             'field' => $this->field,
-            'value' => $this->value,
         ];
 
         return array_merge($data, $this->extraParams);
