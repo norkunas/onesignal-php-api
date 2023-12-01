@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-use OneSignal\Dto\AbstractDto;
-
-class FilterLocation implements AbstractDto
+class LocationFilter extends AbstractFilter
 {
     public const FIELD = 'location';
 

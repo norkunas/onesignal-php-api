@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-use OneSignal\Dto\AbstractDto;
-
-class FilterAppVersion implements AbstractDto
+class SessionCountFilter extends AbstractFilter
 {
-    public const FIELD = 'app_version';
+    public const FIELD = 'session_count';
 
     public const GT = '>';
 
@@ -23,12 +21,12 @@ class FilterAppVersion implements AbstractDto
      */
     protected string $relation;
 
-    protected string $value;
+    protected int $value;
 
     /**
      * @param self::GT|self::LT|self::EQ|self::NEQ $relation
      */
-    public function __construct(string $relation, string $value)
+    public function __construct(string $relation, int $value)
     {
         $this->relation = $relation;
         $this->value = $value;

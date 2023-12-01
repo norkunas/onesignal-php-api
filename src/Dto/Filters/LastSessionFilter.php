@@ -4,36 +4,32 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-use OneSignal\Dto\AbstractDto;
-
-class FilterAmountSpent implements AbstractDto
+class LastSessionFilter extends AbstractFilter
 {
-    public const FIELD = 'amount_spent';
+    public const FIELD = 'last_session';
 
     public const GT = '>';
 
     public const LT = '<';
 
-    public const EQ = '=';
-
     /**
-     * @var self::GT|self::LT|self::EQ
+     * @var self::GT|self::LT
      */
     protected string $relation;
 
     /**
      * @var int|float
      */
-    protected $value;
+    protected $hoursAgo;
 
     /**
-     * @param self::GT|self::LT|self::EQ $relation
-     * @param int|float                  $value
+     * @param self::GT|self::LT $relation
+     * @param int|float         $hoursAgo
      */
-    public function __construct(string $relation, $value)
+    public function __construct(string $relation, $hoursAgo)
     {
         $this->relation = $relation;
-        $this->value = $value;
+        $this->hoursAgo = $hoursAgo;
     }
 
     public function toArray(): array
@@ -41,7 +37,7 @@ class FilterAmountSpent implements AbstractDto
         return [
             'field' => self::FIELD,
             'relation' => $this->relation,
-            'value' => $this->value,
+            'hours_ago' => $this->hoursAgo,
         ];
     }
 }

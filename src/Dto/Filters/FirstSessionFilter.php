@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-use OneSignal\Dto\AbstractDto;
-
-class FilterLastSession implements AbstractDto
+class FirstSessionFilter extends AbstractFilter
 {
-    public const FIELD = 'last_session';
+    public const FIELD = 'first_session';
 
     public const GT = '>';
 

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-use OneSignal\Dto\AbstractDto;
-
-class FilterLanguage implements AbstractDto
+class LanguageFilter extends AbstractFilter
 {
     public const FIELD = 'language';
 

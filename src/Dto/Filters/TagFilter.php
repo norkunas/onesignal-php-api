@@ -6,7 +6,7 @@ namespace OneSignal\Dto\Filters;
 
 use OneSignal\Dto\AbstractDto;
 
-class FilterTag implements AbstractDto
+class TagFilter implements AbstractDto
 {
     public const FIELD = 'tag';
 

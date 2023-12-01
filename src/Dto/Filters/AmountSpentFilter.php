@@ -4,27 +4,31 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-use OneSignal\Dto\AbstractDto;
-
-class FilterSessionTime implements AbstractDto
+class AmountSpentFilter extends AbstractFilter
 {
-    public const FIELD = 'session_time';
+    public const FIELD = 'amount_spent';
 
     public const GT = '>';
 
     public const LT = '<';
 
+    public const EQ = '=';
+
     /**
-     * @var self::GT|self::LT
+     * @var self::GT|self::LT|self::EQ
      */
     protected string $relation;
 
-    protected int $value;
+    /**
+     * @var int|float
+     */
+    protected $value;
 
     /**
-     * @param self::GT|self::LT $relation
+     * @param self::GT|self::LT|self::EQ $relation
+     * @param int|float                  $value
      */
-    public function __construct(string $relation, int $value)
+    public function __construct(string $relation, $value)
     {
         $this->relation = $relation;
         $this->value = $value;
