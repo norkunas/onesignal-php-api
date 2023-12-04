@@ -53,9 +53,12 @@ class CreateSegment implements AbstractDto
     {
         return array_filter([
             'name' => $this->name,
-            'filters' => array_map(static function (AbstractFilter $filter): array {
-                return $filter->toArray();
-            }, $this->filters),
+            'filters' => array_map(
+                static function (AbstractFilter $filter): array {
+                    return $filter->toArray();
+                },
+                $this->filters ?? []
+            ),
         ]);
     }
 }
