@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OneSignal\Dto\Segments;
+namespace OneSignal\Dto\Segment;
 
 use OneSignal\Dto\AbstractDto;
 

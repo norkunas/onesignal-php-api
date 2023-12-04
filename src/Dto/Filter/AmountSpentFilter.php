@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace OneSignal\Dto\Filters;
+namespace OneSignal\Dto\Filter;
 
-final class BoughtSkuFilter extends AbstractFilter
+final class AmountSpentFilter extends AbstractFilter
 {
     public const GT = '>';
 
@@ -17,8 +17,6 @@ final class BoughtSkuFilter extends AbstractFilter
      */
     protected string $relation;
 
-    protected string $key;
-
     /**
      * @var int|float
      */
@@ -28,19 +26,17 @@ final class BoughtSkuFilter extends AbstractFilter
      * @param self::GT|self::LT|self::EQ $relation
      * @param int|float                  $value
      */
-    public function __construct(string $relation, string $key, $value)
+    public function __construct(string $relation, $value)
     {
         $this->relation = $relation;
-        $this->key = $key;
         $this->value = $value;
     }
 
     public function toArray(): array
     {
         return [
-            'field' => 'bought_sku',
+            'field' => 'amount_spent',
             'relation' => $this->relation,
-            'key' => $this->key,
             'value' => $this->value,
         ];
     }

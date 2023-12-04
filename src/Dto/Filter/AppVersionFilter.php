@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace OneSignal\Dto\Filters;
+namespace OneSignal\Dto\Filter;
 
-final class SessionCountFilter extends AbstractFilter
+final class AppVersionFilter extends AbstractFilter
 {
     public const GT = '>';
 
@@ -19,12 +19,12 @@ final class SessionCountFilter extends AbstractFilter
      */
     protected string $relation;
 
-    protected int $value;
+    protected string $value;
 
     /**
      * @param self::GT|self::LT|self::EQ|self::NEQ $relation
      */
-    public function __construct(string $relation, int $value)
+    public function __construct(string $relation, string $value)
     {
         $this->relation = $relation;
         $this->value = $value;
@@ -33,7 +33,7 @@ final class SessionCountFilter extends AbstractFilter
     public function toArray(): array
     {
         return [
-            'field' => 'session_count',
+            'field' => 'app_version',
             'relation' => $this->relation,
             'value' => $this->value,
         ];

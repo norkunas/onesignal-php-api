@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace OneSignal\Dto\Filters;
+namespace OneSignal\Dto\Filter;
 
-final class LastSessionFilter extends AbstractFilter
+final class SessionTimeFilter extends AbstractFilter
 {
     public const GT = '>';
 
@@ -15,27 +15,23 @@ final class LastSessionFilter extends AbstractFilter
      */
     protected string $relation;
 
-    /**
-     * @var int|float
-     */
-    protected $hoursAgo;
+    protected int $value;
 
     /**
      * @param self::GT|self::LT $relation
-     * @param int|float         $hoursAgo
      */
-    public function __construct(string $relation, $hoursAgo)
+    public function __construct(string $relation, int $value)
     {
         $this->relation = $relation;
-        $this->hoursAgo = $hoursAgo;
+        $this->value = $value;
     }
 
     public function toArray(): array
     {
         return [
-            'field' => 'last_session',
+            'field' => 'session_time',
             'relation' => $this->relation,
-            'hours_ago' => $this->hoursAgo,
+            'value' => $this->value,
         ];
     }
 }

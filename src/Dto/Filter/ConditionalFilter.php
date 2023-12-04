@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OneSignal\Dto\Filters;
+namespace OneSignal\Dto\Filter;
 
 final class ConditionalFilter extends AbstractFilter
 {
