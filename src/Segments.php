@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace OneSignal;
 
-use OneSignal\Dto\Segments\CreateSegment;
-use OneSignal\Dto\Segments\ListSegments;
+use OneSignal\Dto\Segment\CreateSegment;
+use OneSignal\Dto\Segment\ListSegments;
 
 class Segments extends AbstractApi
 {
