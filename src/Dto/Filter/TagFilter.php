@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filter;
 
-use OneSignal\Dto\AbstractDto;
-
-final class TagFilter implements AbstractDto
+final class TagFilter extends AbstractFilter
 {
     public const EXISTS = 'exists';
 
