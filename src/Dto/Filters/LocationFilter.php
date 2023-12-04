@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-class LocationFilter extends AbstractFilter
+final class LocationFilter extends AbstractFilter
 {
-    public const FIELD = 'location';
-
     protected int $radius;
 
     /**
@@ -34,7 +32,7 @@ class LocationFilter extends AbstractFilter
     public function toArray(): array
     {
         return [
-            'field' => self::FIELD,
+            'field' => 'location',
             'radius' => $this->radius,
             'lat' => $this->lat,
             'long' => $this->long,

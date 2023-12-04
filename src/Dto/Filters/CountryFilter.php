@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-class CountryFilter extends AbstractFilter
+final class CountryFilter extends AbstractFilter
 {
-    public const FIELD = 'country';
-
     public const EQ = '=';
 
     protected string $value;
@@ -20,7 +18,7 @@ class CountryFilter extends AbstractFilter
     public function toArray(): array
     {
         return [
-            'field' => self::FIELD,
+            'field' => 'country',
             'relation' => self::EQ,
             'value' => $this->value,
         ];

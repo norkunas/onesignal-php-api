@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-class LanguageFilter extends AbstractFilter
+final class LanguageFilter extends AbstractFilter
 {
-    public const FIELD = 'language';
-
     public const EQ = '=';
 
     public const NEQ = '!=';
@@ -31,7 +29,7 @@ class LanguageFilter extends AbstractFilter
     public function toArray(): array
     {
         return [
-            'field' => self::FIELD,
+            'field' => 'language',
             'relation' => $this->relation,
             'value' => $this->value,
         ];

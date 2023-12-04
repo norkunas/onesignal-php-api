@@ -10,20 +10,20 @@ use OneSignal\Dto\Filters\AbstractFilter;
 class CreateSegment implements AbstractDto
 {
     /**
-     * @var non-empty-string
+     * @var non-empty-string|null
      */
-    protected string $name;
+    protected ?string $name = null;
 
     /**
      * @var array<int, AbstractFilter>
      */
-    protected array $filters = [];
+    protected ?array $filters = null;
 
     /**
-     * @param non-empty-string           $name
-     * @param array<int, AbstractFilter> $filters
+     * @param non-empty-string|null           $name
+     * @param array<int, AbstractFilter>|null $filters
      */
-    public function __construct(string $name, array $filters = [])
+    public function __construct(string $name = null, array $filters = null)
     {
         $this->name = $name;
         $this->filters = $filters;
@@ -32,7 +32,7 @@ class CreateSegment implements AbstractDto
     /**
      * @param non-empty-string $name
      */
-    public function setName(string $name): self
+    public function name(string $name): self
     {
         $this->name = $name;
 
@@ -40,9 +40,9 @@ class CreateSegment implements AbstractDto
     }
 
     /**
-     * @param array<int, AbstractFilter> $filters
+     * @param list<AbstractFilter> $filters
      */
-    public function setFilters(array $filters): self
+    public function filters(array $filters): self
     {
         $this->filters = $filters;
 
@@ -51,11 +51,11 @@ class CreateSegment implements AbstractDto
 
     public function toArray(): array
     {
-        return [
+        return array_filter([
             'name' => $this->name,
             'filters' => array_map(static function (AbstractFilter $filter): array {
                 return $filter->toArray();
             }, $this->filters),
-        ];
+        ]);
     }
 }

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-class FirstSessionFilter extends AbstractFilter
+final class FirstSessionFilter extends AbstractFilter
 {
-    public const FIELD = 'first_session';
-
     public const GT = '>';
 
     public const LT = '<';
@@ -35,7 +33,7 @@ class FirstSessionFilter extends AbstractFilter
     public function toArray(): array
     {
         return [
-            'field' => self::FIELD,
+            'field' => 'first_session',
             'relation' => $this->relation,
             'hours_ago' => $this->hoursAgo,
         ];

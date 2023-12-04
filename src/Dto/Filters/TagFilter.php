@@ -6,10 +6,8 @@ namespace OneSignal\Dto\Filters;
 
 use OneSignal\Dto\AbstractDto;
 
-class TagFilter implements AbstractDto
+final class TagFilter implements AbstractDto
 {
-    public const FIELD = 'tag';
-
     public const GT = '>';
 
     public const LT = '<';
@@ -48,7 +46,7 @@ class TagFilter implements AbstractDto
     public function toArray(): array
     {
         return [
-            'field' => self::FIELD,
+            'field' => 'tag',
             'relation' => $this->relation,
             'key' => $this->key,
             'value' => $this->value,

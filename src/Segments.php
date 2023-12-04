@@ -51,7 +51,7 @@ class Segments extends AbstractApi
      *
      * Application authentication key and ID must be set.
      *
-     * @param string $id Segment ID
+     * @param non-empty-string $id Segment ID
      */
     public function delete(string $id): array
     {

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-class SessionCountFilter extends AbstractFilter
+final class SessionCountFilter extends AbstractFilter
 {
-    public const FIELD = 'session_count';
-
     public const GT = '>';
 
     public const LT = '<';
@@ -35,7 +33,7 @@ class SessionCountFilter extends AbstractFilter
     public function toArray(): array
     {
         return [
-            'field' => self::FIELD,
+            'field' => 'session_count',
             'relation' => $this->relation,
             'value' => $this->value,
         ];

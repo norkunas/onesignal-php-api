@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-class AmountSpentFilter extends AbstractFilter
+final class AmountSpentFilter extends AbstractFilter
 {
-    public const FIELD = 'amount_spent';
-
     public const GT = '>';
 
     public const LT = '<';
@@ -37,7 +35,7 @@ class AmountSpentFilter extends AbstractFilter
     public function toArray(): array
     {
         return [
-            'field' => self::FIELD,
+            'field' => 'amount_spent',
             'relation' => $this->relation,
             'value' => $this->value,
         ];

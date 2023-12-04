@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-class BoughtSkuFilter extends AbstractFilter
+final class BoughtSkuFilter extends AbstractFilter
 {
-    public const FIELD = 'bought_sku';
-
     public const GT = '>';
 
     public const LT = '<';
@@ -40,7 +38,7 @@ class BoughtSkuFilter extends AbstractFilter
     public function toArray(): array
     {
         return [
-            'field' => self::FIELD,
+            'field' => 'bought_sku',
             'relation' => $this->relation,
             'key' => $this->key,
             'value' => $this->value,

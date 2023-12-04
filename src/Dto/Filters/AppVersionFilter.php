@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-class AppVersionFilter extends AbstractFilter
+final class AppVersionFilter extends AbstractFilter
 {
-    public const FIELD = 'app_version';
-
     public const GT = '>';
 
     public const LT = '<';
@@ -35,7 +33,7 @@ class AppVersionFilter extends AbstractFilter
     public function toArray(): array
     {
         return [
-            'field' => self::FIELD,
+            'field' => 'app_version',
             'relation' => $this->relation,
             'value' => $this->value,
         ];

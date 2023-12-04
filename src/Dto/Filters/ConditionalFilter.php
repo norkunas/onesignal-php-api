@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OneSignal\Dto\Filters;
 
-class ConditionalFilter extends AbstractFilter
+final class ConditionalFilter extends AbstractFilter
 {
     public const AND = 'AND';
 

@@ -9,20 +9,20 @@ use OneSignal\Dto\AbstractDto;
 class ListSegments implements AbstractDto
 {
     /**
-     * @var int<0, 2147483648>
+     * @var int<0, 2147483648>|null
      */
-    protected int $limit = 0;
+    protected ?int $limit = null;
 
     /**
-     * @var int<0, 2147483648>
+     * @var int<0, 2147483648>|null
      */
-    protected int $offset = 0;
+    protected ?int $offset = null;
 
     /**
-     * @param int<0, 2147483648> $limit
-     * @param int<0, 2147483648> $offset
+     * @param int<0, 2147483648>|null $limit
+     * @param int<0, 2147483648>|null $offset
      */
-    public function __construct(int $limit = 0, int $offset = 0)
+    public function __construct(int $limit = null, int $offset = null)
     {
         $this->limit = $limit;
         $this->offset = $offset;
@@ -31,7 +31,7 @@ class ListSegments implements AbstractDto
     /**
      * @param int<0, 2147483648> $limit
      */
-    public function setLimit(int $limit = 0): self
+    public function limit(int $limit): self
     {
         $this->limit = $limit;
 
@@ -41,7 +41,7 @@ class ListSegments implements AbstractDto
     /**
      * @param int<0, 2147483648> $offset
      */
-    public function setOffset(int $offset = 0): self
+    public function offset(int $offset): self
     {
         $this->offset = $offset;
 
@@ -50,16 +50,9 @@ class ListSegments implements AbstractDto
 
     public function toArray(): array
     {
-        $query = [];
-
-        if ($this->limit > 0) {
-            $query['limit'] = $this->limit;
-        }
-
-        if ($this->offset > 0) {
-            $query['offset'] = $this->offset;
-        }
-
-        return $query;
+        return array_filter([
+            'limit' => $this->limit,
+            'offset' => $this->offset,
+        ]);
     }
 }
