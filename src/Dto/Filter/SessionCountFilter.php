@@ -6,14 +6,6 @@ namespace OneSignal\Dto\Filter;
 
 final class SessionCountFilter extends AbstractFilter
 {
-    public const GT = '>';
-
-    public const LT = '<';
-
-    public const EQ = '=';
-
-    public const NEQ = '!=';
-
     /**
      * @var self::GT|self::LT|self::EQ|self::NEQ
      */

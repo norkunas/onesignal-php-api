@@ -6,12 +6,6 @@ namespace OneSignal\Dto\Filter;
 
 final class BoughtSkuFilter extends AbstractFilter
 {
-    public const GT = '>';
-
-    public const LT = '<';
-
-    public const EQ = '=';
-
     /**
      * @var self::GT|self::LT|self::EQ
      */

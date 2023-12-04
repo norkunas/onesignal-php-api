@@ -6,10 +6,6 @@ namespace OneSignal\Dto\Filter;
 
 final class SessionTimeFilter extends AbstractFilter
 {
-    public const GT = '>';
-
-    public const LT = '<';
-
     /**
      * @var self::GT|self::LT
      */

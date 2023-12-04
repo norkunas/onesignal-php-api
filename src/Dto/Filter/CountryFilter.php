@@ -6,8 +6,6 @@ namespace OneSignal\Dto\Filter;
 
 final class CountryFilter extends AbstractFilter
 {
-    public const EQ = '=';
-
     protected string $value;
 
     public function __construct(string $value)

@@ -6,10 +6,6 @@ namespace OneSignal\Dto\Filter;
 
 final class LanguageFilter extends AbstractFilter
 {
-    public const EQ = '=';
-
-    public const NEQ = '!=';
-
     /**
      * @var self::EQ|self::NEQ
      */

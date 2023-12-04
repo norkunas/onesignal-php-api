@@ -8,14 +8,6 @@ use OneSignal\Dto\AbstractDto;
 
 final class TagFilter implements AbstractDto
 {
-    public const GT = '>';
-
-    public const LT = '<';
-
-    public const EQ = '=';
-
-    public const NEQ = '!=';
-
     public const EXISTS = 'exists';
 
     public const NOT_EXISTS = 'not_exists';
