@@ -8,11 +8,11 @@ use Exception;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class UnsuccessfulResponse extends Exception implements OneSignalExceptionInterface
+final class UnsuccessfulResponse extends Exception implements OneSignalExceptionInterface
 {
-    protected RequestInterface $request;
+    private RequestInterface $request;
 
-    protected ResponseInterface $response;
+    private ResponseInterface $response;
 
     public function __construct(RequestInterface $request, ResponseInterface $response)
     {
