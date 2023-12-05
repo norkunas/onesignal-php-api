@@ -6,5 +6,5 @@ namespace OneSignal\Response;
 
 interface AbstractResponse
 {
-    public static function makeFromRequest(array $request): self;
+    public static function makeFromResponse(array $request): self;
 }

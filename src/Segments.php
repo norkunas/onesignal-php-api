@@ -29,7 +29,7 @@ class Segments extends AbstractApi
         $request = $this->createRequest('GET', '/apps/'.$appId.'/segments?'.http_build_query($listSegmentsDto->toArray()));
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
 
-        return ListSegmentsResponse::makeFromRequest($this->client->sendRequest($request));
+        return ListSegmentsResponse::makeFromResponse($this->client->sendRequest($request));
     }
 
     /**
@@ -46,7 +46,7 @@ class Segments extends AbstractApi
         $request = $request->withHeader('Content-Type', 'application/json');
         $request = $request->withBody($this->createStream($createSegmentDto->toArray()));
 
-        return CreateSegmentResponse::makeFromRequest($this->client->sendRequest($request));
+        return CreateSegmentResponse::makeFromResponse($this->client->sendRequest($request));
     }
 
     /**
@@ -63,6 +63,6 @@ class Segments extends AbstractApi
         $request = $this->createRequest('DELETE', '/apps/'.$appId.'/segments/'.$id);
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
 
-        return DeleteSegmentResponse::makeFromRequest($this->client->sendRequest($request));
+        return DeleteSegmentResponse::makeFromResponse($this->client->sendRequest($request));
     }
 }

@@ -42,7 +42,7 @@ final class ListSegmentsResponse implements AbstractResponse
         $this->segments = $segments;
     }
 
-    public static function makeFromRequest(array $request): self
+    public static function makeFromResponse(array $request): self
     {
         $segments = array_map(
             static function (array $segment): Segment {
