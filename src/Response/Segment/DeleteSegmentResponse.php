@@ -6,7 +6,7 @@ namespace OneSignal\Response\Segment;
 
 use OneSignal\Response\AbstractResponse;
 
-class DeleteSegmentResponse implements AbstractResponse
+final class DeleteSegmentResponse implements AbstractResponse
 {
     protected bool $success;
 

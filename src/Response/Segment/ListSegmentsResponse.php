@@ -6,7 +6,7 @@ namespace OneSignal\Response\Segment;
 
 use OneSignal\Response\AbstractResponse;
 
-class ListSegmentsResponse implements AbstractResponse
+final class ListSegmentsResponse implements AbstractResponse
 {
     /**
      * @var int<0, 2147483648>
