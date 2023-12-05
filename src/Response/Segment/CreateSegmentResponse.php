@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace OneSignal\Response\Segment;
 
-use OneSignal\Exception\UnsuccessfulResponse;
 use OneSignal\Response\AbstractResponse;
 
 final class CreateSegmentResponse implements AbstractResponse
@@ -27,10 +26,6 @@ final class CreateSegmentResponse implements AbstractResponse
 
     public static function makeFromResponse(array $request): self
     {
-        if (!$request['success']) {
-            throw new UnsuccessfulResponse($request);
-        }
-
         return new static(
             $request['success'],
             $request['id']

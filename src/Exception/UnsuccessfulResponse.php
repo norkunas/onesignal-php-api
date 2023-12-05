@@ -5,19 +5,29 @@ declare(strict_types=1);
 namespace OneSignal\Exception;
 
 use Exception;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class UnsuccessfulResponse extends Exception implements OneSignalExceptionInterface
 {
-    protected array $response;
+    protected RequestInterface $request;
 
-    public function __construct(array $response)
+    protected ResponseInterface $response;
+
+    public function __construct(RequestInterface $request, ResponseInterface $response)
     {
+        $this->request = $request;
         $this->response = $response;
 
         parent::__construct();
     }
 
-    public function getResponse(): array
+    public function getRequest(): RequestInterface
+    {
+        return $this->request;
+    }
+
+    public function getResponse(): ResponseInterface
     {
         return $this->response;
     }

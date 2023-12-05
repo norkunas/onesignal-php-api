@@ -7,6 +7,7 @@ namespace OneSignal;
 use OneSignal\Exception\BadMethodCallException;
 use OneSignal\Exception\InvalidArgumentException;
 use OneSignal\Exception\JsonException;
+use OneSignal\Exception\UnsuccessfulResponse;
 use OneSignal\Resolver\ResolverFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -81,6 +82,10 @@ class OneSignal
 
         if (!isset($content['_status_code'])) {
             $content['_status_code'] = $response->getStatusCode();
+        }
+
+        if ($content['_status_code'] >= 400) {
+            throw new UnsuccessfulResponse($request, $response);
         }
 
         return $content;
