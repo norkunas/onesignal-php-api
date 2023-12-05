@@ -103,7 +103,7 @@ class OneSignal
             throw new JsonException($e->getMessage(), $e->getCode(), $e);
         }
 
-        return $content;
+        return (array) $content;
     }
 
     /**
