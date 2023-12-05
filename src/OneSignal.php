@@ -91,7 +91,7 @@ class OneSignal
     {
         $response = $this->httpClient->sendRequest($request);
 
-        if ($response->getStatusCode() >= 400) {
+        if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 400) {
             throw new UnsuccessfulResponse($request, $response);
         }
 
@@ -103,7 +103,11 @@ class OneSignal
             throw new JsonException($e->getMessage(), $e->getCode(), $e);
         }
 
-        return (array) $content;
+        if (!is_array($content)) {
+            throw new JsonException(sprintf('JSON content was expected to decode to an array, %s returned.', gettype($content)));
+        }
+
+        return $content;
     }
 
     /**
