@@ -6,6 +6,9 @@ namespace OneSignal;
 
 use OneSignal\Dto\Segment\CreateSegment;
 use OneSignal\Dto\Segment\ListSegments;
+use OneSignal\Response\Segment\CreateSegmentResponse;
+use OneSignal\Response\Segment\DeleteSegmentResponse;
+use OneSignal\Response\Segment\ListSegmentsResponse;
 
 class Segments extends AbstractApi
 {
@@ -19,14 +22,14 @@ class Segments extends AbstractApi
      *
      * Application authentication key and ID must be set.
      */
-    public function list(ListSegments $listSegmentsDto): array
+    public function list(ListSegments $listSegmentsDto): ListSegmentsResponse
     {
         $appId = $this->client->getConfig()->getApplicationId();
 
         $request = $this->createRequest('GET', '/apps/'.$appId.'/segments?'.http_build_query($listSegmentsDto->toArray()));
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
 
-        return $this->client->sendRequest($request);
+        return ListSegmentsResponse::makeFromRequest($this->client->sendRequest($request));
     }
 
     /**
@@ -34,7 +37,7 @@ class Segments extends AbstractApi
      *
      * Application authentication key and ID must be set.
      */
-    public function create(CreateSegment $createSegmentDto): array
+    public function create(CreateSegment $createSegmentDto): CreateSegmentResponse
     {
         $appId = $this->client->getConfig()->getApplicationId();
 
@@ -43,7 +46,7 @@ class Segments extends AbstractApi
         $request = $request->withHeader('Content-Type', 'application/json');
         $request = $request->withBody($this->createStream($createSegmentDto->toArray()));
 
-        return $this->client->sendRequest($request);
+        return CreateSegmentResponse::makeFromRequest($this->client->sendRequest($request));
     }
 
     /**
@@ -53,13 +56,13 @@ class Segments extends AbstractApi
      *
      * @param non-empty-string $id Segment ID
      */
-    public function delete(string $id): array
+    public function delete(string $id): DeleteSegmentResponse
     {
         $appId = $this->client->getConfig()->getApplicationId();
 
         $request = $this->createRequest('DELETE', '/apps/'.$appId.'/segments/'.$id);
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");
 
-        return $this->client->sendRequest($request);
+        return DeleteSegmentResponse::makeFromRequest($this->client->sendRequest($request));
     }
 }
