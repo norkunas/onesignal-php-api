@@ -8,17 +8,17 @@ use Exception;
 
 class UnsuccessfulResponse extends Exception implements OneSignalExceptionInterface
 {
-    protected array $request;
+    protected array $response;
 
-    public function __construct(array $request)
+    public function __construct(array $response)
     {
-        $this->request = $request;
+        $this->response = $response;
 
         parent::__construct();
     }
 
-    public function getRequest(): array
+    public function getResponse(): array
     {
-        return $this->request;
+        return $this->response;
     }
 }
