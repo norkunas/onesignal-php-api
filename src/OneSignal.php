@@ -91,10 +91,8 @@ class OneSignal
     {
         $response = $this->httpClient->sendRequest($request);
 
-        $contentType = $response->getHeader('Content-Type')[0] ?? 'application/json';
-
-        if (!preg_match('/\bjson\b/i', $contentType)) {
-            throw new JsonException("Response content-type is '$contentType' while a JSON-compatible one was expected.");
+        if ($response->getStatusCode() >= 400) {
+            throw new UnsuccessfulResponse($request, $response);
         }
 
         $content = $response->getBody()->__toString();
@@ -103,18 +101,6 @@ class OneSignal
             $content = json_decode($content, true, 512, JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
             throw new JsonException($e->getMessage(), $e->getCode(), $e);
-        }
-
-        if (!is_array($content)) {
-            throw new JsonException(sprintf('JSON content was expected to decode to an array, %s returned.', gettype($content)));
-        }
-
-        if (!isset($content['_status_code'])) {
-            $content['_status_code'] = $response->getStatusCode();
-        }
-
-        if ($content['_status_code'] >= 400) {
-            throw new UnsuccessfulResponse($request, $response);
         }
 
         return $content;
