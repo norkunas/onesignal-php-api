@@ -7,6 +7,7 @@ namespace OneSignal;
 use OneSignal\Exception\BadMethodCallException;
 use OneSignal\Exception\InvalidArgumentException;
 use OneSignal\Exception\JsonException;
+use OneSignal\Exception\UnsuccessfulResponse;
 use OneSignal\Resolver\ResolverFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -86,6 +87,29 @@ class OneSignal
         return $content;
     }
 
+    public function makeRequest(RequestInterface $request): array
+    {
+        $response = $this->httpClient->sendRequest($request);
+
+        if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 400) {
+            throw new UnsuccessfulResponse($request, $response);
+        }
+
+        $content = $response->getBody()->__toString();
+
+        try {
+            $content = json_decode($content, true, 512, JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR);
+        } catch (\JsonException $e) {
+            throw new JsonException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        if (!is_array($content)) {
+            throw new JsonException(sprintf('JSON content was expected to decode to an array, %s returned.', gettype($content)));
+        }
+
+        return $content;
+    }
+
     /**
      * @return object
      *
@@ -104,6 +128,10 @@ class OneSignal
                 break;
             case 'notifications':
                 $api = new Notifications($this, $this->resolverFactory);
+
+                break;
+            case 'segments':
+                $api = new Segments($this);
 
                 break;
             default:
