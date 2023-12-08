@@ -24,11 +24,11 @@ final class CreateSegmentResponse implements AbstractResponse
         $this->id = $id;
     }
 
-    public static function makeFromResponse(array $request): self
+    public static function makeFromResponse(array $response): self
     {
         return new static(
-            $request['success'],
-            $request['id']
+            $response['success'],
+            $response['id']
         );
     }
 

@@ -42,7 +42,7 @@ final class ListSegmentsResponse implements AbstractResponse
         $this->segments = $segments;
     }
 
-    public static function makeFromResponse(array $request): self
+    public static function makeFromResponse(array $response): self
     {
         $segments = array_map(
             static function (array $segment): Segment {
@@ -56,13 +56,13 @@ final class ListSegmentsResponse implements AbstractResponse
                     $segment['is_active'],
                 );
             },
-            $request['segments']
+            $response['segments']
         );
 
         return new static(
-            $request['total_count'],
-            $request['offset'],
-            $request['limit'],
+            $response['total_count'],
+            $response['offset'],
+            $response['limit'],
             $segments
         );
     }

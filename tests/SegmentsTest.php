@@ -6,7 +6,8 @@ namespace OneSignal\Tests;
 
 use OneSignal\Dto\Segment\ListSegments;
 use OneSignal\OneSignal;
-use OneSignal\Response\Segment\Segment;
+use OneSignal\Response\Segment\DeleteSegmentResponse;
+use OneSignal\Response\Segment\ListSegmentsResponse;
 use OneSignal\Segments;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -28,7 +29,7 @@ class SegmentsTest extends ApiTestCase
 
         $responseData = $segments->list(new ListSegments(300));
 
-        self::assertSame([
+        self::assertEquals(ListSegmentsResponse::makeFromResponse([
             'total_count' => 1,
             'offset' => 0,
             'limit' => 300,
@@ -43,22 +44,7 @@ class SegmentsTest extends ApiTestCase
                     'is_active' => true,
                 ],
             ],
-        ], [
-            'total_count' => $responseData->getTotalCount(),
-            'offset' => $responseData->getOffset(),
-            'limit' => $responseData->getLimit(),
-            'segments' => array_map(
-                static function (Segment $segment): array {
-                    $segment = $segment->toArray();
-
-                    $segment['created_at'] = $segment['created_at']->format('Y-m-d\TH:i:s.v\Z');
-                    $segment['updated_at'] = $segment['updated_at']->format('Y-m-d\TH:i:s.v\Z');
-
-                    return $segment;
-                },
-                $responseData->getSegments()
-            ),
-        ]);
+        ]), $responseData);
     }
 
     public function testDelete(): void
@@ -78,10 +64,6 @@ class SegmentsTest extends ApiTestCase
 
         $responseData = $devices->delete('e4e87830-b954-11e3-811d-f3b376925f15');
 
-        self::assertSame([
-            'success' => true,
-        ], [
-            'success' => $responseData->getSuccess(),
-        ]);
+        self::assertEquals(new DeleteSegmentResponse(true), $responseData);
     }
 }

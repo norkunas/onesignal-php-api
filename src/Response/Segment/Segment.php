@@ -95,13 +95,13 @@ class Segment implements AbstractDto
     public function toArray(): array
     {
         return [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-            'created_at' => $this->getCreatedAt(),
-            'updated_at' => $this->getUpdatedAt(),
-            'app_id' => $this->getAppId(),
-            'read_only' => $this->getReadOnly(),
-            'is_active' => $this->getIsActive(),
+            'id' => $this->id,
+            'name' => $this->name,
+            'created_at' => $this->createdAt,
+            'updated_at' => $this->updatedAt,
+            'app_id' => $this->appId,
+            'read_only' => $this->readOnly,
+            'is_active' => $this->isActive,
         ];
     }
 }

@@ -15,10 +15,10 @@ final class DeleteSegmentResponse implements AbstractResponse
         $this->success = $success;
     }
 
-    public static function makeFromResponse(array $request): self
+    public static function makeFromResponse(array $response): self
     {
         return new static(
-            $request['success']
+            $response['success']
         );
     }
 
