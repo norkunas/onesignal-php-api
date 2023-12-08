@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OneSignal\Response\Segment;
 
+use DateTimeImmutable;
 use OneSignal\Response\AbstractResponse;
 
 final class ListSegmentsResponse implements AbstractResponse
@@ -49,8 +50,8 @@ final class ListSegmentsResponse implements AbstractResponse
                 return new Segment(
                     $segment['id'],
                     $segment['name'],
-                    $segment['created_at'],
-                    $segment['updated_at'],
+                    new DateTimeImmutable($segment['created_at']),
+                    new DateTimeImmutable($segment['updated_at']),
                     $segment['app_id'],
                     $segment['read_only'],
                     $segment['is_active'],

@@ -34,23 +34,21 @@ class Segment
     /**
      * @param non-empty-string $id
      * @param non-empty-string $name
-     * @param non-empty-string $createdAt
-     * @param non-empty-string $updatedAt
      * @param non-empty-string $appId
      */
     public function __construct(
         string $id,
         string $name,
-        string $createdAt,
-        string $updatedAt,
+        DateTimeImmutable $createdAt,
+        DateTimeImmutable $updatedAt,
         string $appId,
         bool $readOnly,
         bool $isActive
     ) {
         $this->id = $id;
         $this->name = $name;
-        $this->createdAt = new DateTimeImmutable($createdAt);
-        $this->updatedAt = new DateTimeImmutable($updatedAt);
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
         $this->appId = $appId;
         $this->readOnly = $readOnly;
         $this->isActive = $isActive;
