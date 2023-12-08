@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OneSignal\Tests;
 
+use OneSignal\Dto\Segment\CreateSegment;
 use OneSignal\Dto\Segment\ListSegments;
 use OneSignal\OneSignal;
+use OneSignal\Response\Segment\CreateSegmentResponse;
 use OneSignal\Response\Segment\DeleteSegmentResponse;
 use OneSignal\Response\Segment\ListSegmentsResponse;
 use OneSignal\Segments;
@@ -47,6 +49,29 @@ class SegmentsTest extends ApiTestCase
         ]), $responseData);
     }
 
+    public function testCreate(): void
+    {
+        $client = $this->createClientMock(function (string $method, string $url, array $options): ResponseInterface {
+            $this->assertSame('POST', $method);
+            $this->assertSame(OneSignal::API_URL.'/apps/fakeApplicationId/segments', $url);
+            $this->assertArrayHasKey('accept', $options['normalized_headers']);
+            $this->assertArrayHasKey('content-type', $options['normalized_headers']);
+            $this->assertSame('Accept: application/json', $options['normalized_headers']['accept'][0]);
+            $this->assertSame('Content-Type: application/json', $options['normalized_headers']['content-type'][0]);
+
+            return new MockResponse($this->loadFixture('segments_create.json'), ['http_code' => 201]);
+        });
+
+        $segments = new Segments($client);
+
+        $responseData = $segments->create(new CreateSegment('Segment 2'));
+
+        self::assertEquals(CreateSegmentResponse::makeFromResponse([
+            'success' => true,
+            'id' => '7ed2887d-bd24-4a81-8220-4b256a08ab19',
+        ]), $responseData);
+    }
+
     public function testDelete(): void
     {
         $client = $this->createClientMock(function (string $method, string $url, array $options): ResponseInterface {
@@ -60,9 +85,9 @@ class SegmentsTest extends ApiTestCase
             return new MockResponse($this->loadFixture('segments_delete.json'), ['http_code' => 200]);
         });
 
-        $devices = new Segments($client);
+        $segments = new Segments($client);
 
-        $responseData = $devices->delete('e4e87830-b954-11e3-811d-f3b376925f15');
+        $responseData = $segments->delete('e4e87830-b954-11e3-811d-f3b376925f15');
 
         self::assertEquals(new DeleteSegmentResponse(true), $responseData);
     }

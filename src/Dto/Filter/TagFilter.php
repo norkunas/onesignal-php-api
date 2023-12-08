@@ -21,12 +21,16 @@ final class TagFilter extends AbstractFilter
 
     protected string $key;
 
-    protected ?string $value = null;
+    /**
+     * @var string|int|null
+     */
+    protected $value;
 
     /**
      * @param self::GT|self::LT|self::EQ|self::NEQ|self::EXISTS|self::NOT_EXISTS|self::TIME_ELAPSED_GT|self::TIME_ELAPSED_LT $relation
+     * @param string|int|null                                                                                                $value
      */
-    public function __construct(string $relation, string $key, string $value = null)
+    public function __construct(string $relation, string $key, $value = null)
     {
         $this->relation = $relation;
         $this->key = $key;
