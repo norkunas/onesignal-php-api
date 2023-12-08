@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace OneSignal\Response\Segment;
 
 use DateTimeImmutable;
+use OneSignal\Dto\AbstractDto;
 
-class Segment
+class Segment implements AbstractDto
 {
     /**
      * @var non-empty-string
@@ -89,5 +90,18 @@ class Segment
     public function getIsActive(): bool
     {
         return $this->isActive;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'created_at' => $this->getCreatedAt(),
+            'updated_at' => $this->getUpdatedAt(),
+            'app_id' => $this->getAppId(),
+            'read_only' => $this->getReadOnly(),
+            'is_active' => $this->getIsActive(),
+        ];
     }
 }
