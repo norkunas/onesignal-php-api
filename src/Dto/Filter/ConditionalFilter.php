@@ -33,6 +33,11 @@ final class ConditionalFilter extends AbstractFilter
         return $this;
     }
 
+    /**
+     * @return array{
+     *     operator: self::AND|self::OR
+     * }
+     */
     public function toArray(): array
     {
         return [

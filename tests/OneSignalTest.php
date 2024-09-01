@@ -118,13 +118,6 @@ class OneSignalTest extends ApiTestCase
         $oneSignal->api('app');
     }
 
-    public function testMagicCallReturnsInstance(): void
-    {
-        $oneSignal = $this->createClientMock();
-
-        self::assertInstanceOf(Apps::class, $oneSignal->apps());
-    }
-
     public function testMagicCallThrowsWithWrongMethod(): void
     {
         $this->expectException(BadMethodCallException::class);

@@ -26,6 +26,13 @@ final class FirstSessionFilter extends AbstractFilter
         $this->hoursAgo = $hoursAgo;
     }
 
+    /**
+     * @return array{
+     *     field: 'first_session',
+     *     relation: self::GT|self::LT,
+     *     hours_ago: int|float
+     * }
+     */
     public function toArray(): array
     {
         return [

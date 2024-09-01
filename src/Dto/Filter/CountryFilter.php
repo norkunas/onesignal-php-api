@@ -13,6 +13,13 @@ final class CountryFilter extends AbstractFilter
         $this->value = $value;
     }
 
+    /**
+     * @return array{
+     *     field: 'country',
+     *     relation: self::EQ,
+     *     value: string
+     * }
+     */
     public function toArray(): array
     {
         return [

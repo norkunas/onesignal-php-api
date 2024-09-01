@@ -92,6 +92,9 @@ class DeviceResolverTest extends OneSignalTestCase
         $this->deviceResolver->resolve([]);
     }
 
+    /**
+     * @return iterable<array<mixed>>
+     */
     public function newDeviceWrongValueTypesProvider(): iterable
     {
         yield [['identifier' => 666]];
@@ -122,6 +125,8 @@ class DeviceResolverTest extends OneSignalTestCase
     }
 
     /**
+     * @param array<mixed> $wrongOption
+     *
      * @dataProvider newDeviceWrongValueTypesProvider
      */
     public function testResolveNewDeviceWithWrongValueTypes(array $wrongOption): void
@@ -136,6 +141,9 @@ class DeviceResolverTest extends OneSignalTestCase
         $this->deviceResolver->resolve(array_merge($requiredOptions, $wrongOption));
     }
 
+    /**
+     * @return iterable<array<mixed>>
+     */
     public function existingDeviceWrongValueTypesProvider(): iterable
     {
         yield [['ip' => 100]];
@@ -144,6 +152,8 @@ class DeviceResolverTest extends OneSignalTestCase
     }
 
     /**
+     * @param array<mixed> $wrongOption
+     *
      * @dataProvider existingDeviceWrongValueTypesProvider
      */
     public function testResolveExistingDeviceWithWrongValueTypes(array $wrongOption): void

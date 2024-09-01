@@ -38,6 +38,9 @@ class DeviceSessionResolverTest extends TestCase
         self::assertEquals($expectedData, $this->deviceSessionResolver->resolve($expectedData));
     }
 
+    /**
+     * @return iterable<array<mixed>>
+     */
     public function wrongValueTypesProvider(): iterable
     {
         yield [['identifier' => 666]];
@@ -52,6 +55,8 @@ class DeviceSessionResolverTest extends TestCase
     }
 
     /**
+     * @param array<mixed> $wrongOption
+     *
      * @dataProvider wrongValueTypesProvider
      */
     public function testResolveWithWrongValueTypes(array $wrongOption): void

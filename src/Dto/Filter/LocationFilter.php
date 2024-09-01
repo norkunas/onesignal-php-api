@@ -19,6 +19,14 @@ final class LocationFilter extends AbstractFilter
         $this->long = $long;
     }
 
+    /**
+     * @return array{
+     *     field: 'location',
+     *     radius: int,
+     *     lat: float,
+     *     long: float
+     * }
+     */
     public function toArray(): array
     {
         return [

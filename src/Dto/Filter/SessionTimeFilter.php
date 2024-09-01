@@ -22,6 +22,13 @@ final class SessionTimeFilter extends AbstractFilter
         $this->value = $value;
     }
 
+    /**
+     * @return array{
+     *     field: 'session_time',
+     *     relation: self::GT|self::LT,
+     *     value: int
+     * }
+     */
     public function toArray(): array
     {
         return [

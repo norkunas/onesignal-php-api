@@ -22,6 +22,13 @@ final class SessionCountFilter extends AbstractFilter
         $this->value = $value;
     }
 
+    /**
+     * @return array{
+     *     field: 'session_count',
+     *     relation: self::GT|self::LT|self::EQ|self::NEQ,
+     *     value: int
+     * }
+     */
     public function toArray(): array
     {
         return [

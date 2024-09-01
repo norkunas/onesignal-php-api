@@ -22,6 +22,13 @@ final class LanguageFilter extends AbstractFilter
         $this->value = $value;
     }
 
+    /**
+     * @return array{
+     *     field: 'language',
+     *     relation: self::EQ|self::NEQ,
+     *     value: string
+     * }
+     */
     public function toArray(): array
     {
         return [

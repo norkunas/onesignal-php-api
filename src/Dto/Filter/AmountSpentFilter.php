@@ -32,6 +32,13 @@ final class AmountSpentFilter extends AbstractFilter
         $this->value = $value;
     }
 
+    /**
+     * @return array{
+     *     field: 'amount_spent',
+     *     relation: self::GT|self::LT|self::EQ,
+     *     value: int|float
+     * }
+     */
     public function toArray(): array
     {
         return [

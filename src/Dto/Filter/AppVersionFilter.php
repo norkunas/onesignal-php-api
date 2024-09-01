@@ -22,6 +22,13 @@ final class AppVersionFilter extends AbstractFilter
         $this->value = $value;
     }
 
+    /**
+     * @return array{
+     *     field: 'app_version',
+     *     relation: self::GT|self::LT|self::EQ|self::NEQ,
+     *     value: string
+     * }
+     */
     public function toArray(): array
     {
         return [

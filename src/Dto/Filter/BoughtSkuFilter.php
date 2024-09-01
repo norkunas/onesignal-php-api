@@ -29,6 +29,13 @@ final class BoughtSkuFilter extends AbstractFilter
         $this->value = $value;
     }
 
+    /**
+     * @return array{
+     *     field: 'bought_sku',
+     *     key: string,
+     *     value: int|float
+     * }
+     */
     public function toArray(): array
     {
         return [

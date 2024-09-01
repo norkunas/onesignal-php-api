@@ -49,6 +49,9 @@ class DeviceFocusResolverTest extends TestCase
         $this->deviceFocusResolver->resolve([]);
     }
 
+    /**
+     * @return iterable<array<mixed>>
+     */
     public function wrongValueTypesProvider(): iterable
     {
         yield [['state' => 666]];
@@ -56,6 +59,8 @@ class DeviceFocusResolverTest extends TestCase
     }
 
     /**
+     * @param array<mixed> $wrongOption
+     *
      * @dataProvider wrongValueTypesProvider
      */
     public function testResolveWithWrongValueTypes(array $wrongOption): void

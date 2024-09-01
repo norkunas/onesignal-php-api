@@ -10,7 +10,7 @@ use OneSignal\Response\AbstractResponse;
 final class ListSegmentsResponse implements AbstractResponse
 {
     /**
-     * @var int<0, 2147483648>
+     * @var non-negative-int
      */
     protected int $totalCount;
 
@@ -30,7 +30,7 @@ final class ListSegmentsResponse implements AbstractResponse
     protected array $segments;
 
     /**
-     * @param int<0, 2147483648> $totalCount
+     * @param non-negative-int   $totalCount
      * @param int<0, 2147483648> $limit
      * @param int<0, 2147483648> $offset
      * @param list<Segment>      $segments
@@ -68,16 +68,25 @@ final class ListSegmentsResponse implements AbstractResponse
         );
     }
 
+    /**
+     * @return non-negative-int
+     */
     public function getTotalCount(): int
     {
         return $this->totalCount;
     }
 
+    /**
+     * @return int<0, 2147483648>
+     */
     public function getOffset(): int
     {
         return $this->offset;
     }
 
+    /**
+     * @return int<0, 2147483648>
+     */
     public function getLimit(): int
     {
         return $this->limit;

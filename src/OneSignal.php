@@ -9,6 +9,7 @@ use OneSignal\Exception\InvalidArgumentException;
 use OneSignal\Exception\JsonException;
 use OneSignal\Exception\UnsuccessfulResponse;
 use OneSignal\Resolver\ResolverFactory;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -58,6 +59,12 @@ class OneSignal
         return $this->streamFactory;
     }
 
+    /**
+     * @return array<mixed>
+     *
+     * @throws JsonException
+     * @throws ClientExceptionInterface
+     */
     public function sendRequest(RequestInterface $request): array
     {
         $response = $this->httpClient->sendRequest($request);
@@ -87,6 +94,13 @@ class OneSignal
         return $content;
     }
 
+    /**
+     * @return array<mixed>
+     *
+     * @throws ClientExceptionInterface
+     * @throws JsonException
+     * @throws UnsuccessfulResponse
+     */
     public function makeRequest(RequestInterface $request): array
     {
         $response = $this->httpClient->sendRequest($request);
@@ -141,6 +155,9 @@ class OneSignal
         return $api;
     }
 
+    /**
+     * @param array<mixed> $args
+     */
     public function __call(string $name, array $args): object
     {
         try {

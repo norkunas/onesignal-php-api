@@ -49,6 +49,12 @@ class CreateSegment implements AbstractDto
         return $this;
     }
 
+    /**
+     * @return array{
+     *     name?: non-empty-string,
+     *     filters?: array<mixed>
+     * }
+     */
     public function toArray(): array
     {
         return array_filter([

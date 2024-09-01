@@ -37,6 +37,14 @@ final class TagFilter extends AbstractFilter
         $this->value = $value;
     }
 
+    /**
+     * @return array{
+     *     field: 'tag',
+     *     relation: self::GT|self::LT|self::EQ|self::NEQ|self::EXISTS|self::NOT_EXISTS|self::TIME_ELAPSED_GT|self::TIME_ELAPSED_LT,
+     *     key: string,
+     *     value: string|int|null
+     * }
+     */
     public function toArray(): array
     {
         return [

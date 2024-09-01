@@ -36,6 +36,9 @@ class SegmentResolverTest extends TestCase
         self::assertEquals($expectedData, $this->segmentResolver->resolve($expectedData));
     }
 
+    /**
+     * @return iterable<array<mixed>>
+     */
     public function wrongValueTypesProvider(): iterable
     {
         yield [['id' => 666, 'name' => '']];
@@ -44,6 +47,8 @@ class SegmentResolverTest extends TestCase
     }
 
     /**
+     * @param array<mixed> $wrongOption
+     *
      * @dataProvider wrongValueTypesProvider
      */
     public function testResolveWithWrongValueTypes(array $wrongOption): void

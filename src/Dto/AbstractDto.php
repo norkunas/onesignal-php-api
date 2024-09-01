@@ -6,5 +6,8 @@ namespace OneSignal\Dto;
 
 interface AbstractDto
 {
+    /**
+     * @return array<mixed>
+     */
     public function toArray(): array;
 }

@@ -59,6 +59,9 @@ class AppResolverTest extends TestCase
         $this->appResolver->resolve([]);
     }
 
+    /**
+     * @return iterable<array<mixed>>
+     */
     public function wrongValueTypesProvider(): iterable
     {
         yield [['name' => 666]];
@@ -86,6 +89,8 @@ class AppResolverTest extends TestCase
     }
 
     /**
+     * @param array<mixed> $wrongOption
+     *
      * @dataProvider wrongValueTypesProvider
      */
     public function testResolveWithWrongValueTypes(array $wrongOption): void

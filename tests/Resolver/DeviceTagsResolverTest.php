@@ -42,6 +42,9 @@ class DeviceTagsResolverTest extends OneSignalTestCase
         $this->deviceResolver->resolve([]);
     }
 
+    /**
+     * @return iterable<array<mixed>>
+     */
     public function wrongValueTypesProvider(): iterable
     {
         yield [['tags' => 777]];
@@ -51,6 +54,8 @@ class DeviceTagsResolverTest extends OneSignalTestCase
     }
 
     /**
+     * @param array<mixed> $wrongOption
+     *
      * @dataProvider wrongValueTypesProvider
      */
     public function testResolveWithWrongValueTypes(array $wrongOption): void

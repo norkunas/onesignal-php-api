@@ -59,11 +59,14 @@ class DevicePurchaseResolverTest extends TestCase
         $this->devicePurchaseResolver->resolve($wrongData);
     }
 
+    /**
+     * @return iterable<array<mixed>>
+     */
     public function wrongValueTypesProvider(): iterable
     {
         yield [['existing' => 666]];
         yield [['purchases' => 666]];
-        [[
+        yield [[
             'purchases' => [[
                 'sku' => 666,
                 'amount' => 56.4,
@@ -87,6 +90,8 @@ class DevicePurchaseResolverTest extends TestCase
     }
 
     /**
+     * @param array<mixed> $wrongOption
+     *
      * @dataProvider wrongValueTypesProvider
      */
     public function testResolveWithWrongValueTypes(array $wrongOption): void

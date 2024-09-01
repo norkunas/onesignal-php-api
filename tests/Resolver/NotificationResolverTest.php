@@ -140,6 +140,9 @@ class NotificationResolverTest extends OneSignalTestCase
         self::assertEquals($expectedData, $this->notificationResolver->resolve($inputData));
     }
 
+    /**
+     * @return iterable<array<mixed>>
+     */
     public function wrongValueTypesProvider(): iterable
     {
         yield [['name' => 666]];
@@ -234,6 +237,8 @@ class NotificationResolverTest extends OneSignalTestCase
     }
 
     /**
+     * @param array<mixed> $wrongOption
+     *
      * @dataProvider wrongValueTypesProvider
      */
     public function testResolveWithWrongValueTypes(array $wrongOption): void

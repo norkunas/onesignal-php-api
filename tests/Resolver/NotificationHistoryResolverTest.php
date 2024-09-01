@@ -40,6 +40,9 @@ class NotificationHistoryResolverTest extends OneSignalTestCase
         $this->notificationHistoryResolver->resolve([]);
     }
 
+    /**
+     * @return iterable<array<mixed>>
+     */
     public function wrongValueTypesProvider(): iterable
     {
         yield [['events' => 666, 'email' => 'example@example.com']];
@@ -47,6 +50,8 @@ class NotificationHistoryResolverTest extends OneSignalTestCase
     }
 
     /**
+     * @param array<mixed> $wrongOption
+     *
      * @dataProvider wrongValueTypesProvider
      */
     public function testResolveWithWrongValueTypes(array $wrongOption): void
