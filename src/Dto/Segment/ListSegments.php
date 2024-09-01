@@ -22,7 +22,7 @@ class ListSegments implements AbstractDto
      * @param int<0, 2147483648>|null $limit
      * @param int<0, 2147483648>|null $offset
      */
-    public function __construct(int $limit = null, int $offset = null)
+    public function __construct(?int $limit = null, ?int $offset = null)
     {
         $this->limit = $limit;
         $this->offset = $offset;

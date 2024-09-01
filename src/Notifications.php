@@ -40,12 +40,12 @@ class Notifications extends AbstractApi
      *
      * Application authentication key and ID must be set.
      *
-     * @param int $limit  How many notifications to return (max 50)
-     * @param int $offset Results offset (results are sorted by ID)
+     * @param int|null $limit  How many notifications to return (max 50)
+     * @param int|null $offset Results offset (results are sorted by ID)
      *
      * @phpstan-param int $kind   Kind of notifications returned. Default (not set) is all notification types
      */
-    public function getAll(int $limit = null, int $offset = null/* , int $kind = null */): array
+    public function getAll(?int $limit = null, ?int $offset = null/* , ?int $kind = null */): array
     {
         if (func_num_args() > 2 && !is_int(func_get_arg(2))) {
             trigger_deprecation('norkunas/onesignal-php-api', '2.1.0', 'Method %s() will have a third `int $kind` argument. Not defining it or passing a non integer value is deprecated.', __METHOD__);
