@@ -23,7 +23,7 @@ class CreateSegment implements AbstractDto
      * @param non-empty-string|null           $name
      * @param array<int, AbstractFilter>|null $filters
      */
-    public function __construct(string $name = null, array $filters = null)
+    public function __construct(?string $name = null, ?array $filters = null)
     {
         $this->name = $name;
         $this->filters = $filters;

@@ -53,7 +53,7 @@ class Devices extends AbstractApi
      * @param int $limit  How many devices to return. Max is 300. Default is 300
      * @param int $offset Result offset. Default is 0. Results are sorted by id
      */
-    public function getAll(int $limit = null, int $offset = null): array
+    public function getAll(?int $limit = null, ?int $offset = null): array
     {
         $query = ['app_id' => $this->client->getConfig()->getApplicationId()];
 
@@ -184,7 +184,7 @@ class Devices extends AbstractApi
      *                                Only devices from that segment will make it into the export
      * @param int    $lastActiveSince An epoch to filter results to users active after this time
      */
-    public function csvExport(array $extraFields = [], string $segmentName = null, int $lastActiveSince = null): array
+    public function csvExport(array $extraFields = [], ?string $segmentName = null, ?int $lastActiveSince = null): array
     {
         $request = $this->createRequest('POST', "/players/csv_export?app_id={$this->client->getConfig()->getApplicationId()}");
         $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getApplicationAuthKey()}");

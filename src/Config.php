@@ -10,7 +10,7 @@ final class Config
     private $applicationAuthKey;
     private $userAuthKey;
 
-    public function __construct(string $applicationId, string $applicationAuthKey, string $userAuthKey = null)
+    public function __construct(string $applicationId, string $applicationAuthKey, ?string $userAuthKey = null)
     {
         $this->applicationId = $applicationId;
         $this->applicationAuthKey = $applicationAuthKey;
