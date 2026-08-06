@@ -19,8 +19,22 @@ abstract class ApiTestCase extends OneSignalTestCase
      */
     protected function createClientMock($response = null): OneSignal
     {
-        $config = new Config('fakeApplicationId', 'fakeApplicationAuthKey', 'fakeUserAuthKey');
+        return $this->createClientMockWithConfig(new Config('fakeApplicationId', 'fakeApplicationAuthKey', 'fakeUserAuthKey'), $response);
+    }
 
+    /**
+     * @param callable|callable[]|ResponseInterface|ResponseInterface[]|iterable|null $response
+     */
+    protected function createV2ClientMock($response = null): OneSignal
+    {
+        return $this->createClientMockWithConfig(new Config('fakeApplicationId', 'os_v2_app_fakeApplicationAuthKey', 'fakeUserAuthKey'), $response);
+    }
+
+    /**
+     * @param callable|callable[]|ResponseInterface|ResponseInterface[]|iterable|null $response
+     */
+    private function createClientMockWithConfig(Config $config, $response = null): OneSignal
+    {
         $httpClient = new Psr18Client(new MockHttpClient($response));
 
         $requestFactory = $streamFactory = new Psr17Factory();

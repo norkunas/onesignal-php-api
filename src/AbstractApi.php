@@ -25,7 +25,7 @@ abstract class AbstractApi
 
     protected function createRequest(string $method, string $uri): RequestInterface
     {
-        $request = $this->client->getRequestFactory()->createRequest($method, OneSignal::API_URL.$uri);
+        $request = $this->client->getRequestFactory()->createRequest($method, $this->client->getConfig()->getApiUrl().$uri);
         $request = $request->withHeader('Accept', 'application/json');
 
         return $request;
