@@ -12,22 +12,22 @@ final class ListSegmentsResponse implements AbstractResponse
     /**
      * @var non-negative-int
      */
-    private int $totalCount;
+    protected int $totalCount;
 
     /**
      * @var int<0, 2147483648>
      */
-    private int $offset;
+    protected int $offset;
 
     /**
      * @var int<0, 2147483648>
      */
-    private int $limit;
+    protected int $limit;
 
     /**
      * @var list<Segment>
      */
-    private array $segments;
+    protected array $segments;
 
     /**
      * @param non-negative-int   $totalCount

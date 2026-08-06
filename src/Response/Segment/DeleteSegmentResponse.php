@@ -8,7 +8,7 @@ use OneSignal\Response\AbstractResponse;
 
 final class DeleteSegmentResponse implements AbstractResponse
 {
-    private bool $success;
+    protected bool $success;
 
     public function __construct(bool $success)
     {
