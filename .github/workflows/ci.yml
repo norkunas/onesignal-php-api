@@ -12,16 +12,16 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "Checkout"
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
 
             - name: "Setup PHP"
               uses: shivammathur/setup-php@v2
               with:
                   coverage: none
-                  php-version: 8.3
+                  php-version: 8.5
 
             - name: "Install Dependencies with Composer"
-              uses: ramsey/composer-install@v2
+              uses: ramsey/composer-install@v4
 
             - name: "Run PHPStan"
               run: |
@@ -31,9 +31,11 @@ jobs:
     php-cs-fixer:
         name: PHP-CS-Fixer
         runs-on: ubuntu-latest
+        env:
+            PHP_CS_FIXER_IGNORE_ENV: 1
         steps:
             - name: "Checkout"
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
 
             - name: "Setup PHP"
               uses: shivammathur/setup-php@v2
@@ -43,18 +45,19 @@ jobs:
                   tools: cs2pr
 
             - name: "Install Dependencies with Composer"
-              uses: ramsey/composer-install@v2
+              uses: ramsey/composer-install@v4
 
             - name: "Run PHP-CS-Fixer"
               run: vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr
 
     phpunit:
-        name: PHPUnit
+        name: PHPUnit (PHP ${{ matrix.php-version }}) (Symfony ${{ matrix.symfony-version }}) (${{ matrix.dependencies }})
         runs-on: ubuntu-latest
         strategy:
+            fail-fast: false
             matrix:
                 dependencies: ['highest']
-                php-version: ['7.4', '8.0', '8.1', '8.2', '8.3']
+                php-version: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
                 include:
                     - php-version: 7.4
                       dependencies: 'lowest'
@@ -76,9 +79,25 @@ jobs:
                       symfony-version: 6.4.*
                     - php-version: 8.3
                       symfony-version: 7.0.*
+                    - php-version: 8.3
+                      symfony-version: 7.1.*
+                    - php-version: 8.3
+                      symfony-version: 7.2.*
+                    - php-version: 8.4
+                      symfony-version: 7.1.*
+                    - php-version: 8.4
+                      symfony-version: 7.2.*
+                    - php-version: 8.4
+                      symfony-version: 7.4.*
+                    - php-version: 8.5
+                      symfony-version: 7.4.*
+                    - php-version: 8.4
+                      symfony-version: 8.1.*
+                    - php-version: 8.5
+                      symfony-version: 8.1.*
         steps:
             - name: "Checkout"
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
 
             - name: "Setup PHP"
               uses: shivammathur/setup-php@v2
@@ -88,7 +107,7 @@ jobs:
                   coverage: none
 
             - name: "Install Dependencies with Composer"
-              uses: ramsey/composer-install@v2
+              uses: ramsey/composer-install@v4
               env:
                   SYMFONY_REQUIRE: ${{ matrix.symfony-version }}
               with:
@@ -105,16 +124,16 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "Checkout"
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
 
             - name: "Setup PHP"
               uses: shivammathur/setup-php@v2
               with:
                   coverage: pcov
-                  php-version: 8.3
+                  php-version: 8.5
 
             - name: "Install Dependencies with Composer"
-              uses: ramsey/composer-install@v2
+              uses: ramsey/composer-install@v4
 
             - name: "Run tests with PHPUnit and collect coverage"
               run: php -dpcov.enabled=1 -dpcov.directory=. -dpcov.exclude="~vendor~" vendor/bin/simple-phpunit --colors=always --coverage-text -vvv

@@ -7,6 +7,8 @@ namespace OneSignal\Tests;
 use ReflectionClass;
 use ReflectionMethod;
 
+use const PHP_VERSION_ID;
+
 trait PrivateAccessorTrait
 {
     /**
@@ -16,7 +18,10 @@ trait PrivateAccessorTrait
     {
         $class = new ReflectionClass($class);
         $method = $class->getMethod($method);
-        $method->setAccessible(true);
+
+        if (PHP_VERSION_ID < 80100) {
+            $method->setAccessible(true);
+        }
 
         return $method;
     }
