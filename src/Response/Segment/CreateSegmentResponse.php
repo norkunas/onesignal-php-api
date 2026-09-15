@@ -8,12 +8,12 @@ use OneSignal\Response\AbstractResponse;
 
 final class CreateSegmentResponse implements AbstractResponse
 {
-    protected bool $success;
+    private bool $success;
 
     /**
      * @var non-empty-string
      */
-    protected string $id;
+    private string $id;
 
     /**
      * @param non-empty-string $id
