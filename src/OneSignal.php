@@ -27,7 +27,11 @@ use function is_array;
  */
 class OneSignal
 {
-    public const API_URL = 'https://onesignal.com/api/v1';
+    /**
+     * @deprecated since 2.9.0, use Config::getApiUrl() instead, which picks the
+     *             url matching the configured application authentication key.
+     */
+    public const API_URL = Config::LEGACY_API_URL;
 
     private $config;
     private $httpClient;

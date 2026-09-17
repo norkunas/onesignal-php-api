@@ -23,9 +23,13 @@ abstract class AbstractApi
         $this->client = $client;
     }
 
-    protected function createRequest(string $method, string $uri): RequestInterface
+    /**
+     * @param non-empty-string|null $authKey Authentication key used for the request,
+     *                                       defaults to the application authentication key
+     */
+    protected function createRequest(string $method, string $uri, ?string $authKey = null): RequestInterface
     {
-        $request = $this->client->getRequestFactory()->createRequest($method, OneSignal::API_URL.$uri);
+        $request = $this->client->getRequestFactory()->createRequest($method, $this->client->getConfig()->getApiUrl($authKey).$uri);
         $request = $request->withHeader('Accept', 'application/json');
 
         return $request;

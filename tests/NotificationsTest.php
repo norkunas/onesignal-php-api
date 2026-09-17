@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OneSignal\Tests;
 
+use OneSignal\Config;
 use OneSignal\Notifications;
 use OneSignal\OneSignal;
 use OneSignal\Resolver\ResolverFactory;
@@ -325,5 +326,33 @@ class NotificationsTest extends ApiTestCase
             'destination_url' => 'https://onesignal-aws-link.com',
             '_status_code' => 200,
         ], $responseData);
+    }
+
+    public function testLegacyKeyKeepsUsingLegacyApiUrl(): void
+    {
+        $client = $this->createClientMock(function (string $method, string $url, array $options): ResponseInterface {
+            $this->assertSame(Config::LEGACY_API_URL.'/notifications/481a2734-6b7d-11e4-a6ea-4b53294fa671?app_id=fakeApplicationId', $url);
+            $this->assertSame('Authorization: Basic fakeApplicationAuthKey', $options['normalized_headers']['authorization'][0]);
+
+            return new MockResponse($this->loadFixture('notifications_get_one.json'), ['http_code' => 200]);
+        });
+
+        $notifications = new Notifications($client, new ResolverFactory($client->getConfig()));
+
+        $notifications->getOne('481a2734-6b7d-11e4-a6ea-4b53294fa671');
+    }
+
+    public function testV2KeyUsesNewApiUrl(): void
+    {
+        $client = $this->createV2ClientMock(function (string $method, string $url, array $options): ResponseInterface {
+            $this->assertSame(Config::API_URL.'/notifications/481a2734-6b7d-11e4-a6ea-4b53294fa671?app_id=fakeApplicationId', $url);
+            $this->assertSame('Authorization: Basic os_v2_app_fakeApplicationAuthKey', $options['normalized_headers']['authorization'][0]);
+
+            return new MockResponse($this->loadFixture('notifications_get_one.json'), ['http_code' => 200]);
+        });
+
+        $notifications = new Notifications($client, new ResolverFactory($client->getConfig()));
+
+        $notifications->getOne('481a2734-6b7d-11e4-a6ea-4b53294fa671');
     }
 }
