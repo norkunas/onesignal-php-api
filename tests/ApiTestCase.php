@@ -31,6 +31,16 @@ abstract class ApiTestCase extends OneSignalTestCase
     }
 
     /**
+     * Client whose organization key has been migrated while the application key has not.
+     *
+     * @param callable|callable[]|ResponseInterface|ResponseInterface[]|iterable|null $response
+     */
+    protected function createV2OrganizationClientMock($response = null): OneSignal
+    {
+        return $this->createClientMockWithConfig(new Config('fakeApplicationId', 'fakeApplicationAuthKey', 'os_v2_org_fakeOrganizationAuthKey'), $response);
+    }
+
+    /**
      * @param callable|callable[]|ResponseInterface|ResponseInterface[]|iterable|null $response
      */
     private function createClientMockWithConfig(Config $config, $response = null): OneSignal

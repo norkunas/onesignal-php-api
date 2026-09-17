@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OneSignal\Tests;
 
 use OneSignal\Apps;
+use OneSignal\Config;
 use OneSignal\Devices;
 use OneSignal\OneSignal;
 use OneSignal\Resolver\ResolverFactory;
@@ -496,5 +497,75 @@ class AppsTest extends ApiTestCase
             ],
             '_status_code' => 200,
         ], $responseData);
+    }
+
+    public function testGetOneUsesTheUrlMatchingTheUserAuthKey(): void
+    {
+        $client = $this->createV2ClientMock(function (string $method, string $url, array $options): ResponseInterface {
+            $this->assertSame(Config::LEGACY_API_URL.'/apps/e4e87830-b954-11e3-811d-f3b376925f15', $url);
+            $this->assertSame('Authorization: Basic fakeUserAuthKey', $options['normalized_headers']['authorization'][0]);
+
+            return new MockResponse($this->loadFixture('apps_get_one.json'), ['http_code' => 200]);
+        });
+
+        $apps = new Apps($client, new ResolverFactory($client->getConfig()));
+
+        $apps->getOne('e4e87830-b954-11e3-811d-f3b376925f15');
+    }
+
+    public function testGetAllUsesTheUrlMatchingTheUserAuthKey(): void
+    {
+        $client = $this->createV2OrganizationClientMock(function (string $method, string $url, array $options): ResponseInterface {
+            $this->assertSame(Config::API_URL.'/apps', $url);
+            $this->assertSame('Authorization: Basic os_v2_org_fakeOrganizationAuthKey', $options['normalized_headers']['authorization'][0]);
+
+            return new MockResponse($this->loadFixture('apps_get_all.json'), ['http_code' => 200]);
+        });
+
+        $apps = new Apps($client, new ResolverFactory($client->getConfig()));
+
+        $apps->getAll();
+    }
+
+    public function testAddUsesTheUrlMatchingTheUserAuthKey(): void
+    {
+        $client = $this->createV2OrganizationClientMock(function (string $method, string $url, array $options): ResponseInterface {
+            $this->assertSame(Config::API_URL.'/apps', $url);
+            $this->assertSame('Authorization: Basic os_v2_org_fakeOrganizationAuthKey', $options['normalized_headers']['authorization'][0]);
+
+            return new MockResponse($this->loadFixture('apps_add.json'), ['http_code' => 200]);
+        });
+
+        $apps = new Apps($client, new ResolverFactory($client->getConfig()));
+
+        $apps->add(['name' => 'Your app 1']);
+    }
+
+    public function testUpdateUsesTheUrlMatchingTheUserAuthKey(): void
+    {
+        $client = $this->createV2OrganizationClientMock(function (string $method, string $url, array $options): ResponseInterface {
+            $this->assertSame(Config::API_URL.'/apps/e4e87830-b954-11e3-811d-f3b376925f15', $url);
+            $this->assertSame('Authorization: Basic os_v2_org_fakeOrganizationAuthKey', $options['normalized_headers']['authorization'][0]);
+
+            return new MockResponse($this->loadFixture('apps_get_one.json'), ['http_code' => 200]);
+        });
+
+        $apps = new Apps($client, new ResolverFactory($client->getConfig()));
+
+        $apps->update('e4e87830-b954-11e3-811d-f3b376925f15', ['name' => 'Your app 1']);
+    }
+
+    public function testOutcomesUsesTheUrlMatchingTheApplicationAuthKey(): void
+    {
+        $client = $this->createV2OrganizationClientMock(function (string $method, string $url, array $options): ResponseInterface {
+            $this->assertStringStartsWith(Config::LEGACY_API_URL.'/apps/e4e87830-b954-11e3-811d-f3b376925f15/outcomes', $url);
+            $this->assertSame('Authorization: Basic fakeApplicationAuthKey', $options['normalized_headers']['authorization'][0]);
+
+            return new MockResponse($this->loadFixture('apps_outcomes.json'), ['http_code' => 200]);
+        });
+
+        $apps = new Apps($client, new ResolverFactory($client->getConfig()));
+
+        $apps->outcomes('e4e87830-b954-11e3-811d-f3b376925f15', ['outcome_names' => ['os__session_duration.sum']]);
     }
 }

@@ -47,12 +47,20 @@ OneSignal replaced the legacy REST API keys with App API keys, which are prefixe
 with `os_v2_app_` and are served by `https://api.onesignal.com` instead of the
 legacy `https://onesignal.com/api/v1`.
 
-The client picks the matching url from the configured application authentication
-key, so migrating only requires replacing the key with the new one, which you can
-create under `Settings > Keys & IDs` in the OneSignal dashboard:
+The client picks the matching url from the key authenticating each request, so
+migrating only requires replacing the key with the new one, which you can create
+under `Settings > Keys & IDs` in the OneSignal dashboard:
 
 ```php
 $config = new Config('your_application_id', 'os_v2_app_...');
+```
+
+The applications endpoints authenticate with the user authentication key instead,
+whose replacement is the Organization API key, prefixed with `os_v2_org_`. Both
+keys are resolved independently, so they can be migrated one at a time:
+
+```php
+$config = new Config('your_application_id', 'os_v2_app_...', 'os_v2_org_...');
 ```
 
 ## How to use this library

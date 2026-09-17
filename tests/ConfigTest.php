@@ -35,6 +35,22 @@ class ConfigTest extends OneSignalTestCase
         self::assertSame(Config::API_URL, $config->getApiUrl());
     }
 
+    public function testGetApiUrlWithExplicitAuthKey(): void
+    {
+        $config = new Config('fakeApplicationId', 'fakeApplicationAuthKey', 'os_v2_org_fakeOrganizationAuthKey');
+
+        self::assertSame(Config::LEGACY_API_URL, $config->getApiUrl());
+        self::assertSame(Config::API_URL, $config->getApiUrl($config->getUserAuthKey()));
+    }
+
+    public function testGetApiUrlWithExplicitLegacyAuthKey(): void
+    {
+        $config = new Config('fakeApplicationId', 'os_v2_app_fakeApplicationAuthKey', 'fakeUserAuthKey');
+
+        self::assertSame(Config::API_URL, $config->getApiUrl());
+        self::assertSame(Config::LEGACY_API_URL, $config->getApiUrl($config->getUserAuthKey()));
+    }
+
     /**
      * @dataProvider provideAuthKeys
      */
@@ -49,10 +65,12 @@ class ConfigTest extends OneSignalTestCase
     public function provideAuthKeys(): iterable
     {
         yield 'v2 key' => [true, 'os_v2_app_fakeApplicationAuthKey'];
-        yield 'exact prefix' => [true, 'os_v2_app_'];
+        yield 'exact app prefix' => [true, 'os_v2_app_'];
+        yield 'organization key' => [true, 'os_v2_org_fakeOrganizationAuthKey'];
+        yield 'exact shared prefix' => [true, 'os_v2_'];
         yield 'legacy key' => [false, 'fakeApplicationAuthKey'];
-        yield 'organization key' => [false, 'os_v2_org_fakeOrganizationAuthKey'];
         yield 'prefix not at the beginning' => [false, 'fakeos_v2_app_Key'];
+        yield 'unrelated os prefix' => [false, 'os_v1_app_fakeKey'];
         yield 'null' => [false, null];
     }
 }

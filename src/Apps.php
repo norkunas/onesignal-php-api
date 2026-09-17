@@ -37,8 +37,10 @@ class Apps extends AbstractApi
      */
     public function getOne(string $id): array
     {
-        $request = $this->createRequest('GET', "/apps/$id");
-        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getUserAuthKey()}");
+        $userAuthKey = $this->client->getConfig()->getUserAuthKey();
+
+        $request = $this->createRequest('GET', "/apps/$id", $userAuthKey);
+        $request = $request->withHeader('Authorization', "Basic $userAuthKey");
 
         return $this->client->sendRequest($request);
     }
@@ -52,8 +54,10 @@ class Apps extends AbstractApi
      */
     public function getAll(): array
     {
-        $request = $this->createRequest('GET', '/apps');
-        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getUserAuthKey()}");
+        $userAuthKey = $this->client->getConfig()->getUserAuthKey();
+
+        $request = $this->createRequest('GET', '/apps', $userAuthKey);
+        $request = $request->withHeader('Authorization', "Basic $userAuthKey");
 
         return $this->client->sendRequest($request);
     }
@@ -71,8 +75,10 @@ class Apps extends AbstractApi
     {
         $resolvedData = $this->resolverFactory->createAppResolver()->resolve($data);
 
-        $request = $this->createRequest('POST', '/apps');
-        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getUserAuthKey()}");
+        $userAuthKey = $this->client->getConfig()->getUserAuthKey();
+
+        $request = $this->createRequest('POST', '/apps', $userAuthKey);
+        $request = $request->withHeader('Authorization', "Basic $userAuthKey");
         $request = $request->withHeader('Content-Type', 'application/json');
         $request = $request->withBody($this->createStream($resolvedData));
 
@@ -93,8 +99,10 @@ class Apps extends AbstractApi
     {
         $resolvedData = $this->resolverFactory->createAppResolver()->resolve($data);
 
-        $request = $this->createRequest('PUT', "/apps/$id");
-        $request = $request->withHeader('Authorization', "Basic {$this->client->getConfig()->getUserAuthKey()}");
+        $userAuthKey = $this->client->getConfig()->getUserAuthKey();
+
+        $request = $this->createRequest('PUT', "/apps/$id", $userAuthKey);
+        $request = $request->withHeader('Authorization', "Basic $userAuthKey");
         $request = $request->withHeader('Content-Type', 'application/json');
         $request = $request->withBody($this->createStream($resolvedData));
 
